@@ -2,7 +2,7 @@
 error_reporting(0);
 include("connection.php");
 session_start();
-// include("checked-login.php");
+include("checked-login.php");
 ?>
 
 
@@ -11,7 +11,7 @@ session_start();
 
 <head>
   <?php include("./components/headlink.php"); ?>
-  <title>Usemee - eCommerce Website</title>
+  <title>Usemee___ eCommerce Website</title>
 
 
 </head>
