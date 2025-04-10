@@ -79,6 +79,12 @@
                         <span>Seller</span>
                     </a>
                 </li>
+                <li>
+                    <a href="wallet.php" class="waves-effect">
+                        <i class="ri-dashboard-line"></i>
+                        <span>Wallet</span>
+                    </a>
+                </li>
 
 
 
