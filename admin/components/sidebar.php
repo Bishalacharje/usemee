@@ -86,10 +86,14 @@
                 <li class="menu-title">Delivery</li>
 
                 <li>
-                    <a href="delivery.php" class="waves-effect">
-                        <i class="ri-dashboard-line"></i>
-                        <span>Manage Delivery</span>
+                    <a href="javascript: void(0);" class="has-arrow waves-effect">
+                        <i class="ri-shopping-bag-line"></i>
+                        <span>Delivery</span>
                     </a>
+                    <ul class="sub-menu" aria-expanded="false">
+                        <li><a href="delivery.php">Manage Delivery</a></li>
+                        <li><a href="Wallet.php">Wallet</a></li>
+                    </ul>
                 </li>
                 <li>
                     <a href="javascript: void(0);" class="has-arrow waves-effect">
