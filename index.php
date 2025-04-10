@@ -11,7 +11,7 @@ session_start();
 
 <head>
   <?php include("./components/headlink.php"); ?>
-  <title>Usemee -$_FILES eCommerce Website</title>
+  <title>Usemee - eCommerce Website</title>
 
 
 </head>
