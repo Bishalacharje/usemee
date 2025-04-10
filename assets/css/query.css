@@ -1,0 +1,1463 @@
+/*---------------------------------------------------- Color------------------------- ------------*/
+:root {
+
+    --bg_color: #fff;
+    --text_color: #2b2b2b;
+    --primary_color: #80B500;
+    --primary_color2: #B3D366;
+    --secondary_color: #ffb800;
+    --bg_secondary: #F7F5EB
+}
+
+/*---------------------------------------------------- Tab & Mini Leptop------------------------- ------------*/
+
+@media (max-width: 1250px) {
+
+    /*---------------------------------------------------- Common Css ------------------------- ------------*/
+
+    .container {
+        width: 900px;
+    }
+
+    .containerSlider {
+        width: 950px;
+    }
+
+    button {
+        width: 160px;
+        height: 48px;
+        font-size: 15px;
+    }
+
+    p {
+        font-size: 14px;
+    }
+
+    .title h2 {
+        font-size: 20px;
+    }
+
+    .title p {
+        font-size: 14px;
+    }
+
+    form input,
+    form select,
+    form textarea {
+        width: calc(100% - 24px);
+        padding: 12px;
+    }
+
+    form .radioInput label {
+        font-size: 16px;
+    }
+
+    form select {
+        width: 100%;
+    }
+
+    /* -------------------------------  header  -------------------------------------- */
+
+    .headerCenter .searchCon {
+        width: 364px;
+    }
+
+    .dropdownMenu {
+        top: 60px;
+    }
+
+    /* -------------------------------  Footer  -------------------------------------- */
+
+
+    footer p {
+        font-size: 12px;
+    }
+
+    footer li {
+        font-size: 14px;
+    }
+
+    .footerFeatureGrid {
+        left: 48px;
+        top: -48px;
+        width: calc(100% - 128px);
+        gap: 15px;
+        padding: 24px 16px;
+    }
+
+    .footerFeature img {
+        width: 36px;
+    }
+
+    .footerFeature h3 {
+        font-size: 16px;
+    }
+
+    .footerFeature p {
+        margin-top: 4px;
+        font-size: 10px;
+    }
+
+    .footerFeature {
+        padding-right: 12px;
+        gap: 10px;
+
+    }
+
+    .footerMain {
+        padding: 92px 48px 16px;
+        border-bottom: 1px solid #dee2e6;
+    }
+
+    .footerGrid {
+        grid-template-columns: 2fr 1fr 1fr;
+        gap: 20px;
+    }
+
+    .footerBottom {
+        padding: 20px 48px;
+    }
+
+    /* -------------------------------  Shop Page  -------------------------------------- */
+
+    .shopGrid {
+        grid-template-columns: 2fr 4fr;
+        gap: 20px;
+    }
+
+    .productGrid {
+        gap: 12px;
+    }
+
+    .shopSidebar .shopSidebarBox {
+        margin-bottom: 24px;
+        padding: 24px 16px 10px;
+    }
+
+    .shopSidebar .shopSidebarBox h4 {
+        margin-bottom: 15px;
+        font-size: 20px;
+        padding-left: 20px;
+    }
+
+    .shopSidebar .shopSidebarBox h4::after {
+        top: 11px;
+    }
+
+    .shopSidebar .shopSidebarBox label {
+        font-size: 12px;
+    }
+
+    .productBox .productImg {
+        height: 164px;
+    }
+
+
+    .productBox .productDes {
+        padding: 20px 12px 12px;
+    }
+
+    .productBox .productImg span {
+        top: 8px;
+        left: 8px;
+    }
+
+    .productBox .productDes h4 {
+        font-size: 12px;
+    }
+
+    .productBox .productDes del {
+        font-size: 16px;
+    }
+
+    .productBox .productDes h3 {
+        font-size: 11px;
+        padding: 3px 6px;
+    }
+
+    .productBox .productDes h2 {
+        font-size: 18px;
+    }
+
+    /* -------------------------------  Single Product Page  -------------------------------------- */
+
+    .otherPageSection {
+        margin: 32px 0;
+    }
+
+    .singleProduct {
+        grid-template-columns: 3fr 4fr;
+        gap: 48px;
+        align-items: center;
+    }
+
+    .singleProduct .showcase-banner {
+        height: 364px;
+    }
+
+    .categorySubcategory span {
+        font-size: 12px;
+        padding: 3px 8px;
+        border-radius: 4px;
+    }
+
+    .showcase-title {
+        font-size: 20px;
+        margin: 8px 0;
+        padding: 8px 0;
+    }
+
+    .productFooter p img {
+        width: 36px;
+    }
+
+    .productFooter p {
+        font-size: 10px;
+        width: 136px;
+        gap: 8px;
+    }
+
+    .price-box del,
+    .price-box del span {
+        font-size: 18px;
+    }
+
+    .price-box h5 {
+        padding: 3px 8px;
+    }
+
+    .price-box .price,
+    .price-box .price span {
+        font-size: 32px;
+    }
+
+    .variantSection {
+        grid-template-columns: 1fr 1fr 1fr 1fr;
+        gap: 8px;
+        margin: 16px 0;
+    }
+
+    .productDescription h3 {
+        padding-bottom: 12px;
+        margin-bottom: 12px;
+        font-size: 20px;
+    }
+
+    .relatedProductSection .relatedProductTitle {
+        font-size: 32px;
+        line-height: 32px;
+        margin-bottom: 16px;
+    }
+
+    /* -------------------------------  Cart Page  -------------------------------------- */
+
+    .qty-btn {
+        width: 32px;
+        height: 36px;
+        font-size: 14px;
+    }
+
+    .cart-qty-input {
+        font-size: 14px;
+        width: 40px;
+        height: 36px;
+    }
+
+    .cartContainer tr img {
+        width: 72px;
+        height: 72px;
+    }
+
+    .cartFooter .cartTotal {
+        font-size: 24px;
+    }
+
+    .cartFooter button {
+        width: 200px;
+    }
+
+    /* -------------------------------  Checkout Page  -------------------------------------- */
+    .checkoutGrid {
+        gap: 30px;
+    }
+
+    .checkoutGrid h3 {
+        font-size: 22px;
+    }
+
+    .checkoutGrid .chekoutBox {
+        padding: 30px 24px;
+    }
+
+    .checkoutOrderBox li {
+        padding: 16px;
+        font-size: 14px;
+    }
+
+    .checkoutOrderBox h2 {
+        padding: 16px;
+        font-size: 15px;
+    }
+
+    /* -------------------------------  My Account / Address Page  -------------------------------------- */
+    .myAccountGrid {
+        gap: 30px;
+    }
+
+    .myAccountSidebar .myAccountSidebarMenu {
+        padding: 16px;
+    }
+
+    /* -------------------------------  Order Page  -------------------------------------- */
+    .ordersCon table thead tr th {
+        padding: 14px 8px;
+        font-size: 14px;
+    }
+
+    .ordersCon table tbody td {
+        padding: 14px 8px;
+        font-size: 12px;
+    }
+
+    .checkoutOrderBox li div {
+        width: 70%;
+    }
+
+
+
+    /* -------------------------------  Track Order Page  -------------------------------------- */
+    .trackOrderGrid {
+        gap: 30px;
+    }
+
+    .trackOrderGrid h3 {
+        font-size: 22px;
+    }
+
+    .trackOrderBox {
+        padding: 30px 24px;
+        margin: 0 0 30px;
+    }
+
+    .checkoutOrderBox h3,
+    .checkoutOrderBox h6 {
+        padding: 16px;
+        font-size: 14px;
+    }
+
+    .orderProductBox {
+        margin: 16px 0;
+        padding: 16px;
+    }
+
+    .orderProductBox img {
+        width: 52px;
+        height: 52px;
+        padding: 8px;
+    }
+
+
+    /* -------------------------------  Login Signup Page  -------------------------------------- */
+    .loginTitle {
+        margin-bottom: 60px;
+    }
+
+    .loginTitle h2 {
+        font-size: 36px;
+        line-height: 1;
+    }
+
+    .signupCon {
+        padding: 0 240px;
+    }
+
+
+
+    /* --------------------------------------------------------------------- */
+    /* ---------------------------------  Landing Page  ------------------------------------ */
+    /* --------------------------------------------------------------------- */
+
+    /* ---------------------------------  Banner Section  ------------------------------------ */
+
+
+    .bannerSec {
+        padding: 16px 0 0;
+    }
+
+    .banner {
+        height: 164px;
+    }
+
+
+    /* -- ---------------------------------  Subcategory Cards  ------------------------------------ -- */
+    .SubcategoryCardSec {
+        padding: 36px 0;
+    }
+
+    .subCategoryCardGrid {
+        grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+        gap: 20px;
+    }
+
+
+
+    .homeSubcategoryCardSec .subCategoryCardGrid {
+
+        height: 316px;
+        overflow: hidden;
+    }
+
+    .subCategoryCard .subCategoryCardImg {
+        height: 112px;
+    }
+
+    .subCategoryCard h3 {
+        margin-top: 8px;
+        font-size: 14px;
+    }
+
+
+    /* -- ---------------------------------  Top Selling Products  ------------------------------------ -- */
+    .sellingSec {
+        padding: 36px 0;
+    }
+
+    .sellingSec .sectionTitle {
+        font-size: 32px;
+        margin-bottom: 28px;
+    }
+
+    /* -- ---------------------------------  Center Banner Section  ------------------------------------ -- */
+
+    .centerBannerSec {
+        padding: 36px 0;
+    }
+
+    .centerBannerGrid {
+        gap: 20px;
+    }
+
+    .centerBannerSmall {
+        gap: 20px;
+    }
+
+    .centerBannerLg {
+        height: 404px;
+        border-radius: 15px;
+    }
+
+    .centerBanner {
+        height: 192px;
+        border-radius: 12px;
+    }
+
+
+    /* -- ---------------------------------  Footer card Section  ------------------------------------ -- */
+
+    .footerCardGrid {
+        padding: 36px 0;
+        gap: 16px;
+    }
+
+    .footerCard {
+        height: 164px;
+        border-radius: 6px;
+    }
+}
+
+
+/*---------------------------------------------------- Tab & Mini Leptop------------------------- ------------*/
+
+@media (max-width: 950px) {
+    /*---------------------------------------------------- Common Css ------------------------- ------------*/
+
+    .container {
+        width: 700px;
+    }
+
+    .containerSlider {
+        width: 748px;
+    }
+
+    button {
+        width: 120px;
+        height: 36px;
+        font-size: 13px;
+    }
+
+    p {
+        font-size: 12px;
+    }
+
+    .title h2 {
+        font-size: 18px;
+    }
+
+    .title p {
+        font-size: 12px;
+    }
+
+    form input,
+    form select,
+    form textarea {
+        width: calc(100% - 20px);
+        padding: 10px;
+    }
+
+    form select {
+        width: 100%;
+    }
+
+    form .radioInput label {
+        font-size: 14px;
+    }
+
+    .otherPageSection {
+        margin: 24px 0;
+    }
+
+    /* -------------------------------  header  -------------------------------------- */
+    .headerTopLeft {
+        column-gap: 24px;
+    }
+
+    .headerTopLeft div h6 {
+        font-size: 13px;
+    }
+
+    .headerTopLeft div img {
+        height: 14px;
+    }
+
+    .headerTopRight select {
+        font-size: 13px;
+    }
+
+    .socialLogo a img {
+        height: 14px;
+    }
+
+    header {
+        padding: 18px 0;
+    }
+
+    .sticky-header {
+        padding: 12px 0;
+    }
+
+    .logo img {
+        height: 22px;
+    }
+
+    .headerCenter .searchCon {
+        width: 364px;
+        padding: 10px 14px;
+    }
+
+    .dropdownMenu {
+        top: 60px;
+    }
+
+    .headerCenter .phone {
+        display: none !important;
+    }
+
+    .headerRight img {
+        height: 20px;
+    }
+
+    .headerRight .cartIcon span {
+        position: absolute;
+        width: 18px;
+        height: 18px;
+        right: 0px;
+        top: -8px;
+    }
+
+    .dropdownMenu {
+        top: 45px;
+    }
+
+
+    /* -------------------------------  Footer  -------------------------------------- */
+    .footerFeatureGrid {
+        left: 20px;
+        top: -48px;
+        width: calc(100% - 72px);
+        gap: 15px;
+        padding: 24px 16px;
+    }
+
+    .footerFeature img {
+        width: 26px;
+    }
+
+    .footerFeature h3 {
+        font-size: 12px;
+    }
+
+    .footerFeature p {
+        font-size: 9px;
+    }
+
+    .footerFeature {
+        padding-right: 10px;
+        gap: 8px;
+    }
+
+    .footerMain {
+        padding: 108px 20px 16px;
+    }
+
+    .footerMenu h3 {
+        font-size: 18px;
+        margin-bottom: 20px;
+    }
+
+    footer li {
+        font-size: 13px;
+        margin-bottom: 16px;
+    }
+
+    .footerBottom {
+        padding: 16px 20px;
+    }
+
+
+
+    /* -------------------------------  Shop Page  -------------------------------------- */
+    .productGrid.grid5 {
+        grid-template-columns: 1fr 1fr 1fr 1fr;
+        gap: 12px;
+    }
+
+    .shopGrid {
+        grid-template-columns: 1fr;
+        gap: 0;
+    }
+
+    .productGrid {
+        grid-template-columns: 1fr 1fr 1fr 1fr;
+    }
+
+    .shopSidebar .shopSidebarBox {
+        position: fixed;
+        background-color: var(--bg_color);
+        z-index: 4;
+        width: 668px;
+        display: none;
+        top: 164px;
+        left: 50%;
+        transform: translate(-50%, 0%);
+        box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
+        border: none;
+        animation: zoomIn 1s 1;
+        height: fit-content;
+    }
+
+    @keyframes zoomIn {
+        0% {
+            margin-top: 20px;
+        }
+
+        100% {
+            margin-top: 0;
+        }
+    }
+
+    .filterBtn {
+        display: flex;
+        align-items: center;
+        gap: 20px;
+    }
+
+    .filterBtn a img {
+        width: 20px;
+    }
+
+    .filterBtn button {
+        background-color: transparent;
+        border: 2px solid #e5eaee;
+        color: var(--text_color);
+        text-transform: capitalize;
+        font-weight: 500;
+        font-family: "Open Sans", sans-serif;
+        height: 44px;
+    }
+
+    .closeCategoryFilter {
+        display: block;
+        position: absolute;
+        z-index: 4;
+        top: 20px;
+        right: 20px;
+        cursor: pointer;
+        color: var(--primary_color);
+        font-size: 20px;
+    }
+
+    .closeSubCategoryFilter {
+        display: block;
+        position: absolute;
+        z-index: 4;
+        top: 20px;
+        right: 20px;
+        cursor: pointer;
+        color: var(--primary_color);
+        font-size: 20px;
+    }
+
+    .shopSidebar .shopSidebarBox label {
+        display: inline-flex;
+        margin-right: 48px;
+        gap: 4px;
+    }
+
+    /* -------------------------------  Single Product Page  -------------------------------------- */
+
+    .singleProduct {
+        grid-template-columns: 1fr 1fr;
+        gap: 32px;
+    }
+
+    .productFooter {
+        margin-top: 16px;
+        padding-top: 16px;
+    }
+
+    .productFooter p {
+        width: 90px;
+        gap: 8px;
+        flex-direction: column;
+        align-items: start;
+    }
+
+    .variantSection {
+        grid-template-columns: 1fr 1fr 1fr;
+    }
+
+    .variant-label {
+        padding: 6px 8px;
+        width: calc(100% - 16px);
+        font-size: 12px;
+    }
+
+
+    /* -------------------------------  Cart Page  -------------------------------------- */
+
+    .cartContainer .cartProductName h3 {
+        font-size: 14px;
+    }
+
+    /* -------------------------------  Checkout Page  -------------------------------------- */
+    .checkoutOrderBox li {
+        padding: 12px;
+        font-size: 12px;
+    }
+
+
+    /* -------------------------------  Login Signup Page  -------------------------------------- */
+
+    .loginGrid {
+        gap: 60px;
+        padding: 0 40px;
+    }
+
+    .signupCon {
+        padding: 0 164px;
+    }
+
+    .loginSection {
+        padding-bottom: 50px;
+    }
+
+
+    .subCategoryCard .subCategoryCardImg {
+        height: 112px;
+    }
+
+    /* --------------------------------------------------------------------- */
+    /* ---------------------------------  Landing Page  ------------------------------------ */
+    /* --------------------------------------------------------------------- */
+
+
+
+    .bannerSlider {
+        border-radius: 10px;
+    }
+
+    .banner {
+        height: 124px;
+    }
+
+    .bannerSlider .prev,
+    .bannerSlider .next {
+        width: 30px;
+        height: 30px;
+    }
+
+    .bannerSlider .prev {
+        left: 16px;
+    }
+
+    .bannerSlider .next {
+        right: 16px;
+    }
+
+    .SubcategoryCardSec {
+        padding: 24px 0;
+    }
+
+    .subCategoryCard .subCategoryCardImg {
+        height: 83px;
+    }
+
+    .homeSubcategoryCardSec .subCategoryCardGrid {
+        height: 250px;
+    }
+
+    .sellingSec {
+        padding: 24px 0;
+    }
+
+    .sellingSec .sectionTitle {
+        font-size: 24px;
+        margin-bottom: 20px;
+    }
+
+    .swiper-initialized {
+        margin: 0 26px 24px;
+    }
+
+    .swiper-button-next,
+    .swiper-button-prev {
+        width: 20px !important;
+    }
+
+    .centerBannerSec {
+        padding: 24px 0;
+    }
+
+    .centerBannerGrid {
+        gap: 16px;
+    }
+
+    .centerBannerLg {
+        height: 322px;
+        border-radius: 10px;
+    }
+
+    .centerBannerSmall {
+        gap: 16px;
+    }
+
+    .centerBanner {
+        height: 152px;
+        border-radius: 8px;
+    }
+
+    .footerCardGrid {
+        padding: 24px 0;
+        gap: 12px;
+    }
+
+    .footerCard {
+        height: 132px;
+    }
+
+}
+
+
+/*---------------------------------------------------- Mobile ------------------------- ------------*/
+
+@media (max-width: 750px) {
+    /*---------------------------------------------------- Common Css ------------------------- ------------*/
+
+    .container {
+        width: 92vw;
+    }
+
+    .containerSlider {
+        width: 92vw;
+    }
+
+    button {
+        width: 108px;
+        height: 32px;
+        font-size: 10px;
+    }
+
+    p {
+        font-size: 10px;
+    }
+
+    .title h2 {
+        font-size: 16px;
+    }
+
+    .title p {
+        font-size: 10px;
+    }
+
+    form input,
+    form select,
+    form textarea {
+        width: calc(100% - 16px);
+        padding: 8px;
+    }
+
+    form select {
+        width: 100%;
+    }
+
+    form .radioInput label {
+        font-size: 14px;
+    }
+
+    .otherPageSection {
+        margin: 16px 0;
+    }
+
+    .formGrid {
+        grid-template-columns: 1fr;
+        gap: 10px;
+        margin-bottom: 10px;
+    }
+
+    .formGrid.grid3 {
+        grid-template-columns: 1fr;
+    }
+
+    /* -------------------------------  header  -------------------------------------- */
+
+    .topHeaderSection {
+        display: none;
+    }
+
+    .headerTopLeft {
+        column-gap: 8px;
+    }
+
+    header .logo {
+        display: none;
+    }
+
+    .sticky-header {
+        padding: 10px 0;
+    }
+
+    .header .mobileLogo {
+        display: block;
+    }
+
+    .mobileLogo img {
+        height: 24px;
+        margin-bottom: -5px;
+    }
+
+    .headerCenter .searchCon input {
+        width: calc(100% - 12px);
+        margin-left: 12px;
+        font-size: 11px;
+    }
+
+    .headerCenter .searchCon img {
+        height: 15px;
+    }
+
+    .header {
+        column-gap: 8px;
+    }
+
+    .headerRight {
+        column-gap: 8px;
+    }
+
+    .headerCenter .searchCon {
+        width: 50vw;
+        padding: 6px 10px;
+    }
+
+    header {
+        padding: 12px 0;
+
+    }
+
+    .logo img {
+        height: 16px;
+    }
+
+    .headerRight img {
+        height: 15px;
+    }
+
+    .headerRight .cartIcon {
+        padding-right: 6px;
+    }
+
+    .headerRight .cartIcon span {
+        width: 14px;
+        height: 14px;
+        top: -4px;
+        font-size: 10px;
+    }
+
+
+    .dropdownMenu {
+        top: 38px;
+        width: 108px;
+    }
+
+    .dropdownMenu li a {
+        column-gap: 8px;
+        padding: 8px 13px;
+        font-size: 12px;
+    }
+
+    .dropdownMenu li a img {
+        height: 14px;
+    }
+
+    /* -------------------------------  Footer  -------------------------------------- */
+
+    .footerFeatureGrid {
+        grid-template-columns: 1fr;
+        top: -110px;
+    }
+
+    .footerFeature {
+        padding-right: 0;
+        border-right: none;
+    }
+
+    .footerMain {
+        padding: 148px 12px 16px;
+    }
+
+    footer {
+        margin-top: 148px;
+    }
+
+    .footerFeature img {
+        width: 36px;
+    }
+
+    .footerGrid {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+
+    .footerAbout p {
+        margin: 16px 0 24px;
+        padding-right: 0;
+        font-size: 11px;
+    }
+
+    .footerBottom {
+        flex-direction: column;
+        gap: 4px;
+    }
+
+    .footerMenu form input {
+        height: 48px;
+        font-size: 11px;
+    }
+
+    .footerMenu form button {
+        height: 48px;
+        width: 15%;
+    }
+
+    .footerMenu h3 {
+        font-size: 16px;
+        margin-bottom: 16px;
+    }
+
+    .footerMenu ul li {
+        font-size: 12px;
+        margin-bottom: 10px;
+    }
+
+
+    /* -------------------------------  shop page  -------------------------------------- */
+    .productGrid.grid5 {
+        grid-template-columns: 1fr 1fr;
+        gap: 8px;
+    }
+
+    .productGrid {
+        grid-template-columns: 1fr 1fr;
+        gap: 8px;
+    }
+
+    .productBox .productDes {
+        padding: 16px 8px 8px;
+    }
+
+    .productBox .productDes h4 {
+        font-size: 11px;
+    }
+
+    .productBox .productDes del {
+        font-size: 13px;
+    }
+
+    .productBox .productDes h3 {
+        font-size: 10px;
+        padding: 2px 5px;
+    }
+
+    .productBox .productDes h2 {
+        font-size: 15px;
+    }
+
+    .title {
+        flex-direction: column;
+        margin-bottom: 20px;
+        align-items: start;
+        gap: 20px;
+    }
+
+    .filterBtn {
+        gap: 8px;
+    }
+
+    .filterSort {
+        flex-direction: column;
+        align-items: start;
+        gap: 8px;
+    }
+
+    .filterBtn button {
+        height: 32px;
+    }
+
+    .productBox .productImg {
+        height: 160px;
+    }
+
+    .shopSidebar .shopSidebarBox {
+        width: 90%;
+    }
+
+    /* -------------------------------  Single Product Page  -------------------------------------- */
+    .singleProduct {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+
+    .singleProduct .showcase-banner {
+        height: 332px;
+    }
+
+    .relatedProductSection h4 {
+        font-size: 10px;
+    }
+
+    .relatedProductSection .relatedProductTitle {
+        font-size: 24px;
+        line-height: 29px;
+        margin-bottom: 12px;
+    }
+
+    /* -------------------------------  Cart Page  -------------------------------------- */
+    .cartContainer tr {
+        grid-template-columns: 1fr;
+        align-items: start;
+        position: relative;
+    }
+
+    .cartContainer tr td {
+        align-items: start;
+        font-size: 13px;
+    }
+
+    .cartContainer .cartProductName {
+        padding-left: 0;
+    }
+
+    .cartContainer tr img {
+        width: 48px;
+        height: 48px;
+    }
+
+    .cartContainer tr form {
+        position: absolute;
+        right: 20%;
+        bottom: 50%;
+    }
+
+    .cartContainer tr form button {
+        font-size: 16px;
+    }
+
+    .qty-btn {
+        width: 20px;
+        height: 20px;
+        font-size: 11px;
+    }
+
+    .cart-qty-input {
+        font-size: 11px;
+        width: 30px;
+        height: 20px;
+    }
+
+    .cartFooter .cartTotal {
+        font-size: 16px;
+    }
+
+
+    .checkoutGrid {
+        grid-template-columns: 1fr;
+        gap: 20px;
+
+    }
+
+    .checkoutGrid .chekoutOrders {
+        grid-row: 1;
+    }
+
+    .checkoutGrid h3 {
+        font-size: 16px;
+        margin-bottom: 12px;
+    }
+
+    .checkoutOrderBox h3,
+    .checkoutOrderBox h6 {
+        font-size: 12px;
+        margin-bottom: 0;
+    }
+
+    .checkoutOrderBox h2 {
+        font-size: 13px;
+    }
+
+    .checkoutGrid .chekoutBox {
+        padding: 20px 16px;
+        margin-bottom: 20px;
+    }
+
+
+    /* -------------------------------   My Account Page  -------------------------------------- */
+    .myAccountGrid {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+
+    .myAccountSidebar {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 10px;
+        border: none;
+    }
+
+    .myAccountSidebar .myAccountSidebarMenu {
+        border: 1px solid #e5eaee;
+        padding: 10px 15px;
+        font-size: 12px;
+    }
+
+    .myAccountSidebar .myAccountSidebarMenu img {
+        height: 12px;
+    }
+
+    .profileBox {
+        padding: 20px;
+        margin-top: 20px;
+    }
+
+    .trackOrderGrid {
+        gap: 20px;
+        grid-template-columns: 1fr;
+    }
+
+    .trackOrderGrid h3 {
+        font-size: 16px;
+        margin-bottom: 12px;
+    }
+
+    .trackOrderBox {
+        padding: 20px 16px;
+        margin: 0 0 20px;
+    }
+
+    .trackOrderBox h2 {
+        margin: 8px 0 6px;
+    }
+
+    .trackOrderBox p {
+        font-size: 11px;
+        margin: 6px 0 0;
+    }
+
+    .orderProductBox {
+        margin: 8px 0;
+        padding: 8px;
+    }
+
+    .orderProductBox h4 {
+        font-size: 14px;
+    }
+
+    .orderProductBox img {
+        width: 42px;
+        height: 42px;
+        padding: 6px;
+    }
+
+    /* -------------------------------  Login Signup Page  -------------------------------------- */
+    .loginTitle {
+        margin-bottom: 36px;
+    }
+
+    .loginTitle h2 {
+        font-size: 24px;
+        line-height: 0.9;
+    }
+
+    .loginGrid {
+        gap: 60px;
+        padding: 0 20px;
+        grid-template-columns: 1fr;
+    }
+
+    .loginRight {
+        gap: 10px;
+    }
+
+    .signupCon {
+        padding: 0 20px;
+    }
+
+    .signUpFooter {
+        gap: 10px;
+        padding-top: 32px;
+    }
+
+    .signUpFooter a {
+        font-size: 12px;
+    }
+
+    .signUpFooter .signupFlex {
+        padding-bottom: 10px;
+    }
+
+    .chekboxCon label {
+        font-size: 11px;
+        margin-top: -2px;
+        line-height: 15px;
+    }
+
+
+
+    /* --------------------------------------------------------------------- */
+    /* ---------------------------------  Landing Page  ------------------------------------ */
+    /* --------------------------------------------------------------------- */
+    .bannerSlider {
+        border-radius: 5px;
+    }
+
+    .bannerSec {
+        padding: 10px 0 0;
+    }
+
+    .banner {
+        height: 62px;
+    }
+
+    .bannerSlider .prev,
+    .bannerSlider .next {
+        width: 20px;
+        height: 20px;
+    }
+
+    .bannerSlider .prev {
+        left: 10px !important;
+    }
+
+    .bannerSlider .next {
+        right: 10px !important;
+    }
+
+
+
+    .SubcategoryCardSec {
+        padding: 16px 0;
+    }
+
+    .homeSubcategoryCardSec br {
+        display: none;
+    }
+
+    .subCategoryCardGrid {
+        gap: 6px;
+        grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+    }
+
+    .subCategoryCard .subCategoryCardImg {
+        height: 56px;
+        border-radius: 4px;
+    }
+
+    .subCategoryCard h3 {
+        margin-top: 4px;
+        font-size: 10px;
+    }
+
+    .homeSubcategoryCardSec .subCategoryCardGrid {
+        height: 264px;
+    }
+
+    .sellingSec {
+        padding: 16px 0;
+    }
+
+    .sellingSec .sectionTitle {
+        font-size: 20px;
+        margin-bottom: 16px;
+    }
+
+    .sectionTitle {
+        font-size: 20px;
+        margin-bottom: 16px;
+    }
+
+    .swiper-initialized {
+        margin: 0 0 32px;
+    }
+
+    .centerBannerSec {
+        padding: 16px 0;
+    }
+
+    .centerBannerGrid {
+
+        gap: 10px;
+    }
+
+    .centerBanner {
+        height: 73px;
+        border-radius: 4px;
+    }
+
+    .centerBannerLg {
+        height: 156px;
+        border-radius: 4px;
+    }
+
+    .centerBannerSmall {
+        gap: 10px;
+    }
+
+    .footerCardGrid {
+        padding: 16px 0;
+        gap: 8px;
+    }
+
+    .footerCard {
+        border-radius: 3px;
+        height: 54px;
+    }
+
+}
