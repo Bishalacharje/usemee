@@ -57,4 +57,8 @@
         font-weight: bold !important;
         color: red;
     }
+
+    .page-content {
+        padding: calc(70px + 24px) 0 60px;
+    }
 </style>

@@ -165,12 +165,27 @@
                 <div class="dropdown-menu dropdown-menu-end">
                     <!-- item-->
                     <a class="dropdown-item" href="#"><i class="ri-user-line align-middle me-1"></i> Profile</a>
-                    <a class="dropdown-item" href="#"><i class="ri-wallet-2-line align-middle me-1"></i> My
-                        Wallet</a>
-                    <a class="dropdown-item d-block" href="#"><span class="badge bg-success float-end mt-1">11</span><i
-                            class="ri-settings-2-line align-middle me-1"></i> Settings</a>
-                    <a class="dropdown-item" href="#"><i class="ri-lock-unlock-line align-middle me-1"></i> Lock
-                        screen</a>
+                    <!-- <a class="dropdown-item" href="#"><i class="ri-wallet-2-line align-middle me-1"></i> My
+                        Wallet</a> -->
+                    <a class="dropdown-item d-block" href="today_order.php">
+
+                        <?php
+                        $query = "SELECT * FROM `orders` WHERE `delivery` = '$delivery_id' AND `status`= 'Packed' AND DATE(`order_packed_date`) = CURDATE()";
+                        $data = mysqli_query($conn, $query);
+                        $total = mysqli_num_rows($data);
+
+                        if ($total > 0) {
+                            ?>
+                            <span class="badge bg-danger float-end mt-1"><?php echo $total; ?></span>
+                            <?php
+                        }
+                        ?>
+
+
+                        <i class="ri-shopping-cart-2-line align-middle me-1"></i> New Order</a>
+
+
+
                     <div class="dropdown-divider"></div>
                     <a class="dropdown-item text-danger" href="logout.php"><i
                             class="ri-shut-down-line align-middle me-1 text-danger"></i> Logout</a>
