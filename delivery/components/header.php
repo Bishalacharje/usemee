@@ -202,3 +202,33 @@
         </div>
     </div>
 </header>
+
+
+
+
+
+
+<!-- ---------------------------------------------------- Loading  section ------------------------- ------------ -->
+
+<section class="loadingSec">
+    <div class="loadingCon">
+        <div class="logo">
+            <img src="assets/images/logo-sm-white.png" alt="" />
+        </div>
+        <div class="loader">
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+    </div>
+</section>
+<script>
+    window.addEventListener("load", () => {
+        // Ensure at least 2 seconds before hiding loader
+        setTimeout(() => {
+            document.querySelector(".loadingSec").classList.add("hide");
+        }, 300);
+    });
+
+</script>
