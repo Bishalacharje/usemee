@@ -51,7 +51,7 @@
                         $total = mysqli_num_rows($data);
 
                         ?>
-                        <i class="ri-dashboard-line"></i>
+                        <i class="ri-shopping-cart-2-line"></i>
                         <?php
                         if ($total > 0) {
                             ?>
@@ -65,19 +65,19 @@
                 </li>
                 <li>
                     <a href="order.php" class="waves-effect">
-                        <i class="ri-dashboard-line"></i>
+                        <i class="ri-shopping-bag-3-line"></i>
                         <span>Order History</span>
                     </a>
                 </li>
                 <li>
                     <a href="today_cod.php" class="waves-effect">
-                        <i class="ri-dashboard-line"></i>
+                        <i class="ri-wallet-line"></i>
                         <span>COD Today</span>
                     </a>
                 </li>
                 <li>
                     <a href="cod.php" class="waves-effect">
-                        <i class="ri-dashboard-line"></i>
+                        <i class="ri-file-paper-2-line"></i>
                         <span>COD History</span>
                     </a>
                 </li>
