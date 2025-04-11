@@ -35,7 +35,7 @@ if (isset($_GET['fetch_sellers'])) {
 
 <head>
     <?php include("./components/headlink.php"); ?>
-    <title>Orders | Usemee</title>
+    <title>Orders | Delivery | Usemee</title>
 </head>
 
 <body data-topbar="dark">
@@ -70,7 +70,7 @@ if (isset($_GET['fetch_sellers'])) {
 
                                 <div class="page-title-right">
                                     <ol class="breadcrumb m-0">
-                                        <li class="breadcrumb-item"><a href="javascript: void(0);">Upcube</a></li>
+                                        <li class="breadcrumb-item"><a href="javascript: void(0);">Usemee</a></li>
                                         <li class="breadcrumb-item active">Orders</li>
                                     </ol>
                                 </div>
@@ -82,15 +82,11 @@ if (isset($_GET['fetch_sellers'])) {
                     <div class="row">
                         <div class="col-md-12">
                             <div class="card">
-                                <div class="card-header d-flex justify-content-between align-items-center">
-                                    <h5 class="mb-0 text-dark">Orders</h5>
 
-                                </div>
-                                <div class="card-body">
+                                <div class="card-body p-0">
 
-                                    <div class="table-con">
-                                        <table id="datatable-buttons"
-                                            class="table table-striped table-bordered dt-responsive nowrap"
+                                    <div class="table-con myTableCon">
+                                        <table id="" class="table table-striped table-bordered dt-responsive nowrap"
                                             style="border-collapse: collapse; border-spacing: 0; width: 100%;">
                                             <?php
                                             $query = "SELECT * FROM `orders` WHERE `delivery`= '$delivery_id'";
@@ -103,11 +99,8 @@ if (isset($_GET['fetch_sellers'])) {
                                                 <thead>
                                                     <tr>
                                                         <th> Order ID</th>
-                                                        <th>Name</th>
-                                                        <th>Phone</th>
-                                                        <th>Total Price</th>
-                                                        <th>Status</th>
                                                         <th>Products</th>
+                                                        <th>Status</th>
                                                         <th>Action</th>
                                                     </tr>
                                                 </thead>
@@ -122,10 +115,19 @@ if (isset($_GET['fetch_sellers'])) {
 
                                                         <tr>
                                                             <td>order2025<?php echo $result['id']; ?></td>
-                                                            <td><?php echo $result['name']; ?></td>
-                                                            <td><?php echo $result['phone']; ?></td>
+
                                                             <td>
-                                                                <h5><?php echo $result['total_price']; ?></h5>
+
+
+                                                                <button type="button"
+                                                                    class="btn btn-sm btn-dark waves-effect waves-light btn-sm viewOrderBtn"
+                                                                    data-id="<?php echo $result['id']; ?>"
+                                                                    data-status="<?php echo $result['status']; ?>"
+                                                                    data-bs-toggle="modal"
+                                                                    data-bs-target=".bs-example-modal-lg-view">
+                                                                    <i class="ri-eye-fill"></i>
+                                                                </button>
+
                                                             </td>
                                                             <td>
                                                                 <?php
@@ -166,40 +168,30 @@ if (isset($_GET['fetch_sellers'])) {
 
                                                             </td>
                                                             <td>
-
-
-                                                                <button type="button"
-                                                                    class="btn btn-dark waves-effect waves-light btn-sm viewOrderBtn"
-                                                                    data-id="<?php echo $result['id']; ?>"
-                                                                    data-status="<?php echo $result['status']; ?>"
-                                                                    data-bs-toggle="modal"
-                                                                    data-bs-target=".bs-example-modal-lg-view">
-                                                                    <i class="ri-eye-fill"></i>
-                                                                </button>
-
-                                                            </td>
-                                                            <td>
-                                                                <?php
-                                                                if ($result['status'] == 'Packed') {
-                                                                    ?>
-                                                                    <a href="<?php echo "out-for-delivery.php?id=$result[id]" ?>"
-                                                                        class="btn btn-sm btn-warning">Out for Delivery</a>
-
+                                                                <div style="width: 142px">
                                                                     <?php
-                                                                } else if ($result['status'] == 'Out for Delivery') {
+                                                                    if ($result['status'] == 'Packed') {
+                                                                        ?>
+                                                                        <a href="<?php echo "out-for-delivery.php?id=$result[id]" ?>"
+                                                                            class="btn btn-sm btn-warning">Out for Delivery</a>
+
+                                                                        <?php
+                                                                    } else if ($result['status'] == 'Out for Delivery') {
+                                                                        ?>
+                                                                            <a href="<?php echo "delivered.php?id=$result[id]" ?>"
+                                                                                class="btn btn-sm btn-success">Delivered</a>
+                                                                            <button type="button"
+                                                                                class="btn btn-danger btn-sm waves-effect waves-light btn-sm orderCancelledBtn"
+                                                                                data-id="<?php echo $result['id']; ?>"
+                                                                                data-bs-toggle="modal"
+                                                                                data-bs-target=".bs-example-modal-cancalled">
+                                                                                Cancel
+                                                                            </button>
+                                                                        <?php
+                                                                    }
                                                                     ?>
-                                                                        <a href="<?php echo "delivered.php?id=$result[id]" ?>"
-                                                                            class="btn btn-sm btn-success">Delivered</a>
-                                                                        <button type="button"
-                                                                            class="btn btn-danger btn-sm waves-effect waves-light btn-sm orderCancelledBtn"
-                                                                            data-id="<?php echo $result['id']; ?>"
-                                                                            data-bs-toggle="modal"
-                                                                            data-bs-target=".bs-example-modal-cancalled">
-                                                                            Cancel
-                                                                        </button>
-                                                                    <?php
-                                                                }
-                                                                ?>
+                                                                </div>
+
 
 
                                                             </td>
@@ -290,26 +282,33 @@ if (isset($_GET['fetch_sellers'])) {
                                             let order = data.order;
                                             let products = data.products;
                                             let hasUnassignedSeller = products.some(p => p.seller == 0);  // Check if any seller is unassigned
+                                            // Define status-to-class mapping
+                                            const statusClasses = {
+                                                'Delivered': 'bg-success',
+                                                'Confirmed': 'bg-info',
+                                                'Packed': 'bg-primary',
+                                                'Out for Delivery': 'bg-warning',
+                                                'Cancelled': 'bg-danger'
+                                            };
 
+                                            // Get status class, default to 'bg-secondary' if not found
+                                            let statusClass = statusClasses[order.status] || 'bg-secondary';
                                             let orderInfoHTML = `
-                            <h5>Customer Information</h5>
+
+                                            
+                            
+                           <p>
+                                <span class="badge rounded-pill ${statusClass}">${order.status}</span>
+                            </p>
+                                            <h5>Customer Information</h5>
                             <div class="row">
                                 <div class="col-md-6">
-                                
+                               
                                     <p><strong>Name:</strong> ${order.name}</p>
                                     <p><strong>Phone:</strong> ${order.phone}</p>
                                     <p><strong>Address:</strong> ${order.address} - ${order.pin}</p>
                                     <h5>Total Amount: <strong>₹${order.total_price}</strong></h5>
                                     
-                                </div>
-                                <div class="col-md-6">
-                                    
-                                    <p><strong>Order Date:</strong> ${order.order_date}</p>
-                                     <p><strong>Confirm Date:</strong> ${order.order_confirmed_date}</p>
-                                     <p><strong>Order Packed Date:</strong> ${order.order_packed_date}</p>
-                                      <p><strong>Out for Delivery Date:</strong> ${order.out_for_delivery_date}</p>
-                                       <p><strong>Delivered Date:</strong> ${order.delivered_date}</p>
-                                    <p><strong>Status:</strong> ${order.status}</p>
                                 </div>
                                  
                             </div>
@@ -318,22 +317,14 @@ if (isset($_GET['fetch_sellers'])) {
                             <table class="table table-bordered">
                                 <thead>
                                     <tr>
-                                        <th>Product Name</th>
-                                        <th>Variant</th>
-                                        <th>Quantity</th>
-                                        <th>Price</th>
-                                        <th>Total</th>
+                                        <th>Product </th>
                                         <th>Seller</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     ${products.map(p => `
-                                       <tr>
-                                            <td>${p.product_name}</td>
-                                            <td>${p.variant_name}</td>
-                                            <td>${p.quantity}</td>
-                                            <td>₹${p.price}</td>
-                                            <td>₹${p.quantity * p.price}</td>
+                                      <tr>
+                                            <td>${p.product_name} (${p.variant_name}) * ${p.quantity}</td>
                                             <td>
                                                 <h6 class="mb-0">${p.seller_name}</h6>
                                                ${p.seller_address}, 

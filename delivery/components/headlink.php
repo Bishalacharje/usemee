@@ -61,4 +61,32 @@
     .page-content {
         padding: calc(70px + 24px) 0 60px;
     }
+
+    .myTableCon {
+        overflow: auto;
+    }
+
+
+
+    @media (max-width: 700px) {
+        .loginCard {
+            height: 100vh;
+            border-radius: 0;
+        }
+
+        .loginCard .card-body {
+
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .wrapper-page {
+            margin: 0;
+        }
+
+        .auth-body-bg {
+            height: 100vh;
+        }
+    }
 </style>

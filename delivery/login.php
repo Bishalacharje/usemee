@@ -10,33 +10,33 @@ session_start();
 
 <head>
     <?php include("./components/headlink.php"); ?>
-    <title>Login | Stock Management</title>
+    <title>Login | Delivery | Usemee</title>
 </head>
 
 <body class="auth-body-bg">
     <div class="bg-overlay"></div>
     <div class="wrapper-page">
         <div class="container-fluid p-0">
-            <div class="card">
+            <div class="card loginCard">
                 <div class="card-body">
 
-                    <div class="text-center mt-4">
+                    <div class="text-center">
                         <div class="mb-3">
                             <a href="index.html" class="auth-logo">
-                                <img src="assets/images/logo-white.png" height="30" class="logo-dark mx-auto" alt="">
-                                <img src="assets/images/logo-white.png" height="30" class="logo-light mx-auto" alt="">
+                                <img src="assets/images/logo-white.png" height="24" class="logo-dark mx-auto" alt="">
+                                <img src="assets/images/logo-white.png" height="24" class="logo-light mx-auto" alt="">
                             </a>
                         </div>
                     </div>
 
-                    <h4 class="text-muted text-center font-size-18"><b>Delivery Boy Login</b></h4>
+                    <h5 class="text-dark text-center"><b>Delivery Boy Login</b></h5>
 
                     <div class="p-3">
                         <form class="form-horizontal mt-3" method="post">
 
                             <div class="form-group mb-3 row">
                                 <div class="col-12">
-                                    <input class="form-control" type="text" required="" name="email"
+                                    <input class="form-control" type="email" required="" name="email"
                                         placeholder="Email">
                                 </div>
                             </div>
