@@ -28,7 +28,7 @@ document.addEventListener('DOMContentLoaded', function() {
         if (result.isConfirmed) {
             window.location.href = 'delivered.php?confirm_update=1&id=$id';
         } else {
-            window.location.href = 'order.php';
+            window.location.href = 'today_order.php?status=Out for Delivery';
         }
     });
 });
@@ -48,7 +48,7 @@ if (isset($_GET['confirm_update']) && $_GET['confirm_update'] == 1) {
             showConfirmButton: false,
             timer: 2000
         }).then(() => {
-            window.location.href = 'order.php';
+            window.location.href = 'today_order.php?status=Out for Delivery';
         });
     });
     </script>";

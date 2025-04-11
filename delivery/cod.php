@@ -11,7 +11,7 @@ include("checked-login.php");
 
 <head>
     <?php include("./components/headlink.php"); ?>
-    <title>Orders | Usemee</title>
+    <title>COD History | Delivery | Usemee</title>
 </head>
 
 <body data-topbar="dark">
@@ -39,7 +39,7 @@ include("checked-login.php");
 
                                 <div class="page-title-right">
                                     <ol class="breadcrumb m-0">
-                                        <li class="breadcrumb-item"><a href="javascript:void(0);">Upcube</a></li>
+                                        <li class="breadcrumb-item"><a href="javascript:void(0);">Usemee</a></li>
                                         <li class="breadcrumb-item active">COD History</li>
                                     </ol>
                                 </div>
@@ -84,8 +84,8 @@ include("checked-login.php");
                                             <h4 class="mb-2"><?php echo $total_cod_amount; ?></h4>
                                         </div>
                                         <div class="avatar-sm">
-                                            <span class="avatar-title bg-light text-primary rounded-3">
-                                                <i class="ri-shopping-cart-2-line font-size-24"></i>
+                                            <span class="avatar-title bg-light text-info rounded-3">
+                                                <i class="ri-file-paper-2-line font-size-24"></i>
                                             </span>
                                         </div>
                                     </div>
@@ -97,14 +97,12 @@ include("checked-login.php");
                     <!-- Order List -->
                     <div class="row">
                         <div class="col-md-12">
+                            <h6>All Date</h6>
                             <div class="card">
-                                <div class="card-header d-flex justify-content-between align-items-center">
-                                    <h5 class="mb-0 text-dark">Total COD</h5>
-                                </div>
-                                <div class="card-body">
-                                    <div class="table-con">
-                                        <table id="alternative-page-datatable"
-                                            class="table table-striped table-bordered dt-responsive nowrap"
+
+                                <div class="card-body p-0">
+                                    <div class="table-con myTableCon">
+                                        <table id="" class="table table-striped table-bordered dt-responsive nowrap"
                                             style="border-collapse: collapse; border-spacing: 0; width: 100%;">
 
                                             <?php

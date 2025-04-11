@@ -19,7 +19,7 @@ $selected_status = isset($_GET['status']) ? $_GET['status'] : 'Packed';
 
 <head>
     <?php include("./components/headlink.php"); ?>
-    <title>Orders | Usemee</title>
+    <title>Today Order | Delivery | Usemee</title>
 </head>
 
 <body data-topbar="dark">
@@ -50,12 +50,12 @@ $selected_status = isset($_GET['status']) ? $_GET['status'] : 'Packed';
                     <div class="row">
                         <div class="col-12">
                             <div class="page-title-box d-sm-flex align-items-center justify-content-between">
-                                <h4 class="mb-sm-0">Orders</h4>
+                                <h4 class="mb-sm-0">Today Orders</h4>
 
                                 <div class="page-title-right">
                                     <ol class="breadcrumb m-0">
-                                        <li class="breadcrumb-item"><a href="javascript: void(0);">Upcube</a></li>
-                                        <li class="breadcrumb-item active">Orders</li>
+                                        <li class="breadcrumb-item"><a href="javascript: void(0);">Usemee</a></li>
+                                        <li class="breadcrumb-item active">Today Orders</li>
                                     </ol>
                                 </div>
 
@@ -66,28 +66,27 @@ $selected_status = isset($_GET['status']) ? $_GET['status'] : 'Packed';
                     <div class="row mb-3">
                         <div class="col-md-12">
                             <a href="?status=Packed"
-                                class="btn btn-<?php echo ($selected_status == 'Packed') ? 'primary' : 'white'; ?>">Packed</a>
+                                class="btn btn-sm btn-<?php echo ($selected_status == 'Packed') ? 'primary' : 'white'; ?>">Packed</a>
                             <a href="?status=Out for Delivery"
-                                class="btn btn-<?php echo ($selected_status == 'Out for Delivery') ? 'warning' : 'white'; ?>">Out
+                                class="btn btn-sm btn-<?php echo ($selected_status == 'Out for Delivery') ? 'warning' : 'white'; ?>">Out
                                 for Delivery</a>
                             <a href="?status=Delivered"
-                                class="btn btn-<?php echo ($selected_status == 'Delivered') ? 'success' : 'white'; ?>">Delivered</a>
+                                class="btn btn-sm btn-<?php echo ($selected_status == 'Delivered') ? 'success' : 'white'; ?>">Delivered</a>
                             <a href="?status=Cancelled"
-                                class="btn btn-<?php echo ($selected_status == 'Cancelled') ? 'danger' : 'white'; ?>">Cancelled</a>
+                                class="btn btn-sm btn-<?php echo ($selected_status == 'Cancelled') ? 'danger' : 'white'; ?>">Cancelled</a>
                         </div>
                     </div>
 
                     <!-- Order List -->
                     <div class="row">
                         <div class="col-md-12">
+                            <h6><?php echo $selected_status; ?> Orders</h6>
                             <div class="card">
-                                <div class="card-header d-flex justify-content-between align-items-center">
-                                    <h5 class="mb-0 text-dark"><?php echo $selected_status; ?> Orders</h5>
-                                </div>
-                                <div class="card-body">
-                                    <div class="table-con">
-                                        <table id="alternative-page-datatable"
-                                            class="table table-striped table-bordered dt-responsive nowrap"
+
+
+                                <div class="card-body p-0">
+                                    <div class="table-con myTableCon">
+                                        <table id="" class="table table-striped table-bordered dt-responsive nowrap"
                                             style="border-collapse: collapse; border-spacing: 0; width: 100%;">
 
                                             <?php
@@ -102,11 +101,9 @@ $selected_status = isset($_GET['status']) ? $_GET['status'] : 'Packed';
                                                     <tr>
                                                         <th>Order ID</th>
                                                         <th>Products</th>
-                                                        <th>Name</th>
-                                                        <th>Phone</th>
-                                                        <th>Total Price</th>
                                                         <th>Status</th>
                                                         <th>Action</th>
+
                                                     </tr>
                                                 </thead>
 
@@ -116,7 +113,7 @@ $selected_status = isset($_GET['status']) ? $_GET['status'] : 'Packed';
                                                             <td>order2025<?php echo $result['id']; ?></td>
                                                             <td>
                                                                 <button type="button"
-                                                                    class="btn btn-dark waves-effect waves-light btn-sm viewOrderBtn"
+                                                                    class="btn btn-sm btn-dark waves-effect waves-light btn-sm viewOrderBtn"
                                                                     data-id="<?php echo $result['id']; ?>"
                                                                     data-status="<?php echo $result['status']; ?>"
                                                                     data-bs-toggle="modal"
@@ -124,11 +121,7 @@ $selected_status = isset($_GET['status']) ? $_GET['status'] : 'Packed';
                                                                     <i class="ri-eye-fill"></i>
                                                                 </button>
                                                             </td>
-                                                            <td><?php echo $result['name']; ?></td>
-                                                            <td><?php echo $result['phone']; ?></td>
-                                                            <td>
-                                                                <h5><?php echo $result['total_price']; ?></h5>
-                                                            </td>
+
                                                             <td>
                                                                 <span class="badge rounded-pill bg-<?php
                                                                 echo ($result['status'] == 'Delivered') ? 'success' :
@@ -139,33 +132,36 @@ $selected_status = isset($_GET['status']) ? $_GET['status'] : 'Packed';
                                                                 ?> float-end"><?php echo $result['status']; ?></span>
                                                             </td>
                                                             <td>
-                                                                <?php
-                                                                if ($result['status'] == 'Packed') {
-                                                                    ?>
-                                                                    <a href="<?php echo "out-for-delivery.php?id=$result[id]" ?>"
-                                                                        class="btn btn-sm btn-warning">Out for Delivery</a>
+                                                                <div style="width: 142px">
                                                                     <?php
-                                                                } else if ($result['status'] == 'Out for Delivery') {
+                                                                    if ($result['status'] == 'Packed') {
+                                                                        ?>
+                                                                        <a href="<?php echo "out-for-delivery.php?id=$result[id]" ?>"
+                                                                            class="btn btn-sm btn-warning">Out for Delivery</a>
+                                                                        <?php
+                                                                    } else if ($result['status'] == 'Out for Delivery') {
+                                                                        ?>
+                                                                            <a href="<?php echo "delivered.php?id=$result[id]" ?>"
+                                                                                class="btn btn-sm btn-success">Delivered</a>
+                                                                            <button type="button"
+                                                                                class="btn btn-danger btn-sm waves-effect waves-light btn-sm orderCancelledBtn"
+                                                                                data-id="<?php echo $result['id']; ?>"
+                                                                                data-bs-toggle="modal"
+                                                                                data-bs-target=".bs-example-modal-cancalled">
+                                                                                Cancel
+                                                                            </button>
+                                                                        <?php
+                                                                    }
                                                                     ?>
-                                                                        <a href="<?php echo "delivered.php?id=$result[id]" ?>"
-                                                                            class="btn btn-sm btn-success">Delivered</a>
-                                                                        <button type="button"
-                                                                            class="btn btn-danger btn-sm waves-effect waves-light btn-sm orderCancelledBtn"
-                                                                            data-id="<?php echo $result['id']; ?>"
-                                                                            data-bs-toggle="modal"
-                                                                            data-bs-target=".bs-example-modal-cancalled">
-                                                                            Cancel
-                                                                        </button>
-                                                                    <?php
-                                                                }
-                                                                ?>
+                                                                </div>
+
                                                             </td>
                                                         </tr>
                                                     <?php } ?>
                                                 </tbody>
                                                 <?php
                                             } else {
-                                                echo "<tr><td colspan='7' class='text-center'>No orders found</td></tr>";
+                                                echo "<tr><td colspan='7' class='text-center'>No orders found today</td></tr>";
                                             }
                                             ?>
                                         </table>
@@ -243,8 +239,22 @@ $selected_status = isset($_GET['status']) ? $_GET['status'] : 'Packed';
                                             let products = data.products;
                                             let hasUnassignedSeller = products.some(p => p.seller == 0);  // Check if any seller is unassigned
 
+                                            // Define status-to-class mapping
+                                            const statusClasses = {
+                                                'Delivered': 'bg-success',
+                                                'Confirmed': 'bg-info',
+                                                'Packed': 'bg-primary',
+                                                'Out for Delivery': 'bg-warning',
+                                                'Cancelled': 'bg-danger'
+                                            };
+
+                                            // Get status class, default to 'bg-secondary' if not found
+                                            let statusClass = statusClasses[order.status] || 'bg-secondary';
                                             let orderInfoHTML = `
-                            <h5>Customer Information</h5>
+                             <p>
+                                <span class="badge rounded-pill ${statusClass}">${order.status}</span>
+                            </p>
+                                            <h5>Customer Information</h5>
                             <div class="row">
                                 <div class="col-md-6">
                                 
@@ -408,7 +418,7 @@ $selected_status = isset($_GET['status']) ? $_GET['status'] : 'Packed';
             showConfirmButton: false,
             timer: 2000
         }).then(() => {
-            window.location.href = 'order.php'; 
+            window.location.href = 'today_order.php?status=Out for Delivery'; 
         });
         </script>";
                                     } else {

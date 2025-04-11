@@ -11,7 +11,7 @@ include("checked-login.php");
 
 <head>
     <?php include("./components/headlink.php"); ?>
-    <title>Dashboard | Usemee</title>
+    <title> Delivery | Usemee</title>
 </head>
 
 <body data-topbar="dark">
@@ -162,7 +162,9 @@ include("checked-login.php");
 
                                         <h3><?php echo $delivery_name; ?></h3>
                                         <p class="my-2"><?php echo $delivery_email; ?></p>
-                                        <p class="m-0 mb-4"><?php echo $delivery_phone; ?></p>
+                                        <p class="m-0 mb-3"><?php echo $delivery_phone; ?></p>
+
+                                        <a href="profile.php" class="btn btn-sm btn-dark btn-rounded waves-effect waves-light mb-4">Profile</a>
                                     </center>
 
                                 </div>
