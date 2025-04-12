@@ -33,7 +33,7 @@ session_start();
                             <input type="number" required="" name="phone" placeholder="Phone Number*">
                         </div>
                         <div>
-                            <input type="text" required="" name="email" placeholder="Email*">
+                            <input type="email" required="" name="email" placeholder="Email*">
                         </div>
                         <div>
                             <input type="password" required="" name="password" placeholder="Password">
@@ -42,9 +42,8 @@ session_start();
 
 
                             <input type="checkbox" id="c1" required>
-                            <label for="c1"> I consent to Herboil processing my
-                                personal data in order to send personalized marketing material in accordance with the
-                                consent form and the privacy policy.</label>
+                            <label for="c1"> I consent to Usemee processing my personal data to send me personalized marketing content, 
+                                in accordance with the consent form and privacy policy.</label>
                         </div>
                         <div class="chekboxCon">
                             <input type="checkbox" id="c2" required>
@@ -55,9 +54,6 @@ session_start();
                         <button class="btn btn-info w-100 waves-effect waves-light" name="submit" type="submit">Sign
                             Up</button>
                     </div>
-
-
-
 
                 </form>
                 <div class="signUpFooter">
@@ -75,8 +71,6 @@ session_start();
         </div>
     </section>
 
-
-
     <?php
     if (isset($_POST['submit'])) {
         // Sanitize input data
@@ -84,14 +78,46 @@ session_start();
         $phone = htmlspecialchars(mysqli_real_escape_string($conn, $_POST['phone']));
         $email = htmlspecialchars(mysqli_real_escape_string($conn, $_POST['email']));
         $password = htmlspecialchars(mysqli_real_escape_string($conn, $_POST['password']));
+        // Password_validation
+        $uppercase = preg_match('@[A-Z]@', $password);
+        $lowercase = preg_match('@[a-z]@', $password);
+        $number    = preg_match('@[0-9]@', $password);
+        $specialChars = preg_match('@[^\w]@', $password);
+        $minLength = strlen($password) >= 8;
 
+        $errors = [];
 
+        if (!$uppercase) {
+            $errors[] = "• Password must include at least one uppercase letter.";
+        }
+        if (!$lowercase) {
+            $errors[] = "• Password must include at least one lowercase letter.";
+        }
+        if (!$number) {
+            $errors[] = "• Password must include at least one number.";
+        }
+        if (!$specialChars) {
+            $errors[] = "• Password must include at least one special character.";
+        }
+        if (!$minLength) {
+            $errors[] = "• Password must be at least 8 characters long.";
+        }
+
+        if (!empty($errors)) {
+            $errorMessage = implode("<br>", $errors);
+            echo "<script src='https://cdn.jsdelivr.net/npm/sweetalert2@11'></script>";
+            echo "<script>
+                Swal.fire({
+                    icon: 'warning',
+                    title: 'Weak Password',
+                    html: '$errorMessage'
+                });
+            </script>";
+            exit;
+        }
 
         // Hash the password
         $hashedPassword = password_hash($password, PASSWORD_BCRYPT);
-
-
-
 
         // Insert data into the database
         $query2 = "INSERT INTO `user`(`name`, `phone`, `email`, `password`) VALUES ('$name','$phone','$email','$hashedPassword')";

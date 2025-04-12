@@ -77,8 +77,6 @@ include("checked-login.php");
                     <?php
                     if (isset($_POST['updateAccount'])) {
 
-
-
                         // Sanitize input
                         $id = $_POST['uid'];
                         $name = htmlspecialchars(mysqli_real_escape_string($conn, $_POST['name']));
@@ -96,27 +94,27 @@ include("checked-login.php");
                         if ($data2) {
                             echo "<script src='https://cdn.jsdelivr.net/npm/sweetalert2@11'></script>";
                             echo "<script>
-            Swal.fire({
-                title: 'Success!',
-                text: 'Profile Updated.',
-                icon: 'success',
-                showConfirmButton: false,
-                timer: 2000 
-            }).then(() => {
-                window.location.href = 'logout.php'; 
-            });
-        </script>";
+                                Swal.fire({
+                                    title: 'Success!',
+                                    text: 'Profile Updated.',
+                                    icon: 'success',
+                                    showConfirmButton: false,
+                                    timer: 2000 
+                                }).then(() => {
+                                    window.location.href = 'logout.php'; 
+                                });
+                            </script>";
                         } else {
                             // Error alert
                             echo "<script src='https://cdn.jsdelivr.net/npm/sweetalert2@11'></script>";
                             echo "<script>
-            Swal.fire({
-                title: 'Error!',
-                text: 'Failed. Please try again.',
-                icon: 'error',
-                confirmButtonText: 'OK'
-            });
-        </script>";
+                            Swal.fire({
+                                title: 'Error!',
+                                text: 'Failed. Please try again.',
+                                icon: 'error',
+                                confirmButtonText: 'OK'
+                            });
+                        </script>";
                         }
 
                         // Flush output buffer
@@ -148,6 +146,44 @@ include("checked-login.php");
                             // Sanitize input
                             $id = $_POST['uid'];
                             $password = htmlspecialchars(mysqli_real_escape_string($conn, $_POST['password']));
+                            // Password_validation
+                            $uppercase = preg_match('@[A-Z]@', $password);
+                            $lowercase = preg_match('@[a-z]@', $password);
+                            $number    = preg_match('@[0-9]@', $password);
+                            $specialChars = preg_match('@[^\w]@', $password);
+                            $minLength = strlen($password) >= 8;
+
+                            $errors = [];
+
+                            if (!$uppercase) {
+                                $errors[] = "• Password must include at least one uppercase letter.";
+                            }
+                            if (!$lowercase) {
+                                $errors[] = "• Password must include at least one lowercase letter.";
+                            }
+                            if (!$number) {
+                                $errors[] = "• Password must include at least one number.";
+                            }
+                            if (!$specialChars) {
+                                $errors[] = "• Password must include at least one special character.";
+                            }
+                            if (!$minLength) {
+                                $errors[] = "• Password must be at least 8 characters long.";
+                            }
+
+                            if (!empty($errors)) {
+                                $errorMessage = implode("<br>", $errors);
+                                echo "<script src='https://cdn.jsdelivr.net/npm/sweetalert2@11'></script>";
+                                echo "<script>
+                                    Swal.fire({
+                                        icon: 'warning',
+                                        title: 'Weak Password',
+                                        html: '$errorMessage'
+                                    });
+                                </script>";
+                                exit;
+                            }
+
                             // Hash the password
                             $hashedPassword = password_hash($password, PASSWORD_BCRYPT);
 
@@ -162,27 +198,28 @@ include("checked-login.php");
                             if ($data2) {
                                 echo "<script src='https://cdn.jsdelivr.net/npm/sweetalert2@11'></script>";
                                 echo "<script>
-            Swal.fire({
-                title: 'Success!',
-                text: 'Password Updated.',
-                icon: 'success',
-                showConfirmButton: false,
-                timer: 2000 
-            }).then(() => {
-                window.location.href = 'logout.php'; 
-            });
-        </script>";
-                            } else {
+                                Swal.fire({
+                                    title: 'Success!',
+                                    text: 'Password Updated.',
+                                    icon: 'success',
+                                    showConfirmButton: false,
+                                    timer: 2000 
+                                }).then(() => {
+                                    window.location.href = 'logout.php'; 
+                                });
+                            </script>";
+                            }
+                            else {
                                 // Error alert
                                 echo "<script src='https://cdn.jsdelivr.net/npm/sweetalert2@11'></script>";
                                 echo "<script>
-            Swal.fire({
-                title: 'Error!',
-                text: 'Failed. Please try again.',
-                icon: 'error',
-                confirmButtonText: 'OK'
-            });
-        </script>";
+                                Swal.fire({
+                                    title: 'Error!',
+                                    text: 'Failed. Please try again.',
+                                    icon: 'error',
+                                    confirmButtonText: 'OK'
+                                });
+                            </script>";
                             }
 
                             // Flush output buffer
