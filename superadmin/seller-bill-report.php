@@ -145,7 +145,10 @@ while ($result2 = mysqli_fetch_assoc($data)) {
                                                             <td><?php echo number_format($result2['price'], 2); ?></td>
                                                             <td><?php echo $result2['quantity']; ?></td>
                                                             <td><?php echo number_format($row_total, 2); ?></td>
+
                                                         </tr>
+
+
                                                     <?php } ?>
                                                 <?php } else { ?>
                                                     <tr>

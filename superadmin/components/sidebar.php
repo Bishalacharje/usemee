@@ -2,23 +2,13 @@
 
     <div data-simplebar class="h-100">
 
-        <!-- User details -->
-        <div class="user-profile text-center mt-3">
-            <div class="">
-                <img src="assets/images/users/user.png" alt="" class="avatar-md rounded-circle">
-            </div>
-            <div class="mt-3">
-                <h4 class="font-size-16 mb-1"><?php echo "$admin_name" ?></h4>
-                <span class="text-muted"><i class="ri-record-circle-line align-middle font-size-14 text-success"></i>
-                    Online</span>
-            </div>
-        </div>
+
 
         <!--- Sidemenu -->
         <div id="sidebar-menu">
             <!-- Left Menu Start -->
             <ul class="metismenu list-unstyled" id="side-menu">
-                <li class="menu-title">Menu</li>
+
 
                 <li>
                     <a href="index.php" class="waves-effect">
@@ -72,29 +62,27 @@
                         <li><a href="cod.php">COD History</a></li>
                     </ul>
                 </li>
-                <li class="menu-title">Seller</li>
                 <li>
-                    <a href="seller.php" class="waves-effect">
-                        <i class="ri-dashboard-line"></i>
+                    <a href="javascript: void(0);" class="has-arrow waves-effect">
+                        <i class="ri-shopping-bag-line"></i>
                         <span>Seller</span>
                     </a>
+                    <ul class="sub-menu" aria-expanded="false">
+                        <li><a href="seller.php">Seller Report</a></li>
+                        <li><a href="seller_wallet.php">Seller Wallet</a></li>
+                    </ul>
                 </li>
                 <li>
                     <a href="wallet.php" class="waves-effect">
                         <i class="ri-dashboard-line"></i>
-                        <span>Wallet</span>
+                        <span>Admin Wallet</span>
                     </a>
                 </li>
 
 
 
                 <li class="menu-title">CMS</li>
-                <li>
-                    <a href="seller.php" class="waves-effect">
-                        <i class="ri-dashboard-line"></i>
-                        <span>Seller</span>
-                    </a>
-                </li>
+
 
 
 
