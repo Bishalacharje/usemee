@@ -24,6 +24,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
             // If OTP is valid and not expired
             if ($current_time < $expiry_time) {
+                $_SESSION['email'] = $email;
                 // Redirect to the home screen after successful OTP verification
                 header("Location: index.php"); // Adjust the home page URL accordingly
                 exit();
@@ -42,15 +43,19 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 <!-- HTML Form -->
 <!DOCTYPE html>
 <html>
+
 <head>
     <title>Verify OTP</title>
 </head>
+
 <body>
     <h2>Verify OTP</h2>
     <form method="post">
         <input type="text" name="otp" placeholder="Enter the OTP" required>
         <button type="submit">Verify OTP</button>
     </form>
-    <?php if (isset($error)) echo "<p style='color:red;'>$error</p>"; ?>
+    <?php if (isset($error))
+        echo "<p style='color:red;'>$error</p>"; ?>
 </body>
+
 </html>
