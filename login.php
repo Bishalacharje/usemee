@@ -48,6 +48,9 @@ session_start();
                                 <button class="btn btn-info w-100 waves-effect waves-light" name="submit"
                                     type="submit">Log
                                     In</button>
+                                    <p style="text-align: center; margin-top: 10px;">
+                                    <a href="forgot_password.php">Forgot Password?</a>
+                                </p>
                             </div>
                         </div>
 
