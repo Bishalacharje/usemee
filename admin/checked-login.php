@@ -1,7 +1,7 @@
 <?php
 
-$_SESSION['email'];
-$sprofile = $_SESSION['email'];
+$_SESSION['admin_email'];
+$sprofile = $_SESSION['admin_email'];
 
 if ($sprofile == true) {
     $queryadmin = "SELECT * FROM `admin` WHERE email ='$sprofile'";

@@ -90,7 +90,7 @@ session_start();
                                 // Use password_verify() to check if the entered password matches the hashed password
                                 if (password_verify($password, $row['password'])) {
                                     // Password is correct, set the session and redirect
-                                    $_SESSION['email'] = $email;
+                                    $_SESSION['delivery_email'] = $email;
                                     echo "<script src='https://cdn.jsdelivr.net/npm/sweetalert2@11'></script>";
                                     echo "<script>
 Swal.fire({

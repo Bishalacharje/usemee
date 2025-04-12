@@ -1,7 +1,7 @@
 <?php
 
-$_SESSION['email'];
-$sprofile = $_SESSION['email'];
+$_SESSION['delivery_email'];
+$sprofile = $_SESSION['delivery_email'];
 
 if ($sprofile == true) {
     $queryadmin = "SELECT * FROM `delivery` WHERE email ='$sprofile'";
