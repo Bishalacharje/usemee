@@ -65,7 +65,6 @@ include("checked-login.php");
                                         Admin</button>
                                 </div>
                                 <div class="card-body">
-
                                     <div class="table-con">
                                         <table id="datatable-buttons"
                                             class="table table-striped table-bordered dt-responsive nowrap"
@@ -74,7 +73,6 @@ include("checked-login.php");
                                             $query = "SELECT * FROM `admin`";
                                             $data = mysqli_query($conn, $query);
                                             $total = mysqli_num_rows($data);
-
 
                                             if ($total != 0) {
                                                 ?>
@@ -128,8 +126,8 @@ include("checked-login.php");
                                                                 </button>
 
                                                                 <a href="<?php echo "delete-admin.php?id=$result[id]" ?>"
-                                                                    class="btn btn-danger btn-sm"> <i
-                                                                        class="ri-delete-bin-fill"></i> </a>
+                                                                class="btn btn-danger btn-sm"> <i
+                                                                class="ri-delete-bin-fill"></i> </a>
                                                             </td>
                                                         </tr>
                                                         <?php
@@ -148,13 +146,6 @@ include("checked-login.php");
                             </div>
                         </div>
                     </div>
-
-
-
-
-
-
-
 
                     <!--  Modal content for add admin -->
                     <div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog"
@@ -236,8 +227,6 @@ include("checked-login.php");
                                                     </div>
                                                 </div>
                                             </div>
-
-
                                         </div>
 
                                         <div>
@@ -255,11 +244,46 @@ include("checked-login.php");
                                         $email = htmlspecialchars(mysqli_real_escape_string($conn, $_POST['email']));
                                         $password = htmlspecialchars(mysqli_real_escape_string($conn, $_POST['password']));
 
+                                         // Password_validation
+                                        // $uppercase = preg_match('@[A-Z]@', $password);
+                                        $lowercase = preg_match('@[a-z]@', $password);
+                                        $number    = preg_match('@[0-9]@', $password);
+                                        $specialChars = preg_match('@[^\w]@', $password);
+                                        $minLength = strlen($password) >= 8;
+
+                                        $errors = [];
+
+                                        // if (!$uppercase) {
+                                        //     $errors[] = "• Password must include at least one uppercase letter.";
+                                        // }
+                                        if (!$lowercase) {
+                                            $errors[] = "• Password must include at least one lowercase letter.";
+                                        }
+                                        if (!$number) {
+                                            $errors[] = "• Password must include at least one number.";
+                                        }
+                                        if (!$specialChars) {
+                                            $errors[] = "• Password must include at least one special character.";
+                                        }
+                                        if (!$minLength) {
+                                            $errors[] = "• Password must be at least 8 characters long.";
+                                        }
+
+                                        if (!empty($errors)) {
+                                            $errorMessage = implode("<br>", $errors);
+                                            echo "<script src='https://cdn.jsdelivr.net/npm/sweetalert2@11'></script>";
+                                            echo "<script>
+                                                Swal.fire({
+                                                    icon: 'warning',
+                                                    title: 'Weak Password',
+                                                    html: '$errorMessage'
+                                                });
+                                            </script>";
+                                            exit;
+                                        }
+
                                         // Hash the password
                                         $hashedPassword = password_hash($password, PASSWORD_BCRYPT);
-
-
-
 
                                         // Insert data into the database
                                         $query2 = "INSERT INTO `admin`(`name`, `phone`, `zone`, `email`, `password`) VALUES ('$aname','$phone','$zone','$email','$hashedPassword')";
@@ -272,43 +296,37 @@ include("checked-login.php");
                                             // SweetAlert for successful creation
                                             echo "<script src='https://cdn.jsdelivr.net/npm/sweetalert2@11'></script>";
                                             echo "<script>
-                Swal.fire({
-                    icon: 'success',
-                    title: 'Success',
-                    text: 'Admin Created',
-                    showConfirmButton: false,
-                    timer: 2000 // Auto close after 2 seconds
-                }).then(() => {
-                    window.location.href = 'admin.php'; // Redirect after the alert
-                });
-              </script>";
+                                            Swal.fire({
+                                            icon: 'success',
+                                            title: 'Success',
+                                            text: 'Admin Created',
+                                            showConfirmButton: false,
+                                            timer: 2000 // Auto close after 2 seconds
+                                            }).then(() => {
+                                            window.location.href = 'admin.php'; // Redirect after the alert
+                                            });
+                                        </script>";
                                         } else {
                                             // Output error with SweetAlert
                                             $errorMessage = mysqli_error($conn); // Capture the MySQL error
                                             echo "<script>
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Error',
-                    text: 'Failed to create admin. Error: $errorMessage',
-                    confirmButtonText: 'OK'
-                });
-              </script>";
+                                            Swal.fire({
+                                            icon: 'error',
+                                            title: 'Error',
+                                            text: 'Failed to create admin. Error: $errorMessage',
+                                            confirmButtonText: 'OK'
+                                            });
+                                            </script>";
                                         }
-
                                         // Close the database connection
                                         mysqli_close($conn);
                                     }
+
                                     ?>
-
-
-
                                 </div>
                             </div><!-- /.modal-content -->
                         </div><!-- /.modal-dialog -->
                     </div><!-- /.modal -->
-
-
-
 
                     <!--  Modal content for edit admin -->
                     <div class="modal fade bs-example-modal-lg-edit" tabindex="-1" role="dialog"

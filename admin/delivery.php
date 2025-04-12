@@ -1,8 +1,5 @@
 <?php include("../connection.php"); session_start(); include("checked-login.php"); ?>
 
-
-
-
     <!doctype html>
     <html lang="en">
 
@@ -17,7 +14,6 @@
 
         <!-- Begin page -->
         <div id="layout-wrapper">
-
 
             <?php include("./components/header.php"); ?>
 
@@ -77,11 +73,11 @@
                                                     ?>
                                                     <thead>
                                                         <tr>
-                                                            <th>Name</th>
-                                                            <th>Phone</th>
-                                                            <th>Email</th>
-                                                            <!-- <th>Category Description</th> -->
-                                                            <th>Action</th>
+                                                        <th>Name</th>
+                                                        <th>Phone</th>
+                                                        <th>Email</th>
+                                                        <!-- <th>Category Description</th> -->
+                                                        <th>Action</th>
                                                         </tr>
                                                     </thead>
 
@@ -90,9 +86,6 @@
                                                         <?php
 
                                                         while ($result = mysqli_fetch_assoc($data)) { ?>
-
-
-
 
                                                             <tr>
                                                                 <td><?php echo $result['name']; ?></td>
@@ -146,8 +139,6 @@
                                                 } else {
                                                     echo "No Delivery Boy found";
                                                 }
-
-
                                                 ?>
                                                 </tbody>
                                             </table>
@@ -157,13 +148,6 @@
                                 </div>
                             </div>
                         </div>
-
-
-
-
-
-
-
 
                         <!--  Modal content for add delivery boy -->
                         <div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog"
@@ -228,35 +212,67 @@
                                                     </div>
                                                 </div>
                                                 <input type="hidden" class="form-control"
-                                                    value="<?php echo $admin_zone; ?>" name="zone" readonly>
-
-
+                                                value="<?php echo $admin_zone; ?>" name="zone" readonly>
 
                                             </div>
 
                                             <div>
                                                 <button class="btn btn-dark" type="submit" name="submit">Add
-                                                    Delivery Boy</button>
+                                                Delivery Boy</button>
                                             </div>
                                         </form>
 
                                         <?php
                                         if (isset($_POST['submit'])) {
 
+                                        // Sanitize input
+                                        $name = htmlspecialchars(mysqli_real_escape_string($conn, $_POST['name']));
+                                        $phone = htmlspecialchars(mysqli_real_escape_string($conn, $_POST['phone']));
+                                        $zone = htmlspecialchars(mysqli_real_escape_string($conn, $_POST['zone']));
 
+                                        $email = htmlspecialchars(mysqli_real_escape_string($conn, $_POST['email']));
+                                        $password = htmlspecialchars(mysqli_real_escape_string($conn, $_POST['password']));
 
-                                            // Sanitize input
-                                        
-                                            $name = htmlspecialchars(mysqli_real_escape_string($conn, $_POST['name']));
-                                            $phone = htmlspecialchars(mysqli_real_escape_string($conn, $_POST['phone']));
-                                            $zone = htmlspecialchars(mysqli_real_escape_string($conn, $_POST['zone']));
+                                        // Password_validation
+                                        // $uppercase = preg_match('@[A-Z]@', $password);
+                                        $lowercase = preg_match('@[a-z]@', $password);
+                                        $number    = preg_match('@[0-9]@', $password);
+                                        $specialChars = preg_match('@[^\w]@', $password);
+                                        $minLength = strlen($password) >= 8;
 
-                                            $email = htmlspecialchars(mysqli_real_escape_string($conn, $_POST['email']));
-                                            $password = htmlspecialchars(mysqli_real_escape_string($conn, $_POST['password']));
+                                        $errors = [];
+
+                                        // if (!$uppercase) {
+                                        //     $errors[] = "• Password must include at least one uppercase letter.";
+                                        // }
+                                        if (!$lowercase) {
+                                            $errors[] = "• Password must include at least one lowercase letter.";
+                                        }
+                                        if (!$number) {
+                                            $errors[] = "• Password must include at least one number.";
+                                        }
+                                        if (!$specialChars) {
+                                            $errors[] = "• Password must include at least one special character.";
+                                        }
+                                        if (!$minLength) {
+                                            $errors[] = "• Password must be at least 8 characters long.";
+                                        }
+
+                                        if (!empty($errors)) {
+                                            $errorMessage = implode("<br>", $errors);
+                                            echo "<script src='https://cdn.jsdelivr.net/npm/sweetalert2@11'></script>";
+                                            echo "<script>
+                                                Swal.fire({
+                                                    icon: 'warning',
+                                                    title: 'Weak Password',
+                                                    html: '$errorMessage'
+                                                });
+                                            </script>";
+                                            exit;
+                                        }
 
                                             // Hash the password
                                             $hashedPassword = password_hash($password, PASSWORD_BCRYPT);
-
 
                                             // Insert query
                                             $query2 = "INSERT INTO `delivery`(`name`, `phone`, `zone`, `email`, `password`) VALUES ('$name', '$phone', '$zone', '$email', '$hashedPassword')";
@@ -271,27 +287,27 @@
                                             if ($data2) {
                                                 echo "<script src='https://cdn.jsdelivr.net/npm/sweetalert2@11'></script>";
                                                 echo "<script>
-                Swal.fire({
-                    title: 'Success!',
-                    text: 'New Delivery boy added.',
-                    icon: 'success',
-                    showConfirmButton: false,
-                    timer: 2000 
-                }).then(() => {
-                    window.location.href = 'delivery.php'; 
-                });
-              </script>";
+                                                    Swal.fire({
+                                                        title: 'Success!',
+                                                        text: 'New Delivery boy added.',
+                                                        icon: 'success',
+                                                        showConfirmButton: false,
+                                                        timer: 2000 
+                                                    }).then(() => {
+                                                        window.location.href = 'delivery.php'; 
+                                                    });
+                                                </script>";
                                             } else {
                                                 // Error alert
                                                 echo "<script src='https://cdn.jsdelivr.net/npm/sweetalert2@11'></script>";
                                                 echo "<script>
-                Swal.fire({
-                    title: 'Error!',
-                    text: 'Failed. Please try again.',
-                    icon: 'error',
-                    confirmButtonText: 'OK'
-                });
-              </script>";
+                                                Swal.fire({
+                                                    title: 'Error!',
+                                                    text: 'Failed. Please try again.',
+                                                    icon: 'error',
+                                                    confirmButtonText: 'OK'
+                                                });
+                                            </script>";
                                             }
 
                                             // Flush output buffer
@@ -325,14 +341,10 @@
                                         });
                                     </script> -->
 
-
-
-
                                     </div>
                                 </div><!-- /.modal-content -->
                             </div><!-- /.modal-dialog -->
                         </div><!-- /.modal -->
-
 
                         <!--  Modal content for view category -->
                         <div class="modal fade bs-example-modal-lg-view" tabindex="-1" role="dialog"
@@ -348,7 +360,7 @@
                                         <div class="row">
                                             <div class="col-md-4">
                                                 <img id="viewDeliveryPhoto" src="" alt="" class="img-fluid rounded"
-                                                                                            style="max-width: 150px; border: 1px solid #ddd; margin-bottom: 15px;">
+                                                style="max-width: 150px; border: 1px solid #ddd; margin-bottom: 15px;">
                                             </div>
                                             <div class="col-md-8">
                                             <h6>Phone: <span id="viewPhone"></span></h6>
@@ -361,16 +373,12 @@
                                             
                                             </div>
                                         </div>
-                                        
 
                                         <!-- Category Description -->
-                                     
                                     </div>
                                 </div>
                             </div>
                         </div>
-
-
                         <!-- /.modal -->
                         <script>
                             document.addEventListener("DOMContentLoaded", function () {
@@ -398,8 +406,6 @@
                                 });
                             });
                         </script>
-
-
 
                         <!--  Modal content for edit delivery boy -->
                         <div class="modal fade bs-example-modal-lg-edit" tabindex="-1" role="dialog"
@@ -488,15 +494,11 @@
                                                     </div>
                                                 </div>
 
-
-
-
-
                                             </div>
 
                                             <div>
-                                                <button class="btn btn-dark" type="submit" name="updatedelivery">Update
-                                                    Delivery Boy</button>
+                                            <button class="btn btn-dark" type="submit" name="updatedelivery">Update
+                                            Delivery Boy</button>
                                             </div>
                                         </form>
 
@@ -573,10 +575,6 @@
                                             ob_end_flush();
                                         }
                                         ?>
-
-
-
-
                                     </div>
                                 </div>
                             </div>
@@ -593,11 +591,6 @@
                                         let adminEmail = this.getAttribute("data-email");
                                         let aadhaarNo = this.getAttribute("data-aadhaarno");
 
-
-
-
-
-
                                         // Populate input fields
                                         document.getElementById("modaladminId").value = adminId;
                                         document.getElementById("modaladminName").value = adminName;
@@ -608,10 +601,6 @@
                                 });
                             });
                         </script>
-
-
-
-
 
                         <!--  Modal content for reset password -->
                         <div class="modal fade bs-example-modal-lg-reset" tabindex="-1" role="dialog"
@@ -642,22 +631,16 @@
                                                         </div>
                                                     </div>
                                                 </div>
-
-
-
-
                                             </div>
 
                                             <div>
-                                                <button class="btn btn-dark" type="submit" name="resetPassword">Update
-                                                    Delivery Boy Password</button>
+                                            <button class="btn btn-dark" type="submit" name="resetPassword">Update
+                                            Delivery Boy Password</button>
                                             </div>
                                         </form>
 
                                         <?php
                                         if (isset($_POST['resetPassword'])) {
-
-
 
                                             // Sanitize input
                                             $id = $_POST['nid'];
@@ -665,51 +648,46 @@
 
                                             // Hash the password
                                             $hashedPassword = password_hash($password, PASSWORD_BCRYPT);
-
-
                                             $query2 = "UPDATE `delivery` SET 
                                         `password`='$hashedPassword'
                                         WHERE `id`='$id'";
 
-                                            // Execute the query
-                                            $data2 = mysqli_query($conn, $query2);
+                                        // Execute the query
+                                        $data2 = mysqli_query($conn, $query2);
 
-                                            // Start output buffering
-                                            ob_start();
+                                        // Start output buffering
+                                        ob_start();
 
-                                            // Success alert
-                                            if ($data2) {
-                                                echo "<script src='https://cdn.jsdelivr.net/npm/sweetalert2@11'></script>";
-                                                echo "<script>
-            Swal.fire({
-                title: 'Success!',
-                text: 'Password Updated',
-                icon: 'success',
-                showConfirmButton: false,
-                timer: 2000 
-            }).then(() => {
-                window.location.href = 'delivery.php'; 
-            });
-        </script>";
-                                            } else {
-                                                // Error alert
-                                                echo "<script src='https://cdn.jsdelivr.net/npm/sweetalert2@11'></script>";
-                                                echo "<script>
-            Swal.fire({
-                title: 'Error!',
-                text: 'Failed. Please try again.',
-                icon: 'error',
-                confirmButtonText: 'OK'
-            });
-        </script>";
-                                            }
-
-                                            // Flush output buffer
-                                            ob_end_flush();
+                                        // Success alert
+                                        if ($data2) {
+                                            echo "<script src='https://cdn.jsdelivr.net/npm/sweetalert2@11'></script>";
+                                            echo "<script>
+                                        Swal.fire({
+                                            title: 'Success!',
+                                            text: 'Password Updated',
+                                            icon: 'success',
+                                            showConfirmButton: false,
+                                            timer: 2000 
+                                        }).then(() => {
+                                            window.location.href = 'delivery.php'; 
+                                        });
+                                    </script>";
+                                    } else {
+                                        // Error alert
+                                        echo "<script src='https://cdn.jsdelivr.net/npm/sweetalert2@11'></script>";
+                                        echo "<script>
+                                        Swal.fire({
+                                            title: 'Error!',
+                                            text: 'Failed. Please try again.',
+                                            icon: 'error',
+                                            confirmButtonText: 'OK'
+                                            });
+                                        </script>";
+                                        }
+                                        // Flush output buffer
+                                        ob_end_flush();
                                         }
                                         ?>
-
-
                                     </div>
                                 </div>
                             </div>
@@ -723,22 +701,12 @@
                                     button.addEventListener("click", function () {
                                         let adminId2 = this.getAttribute("data-id");
 
-
-
-
                                         // Set modal content
                                         document.getElementById("modaladminId2").value = adminId2;
                                     });
                                 });
                             });
                         </script>
-
-
-
-
-
-
-
 
                     </div>
 
