@@ -94,25 +94,25 @@ if (isset($_GET['fetch_sellers'])) {
 
                     function isActive($status, $selected_status)
                     {
-                        return ($selected_status == $status) ? 'btn-lg opacity-100' : '';
+                        return ($selected_status == $status) ? 'btn-dark' : '';
                     }
                     ?>
 
                     <div class="row mb-4">
                         <div class="col-md-12">
                             <a href="?status=Pending"
-                                class="btn btn-secondary opacity-75 <?php echo isActive('Pending', $selected_status); ?>">Pending</a>
+                                class="btn btn-white <?php echo isActive('Pending', $selected_status); ?>">Pending</a>
                             <a href="?status=Confirmed"
-                                class="btn btn-info opacity-75 <?php echo isActive('Confirmed', $selected_status); ?>">Confirmed</a>
+                                class="btn btn-white <?php echo isActive('Confirmed', $selected_status); ?>">Confirmed</a>
                             <a href="?status=Packed"
-                                class="btn btn-primary opacity-75 <?php echo isActive('Packed', $selected_status); ?>">Packed</a>
+                                class="btn btn-white <?php echo isActive('Packed', $selected_status); ?>">Packed</a>
                             <a href="?status=Out for Delivery"
-                                class="btn btn-warning opacity-75 <?php echo isActive('Out for Delivery', $selected_status); ?>">Out
+                                class="btn btn-white <?php echo isActive('Out for Delivery', $selected_status); ?>">Out
                                 for Delivery</a>
                             <a href="?status=Delivered"
-                                class="btn btn-success opacity-75 <?php echo isActive('Delivered', $selected_status); ?>">Delivered</a>
+                                class="btn btn-white <?php echo isActive('Delivered', $selected_status); ?>">Delivered</a>
                             <a href="?status=Cancelled"
-                                class="btn btn-danger opacity-75 <?php echo isActive('Cancelled', $selected_status); ?>">Cancelled</a>
+                                class="btn btn-white <?php echo isActive('Cancelled', $selected_status); ?>">Cancelled</a>
 
                         </div>
                     </div>
