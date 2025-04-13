@@ -1460,4 +1460,14 @@
         height: 54px;
     }
 
+    .address-modal-content {
+        padding: 36px 24px 28px;
+        width: 80%;
+    }
+
+    .address-modal-content .close-button {
+        font-size: 20px;
+        width: 32px;
+        height: 32px;
+    }
 }

@@ -1741,3 +1741,62 @@ button.updatePassword:hover {
 /* --------------------------------------------------------------------- */
 /* ---------------------------------  Landing Page End ------------------------------------ */
 /* --------------------------------------------------------------------- */
+
+
+
+
+
+
+.address-modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: none;
+    /* Hidden by default */
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.address-modal-content {
+    background-color: #fff;
+    padding: 48px 32px 36px;
+    width: 90%;
+    max-width: 800px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    position: relative;
+    animation: ZoomIn 1s 1;
+}
+
+@keyframes ZoomIn {
+    0% {
+        transform: scale(0.5);
+    }
+
+    100% {
+        transform: scale(1);
+    }
+}
+
+.address-modal-content .close-button {
+    position: absolute;
+    top: 0;
+    right: 0;
+    background-color: #dee2e6;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 32px;
+    cursor: pointer;
+    width: 48px;
+    height: 48px;
+    transition: all 0.2s ease-in-out;
+}
+
+.address-modal-content .close-button:hover {
+    background-color: var(--primary_color);
+    color: var(--bg_color);
+}
