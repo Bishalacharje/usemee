@@ -14,12 +14,18 @@ $name = $resultadmin['name'];
 $phone = $resultadmin['phone'];
 $zone = $resultadmin['zone'];
 
-$queryn = "SELECT * FROM `zone` WHERE `id`='$zone'";
-$datan = mysqli_query($conn, $queryn);
-$resultn = mysqli_fetch_assoc($datan);
-$cityName = $resultn['city'];
-$address = $resultadmin['address'];
-$pin = $resultadmin['pin'];
+if (empty($zone) || empty($address) || empty($pin)) {
+
+} else {
+    $queryn = "SELECT * FROM `zone` WHERE `id`='$zone'";
+    $datan = mysqli_query($conn, $queryn);
+    $resultn = mysqli_fetch_assoc($datan);
+    $cityName = $resultn['city'];
+    $address = $resultadmin['address'];
+    $pin = $resultadmin['pin'];
+}
+
+
 
 // Fetch cart items
 $cart_query = mysqli_query($conn, "SELECT c.*, p.name, v.variant_name FROM cart c 
@@ -92,11 +98,21 @@ $total_price = $sub_total + $delivery_cost;
                                         <?php
                                         $queryc = "SELECT * FROM `zone`";
                                         $datac = mysqli_query($conn, $queryc);
-                                        while ($resultc = mysqli_fetch_assoc($datac)) {
-                                            echo "<option value='{$resultc['id']}'>{$resultc['city']}</option>";
+                                        if (empty($zone)) {
+
+                                            while ($resultc = mysqli_fetch_assoc($datac)) {
+                                                echo "<option value='{$resultc['id']}'>{$resultc['city']}</option>";
+                                            }
+                                        } else {
+                                            while ($resultc = mysqli_fetch_assoc($datac)) {
+                                                echo "<option value='{$resultc['id']}'>{$resultc['city']}</option>";
+                                            }
+                                            ?>
+                                            <option value="<?php echo $zone; ?>" selected><?php echo $cityName; ?></option>
+                                            <?php
                                         }
                                         ?>
-                                        <option value="<?php echo $zone; ?>" selected><?php echo $cityName; ?></option>
+
                                     </select>
                                 </div>
                                 <div class="inputCon">

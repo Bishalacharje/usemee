@@ -64,11 +64,21 @@ include("checked-login.php");
                                     <?php
                                     $queryc = "SELECT * FROM `zone`";
                                     $datac = mysqli_query($conn, $queryc);
-                                    while ($resultc = mysqli_fetch_assoc($datac)) {
-                                        echo "<option value='{$resultc['id']}'>{$resultc['city']}</option>";
+                                    if (empty($zone)) {
+
+                                        while ($resultc = mysqli_fetch_assoc($datac)) {
+                                            echo "<option value='{$resultc['id']}'>{$resultc['city']}</option>";
+                                        }
+                                    } else {
+                                        while ($resultc = mysqli_fetch_assoc($datac)) {
+                                            echo "<option value='{$resultc['id']}'>{$resultc['city']}</option>";
+                                        }
+                                        ?>
+                                        <option value="<?php echo $zone; ?>" selected><?php echo $cityName; ?></option>
+                                        <?php
                                     }
                                     ?>
-                                    <option value="<?php echo $zone; ?>" selected><?php echo $cityName; ?></option>
+
                                 </select>
                             </div>
 
