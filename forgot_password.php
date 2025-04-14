@@ -1,6 +1,7 @@
 <?php
 include("connection.php");
 session_start();
+date_default_timezone_set('Asia/Kolkata');
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 

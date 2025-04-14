@@ -1,6 +1,7 @@
 <?php
 include("connection.php");
 session_start();
+date_default_timezone_set('Asia/Kolkata');
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     // Get the email and OTP from the session and form input
@@ -25,8 +26,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             // If OTP is valid and not expired
             if ($current_time < $expiry_time) {
                 $_SESSION['email'] = $email;
+                $clearOtp = $conn->prepare("UPDATE `user` SET otp = NULL, otp_expiry = NULL WHERE email = ?");
+                $clearOtp->bind_param("s", $email);
+                $clearOtp->execute();
                 // Redirect to the home screen after successful OTP verification
-                header("Location: index.php"); // Adjust the home page URL accordingly
+                header("Location: my_account.php"); // Adjust the home page URL accordingly
                 exit();
             } else {
                 $error = "OTP has expired. Please request a new one.";
