@@ -1,4 +1,5 @@
 <?php
+error_reporting(0);
 include("connection.php");
 session_start();
 date_default_timezone_set('Asia/Kolkata');
@@ -44,7 +45,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             // Content
             $mail->isHTML(true);
             $mail->Subject = 'Password Reset OTP';
-            $mail->Body    = "Your OTP is: <b>$otp</b>. It will expire in 10 minutes.";
+            $mail->Body = "Your OTP is: <b>$otp</b>. It will expire in 10 minutes.";
 
             // Send email
             if ($mail->send()) {
@@ -66,15 +67,37 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 <!-- HTML Form -->
 <!DOCTYPE html>
 <html>
+
 <head>
+    <?php include("./components/headlink.php"); ?>
     <title>Forgot Password</title>
 </head>
+
 <body>
-    <h2>Forgot Password</h2>
-    <form method="post">
-        <input type="email" name="email" placeholder="Enter your email" required>
-        <button type="submit">Send OTP</button>
-    </form>
-    <?php if (isset($error)) echo "<p style='color:red;'>$error</p>"; ?>
+    <div>
+        <?php include("./components/header.php"); ?>
+    </div>
+
+    <section class="conSection">
+        <div class="container">
+            <br><br>
+            <h2>Forgot Password</h2>
+            <br>
+            <form method="post">
+                <div class="formGrid grid1">
+                    <input type="email" name="email" placeholder="Enter your email" required>
+                </div>
+
+                <button type="submit">Send OTP</button>
+            </form>
+            <?php if (isset($error))
+                echo "<p style='color:red;'>$error</p>"; ?>
+        </div>
+    </section>
+    <br><br>
+
+    <?php include("./components/footer.php"); ?>
+
 </body>
+
 </html>

@@ -1,4 +1,5 @@
 <?php
+error_reporting(0);
 include("connection.php");
 session_start();
 date_default_timezone_set('Asia/Kolkata');
@@ -49,17 +50,35 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 <html>
 
 <head>
+    <?php include("./components/headlink.php"); ?>
     <title>Verify OTP</title>
 </head>
 
 <body>
-    <h2>Verify OTP</h2>
-    <form method="post">
-        <input type="text" name="otp" placeholder="Enter the OTP" required>
-        <button type="submit">Verify OTP</button>
-    </form>
-    <?php if (isset($error))
-        echo "<p style='color:red;'>$error</p>"; ?>
+    <div>
+        <?php include("./components/header.php"); ?>
+    </div>
+    <section class="conSection">
+        <div class="container">
+            <br><br>
+            <h2>Verify OTP</h2>
+            <br>
+            <form method="post">
+                <div class="formGrid grid1">
+                    <input type="number" name="otp" placeholder="Enter the OTP" required>
+                </div>
+
+                <button type="submit">Verify OTP</button>
+            </form>
+            <?php if (isset($error))
+                echo "<p style='color:red;'>$error</p>"; ?>
+        </div>
+    </section>
+    <br><br>
+
+    <?php include("./components/footer.php"); ?>
+
+
 </body>
 
 </html>
