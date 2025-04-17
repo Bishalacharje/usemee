@@ -34,9 +34,6 @@ if ($sprofile == true) {
     header('location:login.php');
 }
 
-
-
-
 ?>
 
 <!DOCTYPE html>

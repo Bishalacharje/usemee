@@ -2,8 +2,6 @@
 
     <div data-simplebar class="h-100">
 
-
-
         <!--- Sidemenu -->
         <div id="sidebar-menu">
             <!-- Left Menu Start -->
@@ -79,13 +77,16 @@
                     </a>
                 </li>
 
-
-
                 <li class="menu-title">CMS</li>
-
-
-
-
+                <li>
+                <a href="javascript: void(0);" class="has-arrow waves-effect">
+                    <i class="ri-file-text-line"></i>
+                    <span>CMS</span>
+                </a>
+                <ul class="sub-menu" aria-expanded="false">
+                    <li><a href="banner.php">Manage Banners</a></li>
+                </ul>
+            </li>
 
             </ul>
         </div>

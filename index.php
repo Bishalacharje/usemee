@@ -1,5 +1,5 @@
 <?php
-error_reporting(0);
+error_reporting();
 include("connection.php");
 session_start();
 // include("checked-login.php");
@@ -27,37 +27,30 @@ session_start();
   </div>
   <!-- ---------------------------------  Banner Section  ------------------------------------ -->
   <section class="conSection bannerSec">
-    <div class="container">
-      <div class="bannerSlider">
-        <div class="slider-wrapper">
-          <a href="#" class="banner">
-            <div class="bannerImage">
-              <img src="assets/images/banner/banner1.png" alt="" />
-            </div>
-            <!-- <div class="bannerLink">
-              <button class="btn">Shop now</button>
-            </div> -->
-          </a>
-          <a href="#" class="banner">
-            <div class="bannerImage">
-              <img src="assets/images/banner/banner2.png" alt="" />
-            </div>
-            <!-- <div class="bannerLink">
-              <button class="btn">Shop now</button>
-            </div> -->
-          </a>
+  <div class="container">
+    <div class="bannerSlider">
+      <div class="slider-wrapper">
+        <?php
+        // Fetch header banners ordered by position (numerical or string-based)
+        $headerBannerQuery = "SELECT * FROM `banners` WHERE `banner_type`='header' ORDER BY CAST(position AS UNSIGNED)";
+        $headerBannerData = mysqli_query($conn, $headerBannerQuery);
 
-        </div>
-        <button class="prev" onclick="prevSlide()">
-          &#8592; </button>
-        <button class="next" onclick="nextSlide()">
-          &#8594;
-        </button>
+        while ($banner = mysqli_fetch_assoc($headerBannerData)) {
+        ?>
+          <a href="#" class="banner">
+            <div class="bannerImage">
+              <img src="superadmin/<?php echo $banner['image']; ?>" alt="<?php echo htmlspecialchars($banner['title']); ?>" />
+            </div>
+          </a>
+        <?php } ?>
       </div>
 
+      <button class="prev" onclick="prevSlide()">&#8592;</button>
+      <button class="next" onclick="nextSlide()">&#8594;</button>
     </div>
+  </div>
+</section>
 
-  </section>
 
 
   <!-- ---------------------------------  Subcategory Cards  ------------------------------------ -->
@@ -191,31 +184,53 @@ session_start();
     </div>
   </section>
 
-  <!-- ---------------------------------  Center Banner Section  ------------------------------------ -->
+ <!-- ---------------------------------  Center Banner Section  ------------------------------------ -->
 
-  <section class="conSection centerBannerSec">
-    <div class="container">
-      <div class="centerBannerGrid">
+ <section class="conSection centerBannerSec">
+  <div class="container">
+    <div class="centerBannerGrid">
+      <?php
+      $centerBannerQuery = "SELECT * FROM `banners` WHERE `banner_type`='center' ORDER BY CAST(position AS UNSIGNED)";
+      $centerBannerResult = mysqli_query($conn, $centerBannerQuery);
+
+      $centerBanners = [];
+      while ($banner = mysqli_fetch_assoc($centerBannerResult)) {
+        $centerBanners[] = $banner;
+      }
+
+      // Large banner
+      if (!empty($centerBanners[0])) {
+        $large = $centerBanners[0];
+      ?>
         <div class="centerBannerLg">
-          <a href="shop.php?subcategory=12">
-            <img src="assets/images/centerBannerLg.png" alt="">
+          <a href="<?php echo !empty($large['link']) ? $large['link'] : '#'; ?>">
+            <img src="superadmin/<?php echo $large['image']; ?>" alt="<?php echo htmlspecialchars($large['title']); ?>">
           </a>
         </div>
-        <div class="centerBannerSmall">
-          <div class="centerBanner">
-            <a href="#">
-              <img src="assets/images/centerBanner1.png" alt="">
-            </a>
-          </div>
-          <div class="centerBanner">
-            <a href="#">
-              <img src="assets/images/centerBanner2.png" alt="">
-            </a>
-          </div>
-        </div>
+      <?php } ?>
+
+      <div class="centerBannerSmall">
+        <?php
+        // Two small banners
+        for ($i = 1; $i <= 2; $i++) {
+          if (!empty($centerBanners[$i])) {
+            $small = $centerBanners[$i];
+        ?>
+            <div class="centerBanner">
+              <a href="<?php echo !empty($small['link']) ? $small['link'] : '#'; ?>">
+                <img src="superadmin/<?php echo $small['image']; ?>" alt="<?php echo htmlspecialchars($small['title']); ?>">
+              </a>
+            </div>
+        <?php
+          }
+        }
+        ?>
       </div>
     </div>
-  </section>
+  </div>
+</section>
+
+
 
   <!-- ---------------------------------  Category Cards  ------------------------------------ -->
 
@@ -353,25 +368,39 @@ session_start();
   <!-- ---------------------------------  Footer card Section  ------------------------------------ -->
 
   <section class="conSection">
-    <div class="container">
-      <div class="footerCardGrid">
-        <a href="#" class="footerCard">
-          <img src="assets/images/footerCard1.png" alt="">
-        </a>
-        <a href="#" class="footerCard">
-          <img src="assets/images/footerCard2.png" alt="">
-        </a>
-        <a href="#" class="footerCard">
-          <img src="assets/images/footerCard3.png" alt="">
-        </a>
-      </div>
+  <div class="container">
+    <div class="footerCardGrid">
+      <?php
+      // Fetch all footer card banners
+      $footerCardQuery = "SELECT * FROM `banners` WHERE `banner_type`='footer'";
+      $footerCardResult = mysqli_query($conn, $footerCardQuery);
+
+      // Create array for positioning
+      $footerCards = [1 => null, 2 => null, 3 => null];
+
+      // Assign each to its position
+      while ($banner = mysqli_fetch_assoc($footerCardResult)) {
+        $position = (int) $banner['position'];
+        if ($position >= 1 && $position <= 3) {
+          $footerCards[$position] = $banner;
+        }
+      }
+
+      // Loop through 1 to 3 for consistent positioning
+      for ($i = 1; $i <= 3; $i++) {
+        if (!empty($footerCards[$i])) {
+          $card = $footerCards[$i];
+      ?>
+          <a href="<?php echo !empty($card['link']) ? $card['link'] : '#'; ?>" class="footerCard">
+            <img src="superadmin/<?php echo $card['image']; ?>" alt="<?php echo htmlspecialchars($card['title']); ?>">
+          </a>
+      <?php
+        }
+      }
+      ?>
     </div>
-  </section>
-
-
-
-
-
+  </div>
+</section>
 
 
   <?php include("./components/footer.php"); ?>
