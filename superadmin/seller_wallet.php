@@ -132,7 +132,6 @@ include("checked-login.php");
                                             <thead>
                                                 <tr>
                                                     <th>Seller Name</th>
-                                                    <th>Category</th>
                                                     <th>Total Price</th>
                                                 </tr>
                                             </thead>
@@ -159,9 +158,9 @@ include("checked-login.php");
                                                 $result = $conn->query($sql);
 
                                                 while ($row = $result->fetch_assoc()) {
+
                                                     echo "<tr>
                                                             <td>" . htmlspecialchars($row['SellerName']) . "</td>
-                                                            <td>" . htmlspecialchars($row['Category']) . "</td>
                                                             <td>" . number_format($row['TotalPrice'], 2) . "</td>
                                                           </tr>";
                                                 }
