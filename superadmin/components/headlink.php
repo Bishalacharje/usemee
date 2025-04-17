@@ -44,7 +44,7 @@
         color: #0f9bf2;
     }
 
-    .table-con {}
+    /* .table-con {} */
 
     .table-con td {
         min-width: 100px;

@@ -86,8 +86,6 @@ include("checked-login.php");
                                                         <th>Action</th>
                                                     </tr>
                                                 </thead>
-
-
                                                 <tbody>
                                                     <?php
 
@@ -108,8 +106,6 @@ include("checked-login.php");
                                                             </td> -->
 
                                                             <td>
-
-
                                                                 <button type="button"
                                                                     class="btn btn-warning waves-effect waves-light btn-sm viewCategoryBtn"
                                                                     data-name="<?php echo $result['name']; ?>"
@@ -140,8 +136,6 @@ include("checked-login.php");
                                             } else {
                                                 echo "No Category found";
                                             }
-
-
                                             ?>
                                             </tbody>
                                         </table>
@@ -151,12 +145,6 @@ include("checked-login.php");
                             </div>
                         </div>
                     </div>
-
-
-
-
-
-
 
 
                     <!--  Modal content for add category -->
@@ -203,8 +191,6 @@ include("checked-login.php");
                                                             style="max-width: 100px; display: none;">
                                                     </div>
                                                 </div>
-
-
 
                                             </div>
 
@@ -255,27 +241,27 @@ include("checked-login.php");
                                         if ($data2) {
                                             echo "<script src='https://cdn.jsdelivr.net/npm/sweetalert2@11'></script>";
                                             echo "<script>
-                Swal.fire({
-                    title: 'Success!',
-                    text: 'New Category added.',
-                    icon: 'success',
-                    showConfirmButton: false,
-                    timer: 2000 
-                }).then(() => {
-                    window.location.href = 'category.php'; 
-                });
-              </script>";
+                                            Swal.fire({
+                                                title: 'Success!',
+                                                text: 'New Category added.',
+                                                icon: 'success',
+                                                showConfirmButton: false,
+                                                timer: 2000 
+                                            }).then(() => {
+                                                window.location.href = 'category.php'; 
+                                            });
+                                        </script>";
                                         } else {
                                             // Error alert
                                             echo "<script src='https://cdn.jsdelivr.net/npm/sweetalert2@11'></script>";
                                             echo "<script>
-                Swal.fire({
-                    title: 'Error!',
-                    text: 'Failed. Please try again.',
-                    icon: 'error',
-                    confirmButtonText: 'OK'
-                });
-              </script>";
+                                            Swal.fire({
+                                                title: 'Error!',
+                                                text: 'Failed. Please try again.',
+                                                icon: 'error',
+                                                confirmButtonText: 'OK'
+                                            });
+                                        </script>";
                                         }
 
                                         // Flush output buffer
@@ -283,15 +269,10 @@ include("checked-login.php");
                                     }
                                     ?>
 
-
-
                                 </div>
                             </div><!-- /.modal-content -->
                         </div><!-- /.modal-dialog -->
                     </div><!-- /.modal -->
-
-
-
 
                     <!--  Modal content for edit category -->
                     <div class="modal fade bs-example-modal-lg-edit" tabindex="-1" role="dialog"
@@ -338,9 +319,6 @@ include("checked-login.php");
                                                             style="max-width: 100px; display: none;">
                                                     </div>
                                                 </div>
-
-
-
                                             </div>
 
                                             <div class="col-md-12">
@@ -381,15 +359,15 @@ include("checked-login.php");
                                         if (!empty($filename)) {
                                             move_uploaded_file($tempname, $folder);
                                             $query2 = "UPDATE `category` SET 
-                    `name`='$name',
-                    `image`='$folder',
-                    `description`='$description'
-                    WHERE `id`='$id'";
+                                            `name`='$name',
+                                            `image`='$folder',
+                                            `description`='$description'
+                                            WHERE `id`='$id'";
                                         } else {
                                             $query2 = "UPDATE `category` SET 
-                    `name`='$name',
-                    `description`='$description'
-                    WHERE `id`='$id'";
+                                            `name`='$name',
+                                            `description`='$description'
+                                            WHERE `id`='$id'";
                                         }
 
                                         // Execute the query
@@ -402,43 +380,39 @@ include("checked-login.php");
                                         if ($data2) {
                                             echo "<script src='https://cdn.jsdelivr.net/npm/sweetalert2@11'></script>";
                                             echo "<script>
-            Swal.fire({
-                title: 'Success!',
-                text: 'Category Updated.',
-                icon: 'success',
-                showConfirmButton: false,
-                timer: 2000 
-            }).then(() => {
-                window.location.href = 'category.php'; 
-            });
-        </script>";
+                                            Swal.fire({
+                                                title: 'Success!',
+                                                text: 'Category Updated.',
+                                                icon: 'success',
+                                                showConfirmButton: false,
+                                                timer: 2000 
+                                            }).then(() => {
+                                                window.location.href = 'category.php'; 
+                                            });
+                                        </script>";
                                         } else {
                                             // Error alert
                                             echo "<script src='https://cdn.jsdelivr.net/npm/sweetalert2@11'></script>";
                                             echo "<script>
-            Swal.fire({
-                title: 'Error!',
-                text: 'Failed. Please try again.',
-                icon: 'error',
-                confirmButtonText: 'OK'
-            });
-        </script>";
+                                            Swal.fire({
+                                                title: 'Error!',
+                                                text: 'Failed. Please try again.',
+                                                icon: 'error',
+                                                confirmButtonText: 'OK'
+                                            });
+                                        </script>";
                                         }
 
                                         // Flush output buffer
                                         ob_end_flush();
                                     }
                                     ?>
-
-
-
                                 </div>
                             </div>
                         </div>
                     </div>
 
                     <!-- /.modal -->
-
 
                     <script>
                         document.addEventListener("DOMContentLoaded", function () {
@@ -447,9 +421,6 @@ include("checked-login.php");
                                     let categoryId = this.getAttribute("data-id");
                                     let categoryName = this.getAttribute("data-name");
                                     let categoryDescription = this.getAttribute("data-description");
-
-
-
                                     // Populate input fields
                                     document.getElementById("modalCategoryId").value = categoryId;
                                     document.getElementById("modalCategoryNameInput").value = categoryName;
@@ -458,10 +429,6 @@ include("checked-login.php");
                             });
                         });
                     </script>
-
-
-
-
 
                     <!--  Modal content for view category -->
                     <div class="modal fade bs-example-modal-lg-view" tabindex="-1" role="dialog"
@@ -485,12 +452,7 @@ include("checked-login.php");
                         </div>
                     </div>
 
-
                     <!-- /.modal -->
-
-
-
-
 
                     <script>
                         document.addEventListener("DOMContentLoaded", function () {
@@ -511,9 +473,6 @@ include("checked-login.php");
                         });
                     </script>
 
-
-
-
                 </div>
 
             </div>
@@ -526,8 +485,6 @@ include("checked-login.php");
 
     </div>
     <!-- END layout-wrapper -->
-
-
 
     <!-- JAVASCRIPT -->
     <?php include("./components/footscript.php"); ?>
