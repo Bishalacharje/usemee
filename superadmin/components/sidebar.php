@@ -79,14 +79,16 @@
 
                 <li class="menu-title">CMS</li>
                 <li>
-                <a href="javascript: void(0);" class="has-arrow waves-effect">
-                    <i class="ri-file-text-line"></i>
-                    <span>CMS</span>
-                </a>
-                <ul class="sub-menu" aria-expanded="false">
-                    <li><a href="banner.php">Manage Banners</a></li>
-                </ul>
-            </li>
+                    <a href="javascript: void(0);" class="has-arrow waves-effect">
+                        <i class="ri-file-text-line"></i>
+                        <span>Banners/Posters</span>
+                    </a>
+                    <ul class="sub-menu" aria-expanded="false">
+                        <li><a href="banner.php?type=header">Header Banners</a></li>
+                        <li><a href="banner.php?type=center">Center Cards</a></li>
+                        <li><a href="banner.php?type=footer">Footer Cards</a></li>
+                    </ul>
+                </li>
 
             </ul>
         </div>
