@@ -63,7 +63,7 @@ session_start();
                         |
                         <a href="#">Privacy Policy</a>
                     </div>
-                    <a href="login.php">ALREADY HAVE AN ACCOUNT ?</a>
+                    <a href="login.php">ALREADY HAVE AN ACCOUNT ? LOG IN</a>
                 </div>
 
             </div>
