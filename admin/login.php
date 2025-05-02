@@ -29,7 +29,7 @@ session_start();
                         </div>
                     </div>
 
-                    <h4 class="text-muted text-center font-size-18"><b>Admin Login</b></h4>
+                    <h4 class="text-dark text-center font-size-18"><b>Admin Login</b></h4>
 
                     <div class="p-3">
                         <form class="form-horizontal mt-3" method="post">
