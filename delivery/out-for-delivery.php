@@ -54,3 +54,22 @@ if (isset($_GET['confirm_update']) && $_GET['confirm_update'] == 1) {
     </script>";
 }
 ?>
+
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <head>
+        <?php include("./components/headlink.php"); ?>
+    </head>
+</head>
+
+<body>
+
+    <!-- JAVASCRIPT -->
+    <?php include("./components/footscript.php"); ?>
+</body>
+
+</html>

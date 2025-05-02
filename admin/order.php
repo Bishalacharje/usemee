@@ -35,7 +35,7 @@ if (isset($_GET['fetch_sellers'])) {
 
 <head>
     <?php include("./components/headlink.php"); ?>
-    <title>Orders | Usemee</title>
+    <title>Orders | Admin | Usemee</title>
 </head>
 
 <body data-topbar="dark">
@@ -70,7 +70,7 @@ if (isset($_GET['fetch_sellers'])) {
 
                                 <div class="page-title-right">
                                     <ol class="breadcrumb m-0">
-                                        <li class="breadcrumb-item"><a href="javascript: void(0);">Upcube</a></li>
+                                        <li class="breadcrumb-item"><a href="javascript: void(0);">Usemee</a></li>
                                         <li class="breadcrumb-item active">Orders History</li>
                                     </ol>
                                 </div>

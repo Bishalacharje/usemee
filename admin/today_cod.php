@@ -9,7 +9,7 @@ include("checked-login.php");
 
 <head>
     <?php include("./components/headlink.php"); ?>
-    <title>Orders | Usemee</title>
+    <title>Today COD | Admin | Usemee</title>
 </head>
 
 <body data-topbar="dark">
@@ -26,7 +26,7 @@ include("checked-login.php");
                                 <h4 class="mb-sm-0">COD History</h4>
                                 <div class="page-title-right">
                                     <ol class="breadcrumb m-0">
-                                        <li class="breadcrumb-item"><a href="javascript:void(0);">Upcube</a></li>
+                                        <li class="breadcrumb-item"><a href="javascript:void(0);">Usemee</a></li>
                                         <li class="breadcrumb-item active">COD History</li>
                                     </ol>
                                 </div>

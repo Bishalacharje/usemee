@@ -5,7 +5,7 @@
 
     <head>
         <?php include("./components/headlink.php"); ?>
-        <title>Delivery Boy | Usemee</title>
+        <title>Delivery Boy | Admin | Usemee</title>
     </head>
 
     <body data-topbar="dark">
@@ -39,7 +39,7 @@
 
                                     <div class="page-title-right">
                                         <ol class="breadcrumb m-0">
-                                            <li class="breadcrumb-item"><a href="javascript: void(0);">Upcube</a></li>
+                                            <li class="breadcrumb-item"><a href="javascript: void(0);">Usemee</a></li>
                                             <li class="breadcrumb-item active">Delivery Boy</li>
                                         </ol>
                                     </div>
@@ -129,7 +129,7 @@
                                                                         Reset Password
                                                                     </button>
 
-                                                                    <a href="<?php echo "delete-deleviry.php?id=$result[id]" ?>"
+                                                                    <a href="<?php echo "delete-delivery.php?id=$result[id]" ?>"
                                                                         class="btn btn-danger btn-sm"> <i
                                                                             class="ri-delete-bin-fill"></i> </a>
                                                                 </td>
