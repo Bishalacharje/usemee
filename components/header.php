@@ -1,5 +1,5 @@
 <?php
-
+error_reporting(0);
 $_SESSION['email'];
 $sprofile = $_SESSION['email'];
 

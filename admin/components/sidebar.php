@@ -3,7 +3,7 @@
     <div data-simplebar class="h-100">
 
         <!-- User details -->
-        <div class="user-profile text-center mt-3">
+        <!-- <div class="user-profile text-center mt-3">
             <div class="">
                 <img src="assets/images/users/user.png" alt="" class="avatar-md rounded-circle">
             </div>
@@ -12,13 +12,13 @@
                 <span class="text-muted"><i class="ri-record-circle-line align-middle font-size-14 text-success"></i>
                     Online</span>
             </div>
-        </div>
+        </div> -->
 
         <!--- Sidemenu -->
         <div id="sidebar-menu">
             <!-- Left Menu Start -->
             <ul class="metismenu list-unstyled" id="side-menu">
-                <li class="menu-title">Menu</li>
+
 
                 <li>
                     <a href="index.php" class="waves-effect">
