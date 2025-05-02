@@ -11,7 +11,7 @@ include("checked-login.php");
 
 <head>
     <?php include("./components/headlink.php"); ?>
-    <title>Orders | Usemee</title>
+    <title>COD | Admin | Usemee</title>
 </head>
 
 <body data-topbar="dark">

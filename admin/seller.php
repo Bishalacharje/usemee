@@ -19,7 +19,7 @@ include("checked-login.php");
 
 <head>
     <?php include("./components/headlink.php"); ?>
-    <title>Seller | Usemee</title>
+    <title>Seller | Admin | Usemee</title>
 </head>
 
 <body data-topbar="dark">
@@ -54,7 +54,7 @@ include("checked-login.php");
 
                                 <div class="page-title-right">
                                     <ol class="breadcrumb m-0">
-                                        <li class="breadcrumb-item"><a href="javascript: void(0);">Upcube</a></li>
+                                        <li class="breadcrumb-item"><a href="javascript: void(0);">Usemee</a></li>
                                         <li class="breadcrumb-item active">Seller</li>
                                     </ol>
                                 </div>
@@ -128,17 +128,18 @@ include("checked-login.php");
 
                                                             <td>
 
-                                                            <a href="<?php echo "seller-bill-report.php?id=$result[id]" ?>"
+                                                            <!-- <a href="<?php echo "seller-bill-report.php?id=$result[id]" ?>"
                                                                     class="btn btn-dark btn-sm"> <i
-                                                                        class="ri-file-paper-2-fill"></i> </a>
-                                                                <button type="button"
-                                                                    class="btn btn-warning waves-effect waves-light btn-sm viewCategoryBtn"
-                                                                    data-bs-toggle="modal"
-                                                                    data-bs-target=".bs-example-modal-lg-view">
-                                                                    <i class="ri-eye-fill"></i>
-                                                                </button>
+                                                                        class="ri-file-paper-2-fill"></i> </a> -->
+                                                               
                                                                 <button type="button"
                                                                     class="btn btn-info waves-effect waves-light btn-sm editCategoryBtn"
+                                                                    data-id="<?php echo $result['id']; ?>"
+                                                                    data-name="<?php echo $result['name']; ?>"
+                                                                    data-phone="<?php echo $result['phone']; ?>"
+                                                                    data-address="<?php echo $result['address']; ?>"
+                                                                    data-pin="<?php echo $result['pin']; ?>"
+                                                                    data-category="<?php echo $result['category']; ?>"
                                                                     data-bs-toggle="modal"
                                                                     data-bs-target=".bs-example-modal-lg-edit">
                                                                     <i class="ri-pencil-fill"></i>
@@ -216,7 +217,7 @@ include("checked-login.php");
                                             <div class="col-md-8">
                                                 <div class="mb-3">
                                                     <label class="form-label">Phone Number</label>
-                                                    <input type="text" class="form-control" name="phone" required>
+                                                    <input type="number" class="form-control" name="phone" required>
                                                 </div>
                                             </div>
                                             <input type="hidden" class="form-control"
@@ -225,7 +226,7 @@ include("checked-login.php");
                                             <div class="col-md-4">
                                                 <div class="mb-3">
                                                     <label class="form-label">Pin</label>
-                                                    <input type="text" class="form-control variant" name="pin" required>
+                                                    <input type="text" class="form-control" name="pin" required>
                                                 </div>
                                             </div>
                                             <div class="col-md-12">
@@ -341,13 +342,13 @@ include("checked-login.php");
 
 
 
-                    <!--  Modal content for edit sub category -->
+                    <!--  Modal content for edit seller -->
                     <div class="modal fade bs-example-modal-lg-edit" tabindex="-1" role="dialog"
                         aria-labelledby="myLargeModalLabel" aria-hidden="true">
                         <div class="modal-dialog modal-lg modal-dialog-centered">
                             <div class="modal-content">
                                 <div class="modal-header">
-                                    <h5 class="modal-title" id="myLargeModalLabel">Update Sub-Category</h5>
+                                    <h5 class="modal-title" id="myLargeModalLabel">Update Seller</h5>
                                     <button type="button" class="btn-close" data-bs-dismiss="modal"
                                         aria-label="Close"></button>
                                 </div>
@@ -356,12 +357,11 @@ include("checked-login.php");
 
                                     <form method="POST" enctype="multipart/form-data"
                                         class="needs-validation was-validated" novalidate="">
-
-                                        <input type="hidden" name="uid" id="modalCategoryId">
                                         <div class="row">
-                                            <div class="col-md-12">
-                                                <div class="mb-3">
-                                                    <label for="" class="form-label">Select Category</label>
+                                        <input type="hidden" name="sid" id="modalSellerId">
+                                            <div class="col-md-3">
+                                                <div class="mb-6">
+                                                    <label class="form-label">Select Category</label>
                                                     <select name="category" id="modalCategorySelect" class="form-select"
                                                         required>
                                                         <option value="">-- Choose --</option>
@@ -373,49 +373,36 @@ include("checked-login.php");
                                                         }
                                                         ?>
                                                     </select>
-                                                    <div class="valid-feedback">
-                                                        Looks good!
-                                                    </div>
                                                 </div>
                                             </div>
-                                            <div class="col-md-6">
+
+
+                                            <div class="col-md-9">
                                                 <div class="mb-3">
-                                                    <label for="modalCategoryNameInput" class="form-label">Sub-Category
-                                                        name</label>
-                                                    <input type="text" name="name" id="modalCategoryNameInput"
-                                                        class="form-control">
-                                                    <div class="valid-feedback">
-                                                        Looks good!
-                                                    </div>
+                                                    <label class="form-label">Seller Name</label>
+                                                    <input type="text" id="modalSellerName" class="form-control" name="name" required>
                                                 </div>
                                             </div>
-                                            <div class="col-md-6">
-                                                <div class="row image-wrapper">
-                                                    <div class="col-md-8">
-                                                        <div class="mb-3">
-                                                            <label for="" class="form-label">Sub-Category
-                                                                Image</label>
-                                                            <input type="file" name="image"
-                                                                class="form-control imageInput" id="">
 
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-md-4">
-                                                        <img src="" alt="Selected Image" class="showImageInput"
-                                                            style="max-width: 100px; display: none;">
-                                                    </div>
+                                            <div class="col-md-8">
+                                                <div class="mb-3">
+                                                    <label class="form-label">Phone Number</label>
+                                                    <input type="number" id="modalSellerPhone" class="form-control" name="phone" required>
                                                 </div>
-
-
-
                                             </div>
+                                           
 
+                                            <div class="col-md-4">
+                                                <div class="mb-3">
+                                                    <label class="form-label">Pin</label>
+                                                    <input type="text" id="modalSellerPin" class="form-control" name="pin" required>
+                                                </div>
+                                            </div>
                                             <div class="col-md-12">
-                                                <div class="mb-3">
-                                                    <label for="modalCategoryDescriptionInput"
-                                                        class="form-label">Sub-Category
-                                                        Description</label>
-                                                    <textarea id="modalCategoryDescriptionInput" name="description"
+                                                <div class="mb-4">
+                                                    <label for="modalSellerAddress" class="form-label">Address
+                                                    </label>
+                                                    <textarea id="modalSellerAddress" name="address"
                                                         class="form-control" required=""></textarea>
 
                                                     <div class="valid-feedback">
@@ -423,44 +410,35 @@ include("checked-login.php");
                                                     </div>
                                                 </div>
                                             </div>
+
                                         </div>
 
                                         <div>
-                                            <button class="btn btn-dark" type="submit" name="updatesubcategory">Update
-                                                Sub-Category</button>
+                                            <button class="btn btn-dark" type="submit" name="updateseller">Update
+                                                Seller</button>
                                         </div>
                                     </form>
 
                                     <?php
-                                    if (isset($_POST['updatesubcategory'])) {
+                                    if (isset($_POST['updateseller'])) {
 
-                                        // Handle image upload
-                                        $filename = $_FILES["image"]["name"];
-                                        $tempname = $_FILES["image"]["tmp_name"];
-                                        $folder = "category/" . mysqli_real_escape_string($conn, $filename);
+                                       
 
                                         // Sanitize input
-                                        $id = $_POST['uid'];
+                                        $id = $_POST['sid'];
                                         $category = htmlspecialchars(mysqli_real_escape_string($conn, $_POST['category']));
                                         $name = htmlspecialchars(mysqli_real_escape_string($conn, $_POST['name']));
-                                        $description = htmlspecialchars(mysqli_real_escape_string($conn, $_POST['description']));
+                                        $phone = htmlspecialchars(mysqli_real_escape_string($conn, $_POST['phone']));
+                                        $address = htmlspecialchars(mysqli_real_escape_string($conn, $_POST['address']));
+                                        $pin = htmlspecialchars(mysqli_real_escape_string($conn, $_POST['pin']));
 
-                                        // Conditional update query
-                                        if (!empty($filename)) {
-                                            move_uploaded_file($tempname, $folder);
-                                            $query2 = "UPDATE `subcategory` SET 
-                    `categoryId`='$category',
-                    `name`='$name',
-                    `image`='$folder',
-                    `description`='$description'
-                    WHERE `id`='$id'";
-                                        } else {
-                                            $query2 = "UPDATE `subcategory` SET 
-                    `categoryId`='$category',
-                    `name`='$name',
-                    `description`='$description'
-                    WHERE `id`='$id'";
-                                        }
+                                        $query2 = "UPDATE `seller` SET 
+                                        `category`='$category',
+                                        `name`='$name',
+                                        `phone`='$phone',
+                                        `pin`='$pin',
+                                        `address`='$address'
+                                        WHERE `id`='$id'";
 
                                         // Execute the query
                                         $data2 = mysqli_query($conn, $query2);
@@ -474,12 +452,12 @@ include("checked-login.php");
                                             echo "<script>
             Swal.fire({
                 title: 'Success!',
-                text: 'Sub Category Updated.',
+                text: 'Seller Updated.',
                 icon: 'success',
                 showConfirmButton: false,
                 timer: 2000 
             }).then(() => {
-                window.location.href = 'sub-category.php'; 
+                window.location.href = 'seller.php'; 
             });
         </script>";
                                         } else {
@@ -514,15 +492,19 @@ include("checked-login.php");
                         document.addEventListener("DOMContentLoaded", function () {
                             document.querySelectorAll(".editCategoryBtn").forEach(button => {
                                 button.addEventListener("click", function () {
-                                    let categoryId = this.getAttribute("data-id");
-                                    let categoryName = this.getAttribute("data-name");
-                                    let categoryDescription = this.getAttribute("data-description");
-                                    let categorySelected = this.getAttribute("data-category"); // Get selected category ID
+                                    let sellerId = this.getAttribute("data-id");
+                                    let sellerName = this.getAttribute("data-name");
+                                    let sellerPhone = this.getAttribute("data-phone");
+                                    let sellerAddress = this.getAttribute("data-address"); 
+                                    let sellerPin = this.getAttribute("data-pin"); 
+                                    let categorySelected = this.getAttribute("data-category");
 
                                     // Populate input fields
-                                    document.getElementById("modalCategoryId").value = categoryId;
-                                    document.getElementById("modalCategoryNameInput").value = categoryName;
-                                    document.getElementById("modalCategoryDescriptionInput").value = categoryDescription;
+                                    document.getElementById("modalSellerId").value = sellerId;
+                                    document.getElementById("modalSellerName").value = sellerName;
+                                    document.getElementById("modalSellerPhone").value = sellerPhone;
+                                    document.getElementById("modalSellerAddress").value = sellerAddress;
+                                    document.getElementById("modalSellerPin").value = sellerPin;
 
                                     // Set the selected category in the dropdown
                                     let categoryDropdown = document.getElementById("modalCategorySelect");
@@ -542,56 +524,6 @@ include("checked-login.php");
 
 
 
-                    <!--  Modal content for view sub category -->
-                    <div class="modal fade bs-example-modal-lg-view" tabindex="-1" role="dialog"
-                        aria-labelledby="myLargeModalLabel" aria-hidden="true">
-                        <div class="modal-dialog modal-lg modal-dialog-centered">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h5 class="modal-title" id="viewCategoryName"></h5>
-                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                        aria-label="Close"></button>
-                                </div>
-                                <div class="modal-body">
-                                    <!-- Category Image -->
-                                    <img id="viewCategoryImage" src="" alt="Category Image" class="img-fluid rounded"
-                                        style="max-width: 200px; border: 1px solid #ddd; margin-bottom: 15px;">
-
-                                    <!-- Category Description -->
-                                    <p>Category: <b id="viewCategory"></b></p>
-                                    <p id="viewCategoryDescription"></p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-
-                    <!-- /.modal -->
-
-
-
-
-
-                    <script>
-                        document.addEventListener("DOMContentLoaded", function () {
-                            document.querySelectorAll(".viewCategoryBtn").forEach(button => {
-                                button.addEventListener("click", function () {
-                                    let categoryName = this.getAttribute("data-name");
-                                    let categoryDescription = this.getAttribute("data-description");
-                                    let categoryImage = this.getAttribute("data-image");
-                                    let category = this.getAttribute("data-category");
-
-                                    // Set modal content
-                                    document.getElementById("viewCategory").textContent = category;
-                                    document.getElementById("viewCategoryName").textContent = categoryName;
-                                    document.getElementById("viewCategoryDescription").textContent = categoryDescription;
-
-                                    // Set image source
-                                    document.getElementById("viewCategoryImage").src = categoryImage;
-                                });
-                            });
-                        });
-                    </script>
 
 
 
