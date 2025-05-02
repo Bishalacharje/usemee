@@ -148,7 +148,7 @@ switch ($type) {
                                                 <div class="col-md-6 mb-3">
                                                     <label class="form-label">Visibility</label>
                                                     <select name="visibility" class="form-control" required>
-                                                        <option value="1">Visible</ contrats: <option value="0">Hidden</option>
+                                                        <option value="1">Visible</option>
                                                     </select>
                                                 </div>
                                             <?php endif; ?>
