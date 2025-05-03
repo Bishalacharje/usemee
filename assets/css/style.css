@@ -1019,7 +1019,31 @@ footer {
     margin: 6px 0 10px;
 }
 
+.emptyCartCon .centerBtnContainer {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 20px;
+}
 
+.emptyCartCon .centerBtnContainer button {
+    border: 2px solid var(--primary_color);
+}
+
+.emptyCartCon .centerBtnContainer button:hover {
+    border-color: var(--text_color);
+}
+
+.emptyCartCon .centerBtnContainer .continueBtn {
+    background-color: transparent;
+    color: var(--primary_color);
+
+}
+
+.emptyCartCon .centerBtnContainer .continueBtn:hover {
+    background-color: rgba(204, 255, 204, 0.236);
+    color: var(--text_color);
+}
 
 /* -------------------------------  Checkout Page  -------------------------------------- */
 .checkoutGrid {
