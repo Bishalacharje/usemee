@@ -111,7 +111,7 @@ while ($row = mysqli_fetch_assoc($cartData)) {
             <p>Add items to it now.</p>
             <a href="shop.php"><button>Shop now</button></a>
           </div>
-          <p>.</p>
+
         <?php } ?>
       </div>
     </div>
