@@ -115,7 +115,34 @@ if (isset($_GET['id'])) {
 
                     </script>
 
-                    <button class="add-cart-btn" id="addToCartBtn"><img src="./assets/images/imgicon/cart-white.png" alt=""> Add to cart</button>
+                    <div class="buyProductButtonCon">
+                        <!-- ----------------------------------------- -->
+                        <form action="checkout_single.php" method="POST" id="buyNowForm">
+                            <input type="hidden" name="product_id" id="buyNowProductId" value="<?php echo $product_id; ?>">
+                            <input type="hidden" name="variant_id" id="buyNowVariantId" value="<?php echo $default_variant['id']; ?>">
+                            <input type="hidden" name="variant_data" id="buyNowVariantData" value='<?php echo json_encode($default_variant); ?>'>
+                            <button type="submit" class="buyButton"> Buy now</button>
+                        </form>
+
+                        <script>
+                            // Update hidden fields on variant change
+                            document.querySelectorAll('.variant-radio').forEach(radio => {
+                                radio.addEventListener('change', function () {
+                                    const variantData = JSON.parse(this.value);
+                                    document.getElementById('buyNowVariantId').value = variantData.id;
+                                    document.getElementById('buyNowVariantData').value = JSON.stringify(variantData);
+                                });
+                            });
+                        </script>
+
+                        <!-- ----------------------------------------------------- -->
+
+
+
+                        <button class="add-cart-btn" id="addToCartBtn"><img src="./assets/images/imgicon/cart-white.png" alt=""> Add to cart</button>
+                    </div>
+
+
 
                     <div class="productFooter">
                         <p><img src="assets/images/imgicon/original.png" alt="">100% Original Products</p>
