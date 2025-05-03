@@ -3,6 +3,7 @@ session_start();
 include("connection.php");
 include("checked-login.php");
 
+// Validate required POST data
 if (!isset($_POST['product_id']) || !isset($_POST['variant_id']) || !isset($_POST['variant_data'])) {
     echo "Invalid request.";
     exit;
@@ -19,23 +20,27 @@ $user_query = mysqli_query($conn, "SELECT * FROM user WHERE email = '$user_email
 $user = mysqli_fetch_assoc($user_query);
 $user_id = $user['id'];
 
-// Insert product into cart only if not already there
-$check_cart = mysqli_query($conn, "SELECT * FROM cart WHERE user_id = '$user_id' AND product_id = '$product_id' AND variant_id = '$variant_id'");
-if (mysqli_num_rows($check_cart) == 0) {
-    mysqli_query($conn, "INSERT INTO cart (user_id, product_id, variant_id, price, quantity) VALUES ('$user_id', '$product_id', '$variant_id', '$price', '$quantity')");
+// Load only the selected product for order summary
+$product_query = mysqli_query($conn, "SELECT p.name AS product_name, v.variant_name 
+    FROM product p 
+    JOIN product_variant v ON v.id = '$variant_id' AND v.product_id = p.id 
+    WHERE p.id = '$product_id'");
+
+if (!$product_query || mysqli_num_rows($product_query) === 0) {
+    echo "Product not found.";
+    exit;
 }
 
-// Load cart items
-$cart_query = mysqli_query($conn, "SELECT c.*, p.name AS product_name, v.variant_name FROM cart c
-    JOIN product p ON c.product_id = p.id
-    JOIN product_variant v ON c.variant_id = v.id
-    WHERE c.user_id = '$user_id'");
-$cart_items = [];
-$subtotal = 0;
-while ($item = mysqli_fetch_assoc($cart_query)) {
-    $subtotal += $item['price'] * $item['quantity'];
-    $cart_items[] = $item;
-}
+$product = mysqli_fetch_assoc($product_query);
+$cart_items = [
+    [
+        'product_name' => $product['product_name'],
+        'variant_name' => $product['variant_name'],
+        'price' => $price,
+        'quantity' => $quantity
+    ]
+];
+$subtotal = $price * $quantity;
 $delivery_charge = 49;
 $total_price = $subtotal + $delivery_charge;
 
@@ -69,7 +74,7 @@ $pin = $user['pin'];
 
             <div class="checkoutGrid">
                 <div>
-                    <form action="place_order.php" method="POST">
+                    <form action="place_order_single.php" method="POST">
                         <h3>Shipping Address</h3>
                         <div class="chekoutBox">
                             <div class="formGrid">
@@ -118,6 +123,12 @@ $pin = $user['pin'];
 
                         <br>
                         <button type="submit">Place Order</button>
+
+                        <!-- Send the selected product/variant info with the order -->
+                        <input type="hidden" name="product_id" value="<?php echo $product_id; ?>">
+                        <input type="hidden" name="variant_id" value="<?php echo $variant_id; ?>">
+                        <input type="hidden" name="variant_data" value='<?php echo json_encode($variant_data); ?>'>
+                        <input type="hidden" name="quantity" value="1">
                     </form>
                 </div>
 
