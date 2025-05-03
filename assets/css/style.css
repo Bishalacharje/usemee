@@ -647,6 +647,8 @@ footer {
     border-radius: 5px;
 }
 
+
+
 .productBox .productDes {
     display: flex;
     flex-direction: column;
@@ -835,6 +837,22 @@ footer {
     width: 200px;
     align-items: center;
     gap: 10px;
+}
+
+.singleProduct .buyProductButtonCon {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.singleProduct .buyProductButtonCon .buyButton {
+    background-color: var(--secondary_color);
+    color: var(--text_color);
+}
+
+.singleProduct .buyProductButtonCon .buyButton:hover {
+    background-color: var(--text_color);
+    color: var(--bg_color);
 }
 
 .productFooter p img {
