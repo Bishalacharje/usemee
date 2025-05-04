@@ -122,7 +122,7 @@ $total_price = $sub_total + $delivery_cost;
                             </div>
 
                             <div>
-                                <label>Address</label>
+                                <label>Street Address / Apartment / Suite / Unit</label>
                                 <textarea name="address" required><?php echo $address; ?></textarea>
                             </div>
 
