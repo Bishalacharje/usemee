@@ -45,7 +45,7 @@ $order_id = $result['id']; ?>
 
 
                         <h5>
-                            <b>ID: order2025<?php echo $order_id; ?></b>
+                            <b>ID: order2025<?php echo $order_id; ?> </b>
                             <?php
                             if ($result['status'] == 'Delivered') {
                                 ?>
@@ -77,6 +77,19 @@ $order_id = $result['id']; ?>
                         </h5>
                         <h2>₹<?php echo $result['total_price']; ?></h2>
                         <p>Payment Mode: <?php echo $result['payment_mode']; ?></p>
+
+                        <?php
+                        if ($result['status'] == 'Pending' || $result['status'] == 'Confirmed' || $result['status'] == 'Packed') {
+                            ?>
+                            <form action="">
+                                <input type="text" value="<?php echo $order_id; ?>" readonly hidden>
+                                <button type="submit">Cancel Order</button>
+                            </form>
+                            <?php
+                        }
+                        ?>
+
+
                     </div>
 
                     <h3>Items In This Order</h3>

@@ -1246,15 +1246,54 @@ button.updatePassword:hover {
 
 .ordersCon table tr {
     display: grid;
-    grid-template-columns: 2fr 3fr 2fr 2fr 1fr;
+    grid-template-columns: 3fr 2fr 1fr
 }
 
 .ordersCon table tbody td {
     padding: 16px 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: start;
+}
+
+.ordersCon table tbody td .date {
+    font-size: 12px;
+}
+
+.ordersCon table tbody td button {
+    background-color: var(--text_color);
+    width: 120px;
+    height: 36px;
+    font-size: 12px;
 }
 
 .ordersCon table tbody tr {
     border-bottom: 1px solid #e5eaee;
+}
+
+.pagination {
+    margin-top: 20px;
+    text-align: center;
+}
+
+.pagination a {
+    padding: 8px 14px;
+    margin: 0 5px;
+    background: #f0f0f0;
+    border: 1px solid #ccc;
+    text-decoration: none;
+    color: var(--text_color);
+}
+
+.pagination a:hover {
+    background: #ddd;
+}
+
+.pagination .active-page {
+    background-color: var(--text_color);
+    color: var(--bg_color);
+    border-color: var(--text_color);
 }
 
 .status {
