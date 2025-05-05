@@ -1041,7 +1041,6 @@ footer {
 }
 
 .emptyCartCon .centerBtnContainer .continueBtn:hover {
-    background-color: rgba(204, 255, 204, 0.236);
     color: var(--text_color);
 }
 

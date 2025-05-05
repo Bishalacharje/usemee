@@ -89,7 +89,7 @@ if ($sprofile == true) {
                     <div class="formGrid grid1">
 
                         <div>
-                            <label for="">Address</label>
+                            <label for="">Street Address / Apartment / Suite / Unit</label>
                             <textarea name="address" id=""><?php echo $address ?></textarea>
                         </div>
 
