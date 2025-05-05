@@ -2,6 +2,26 @@
 include("connection.php");
 session_start();
 include("checked-login.php");
+
+
+
+// Pagination variables
+$limit = 10;
+$page = isset($_GET['page']) && is_numeric($_GET['page']) ? (int) $_GET['page'] : 1;
+if ($page < 1)
+    $page = 1;
+$offset = ($page - 1) * $limit;
+
+// Count total orders
+$count_query = "SELECT COUNT(*) AS total FROM `orders` WHERE `user_id`='$userid'";
+$count_result = mysqli_query($conn, $count_query);
+$count_row = mysqli_fetch_assoc($count_result);
+$total_orders = $count_row['total'];
+$total_pages = ceil($total_orders / $limit);
+
+// Fetch orders for current page
+$query = "SELECT * FROM `orders` WHERE `user_id`='$userid' ORDER BY `id` DESC LIMIT $limit OFFSET $offset";
+$data = mysqli_query($conn, $query);
 ?>
 
 <!DOCTYPE html>
@@ -10,12 +30,10 @@ include("checked-login.php");
 <head>
     <?php include("./components/headlink.php"); ?>
     <title>My Cart - eCommerce Website</title>
-
 </head>
 
 <body>
     <div>
-
         <?php include("./components/header.php"); ?>
     </div>
 
@@ -52,28 +70,13 @@ include("checked-login.php");
 
                     <div class="ordersCon">
                         <table>
-                            <thead>
-                                <tr>
-                                    <th>Order_ID</th>
-                                    <th>Date</th>
-                                    <th>Status</th>
-                                    <th>Total</th>
-                                    <th>View</th>
-                                </tr>
-
-                            </thead>
                             <tbody>
-                                <?php
-                                $query = "SELECT * FROM `orders` WHERE `user_id`='$userid' ORDER BY `id` DESC";
-                                $data = mysqli_query($conn, $query);
-                                $total = mysqli_num_rows($data);
-
-
-                                while ($result = mysqli_fetch_assoc($data)) {
-                                    ?>
+                                <?php while ($result = mysqli_fetch_assoc($data)) { ?>
                                     <tr>
-                                        <td>order2025<?php echo $result['id']; ?></td>
-                                        <td><?php echo $result['order_date']; ?></td>
+                                        <td>
+                                            <span class="date"><?php echo $result['order_date']; ?></span>
+                                            <h2>₹<?php echo $result['total_price']; ?></h2>
+                                        </td>
                                         <td>
                                             <?php
                                             if ($result['status'] == 'Delivered') {
@@ -105,50 +108,41 @@ include("checked-login.php");
                                             ?>
                                         </td>
                                         <td>
-                                            <h3>₹<?php echo $result['total_price']; ?></h3>
-                                        </td>
-                                        <td>
-                                            <a href="<?php echo "track-order.php?id=$result[id]" ?>">View</a>
+                                            <a href="track-order.php?id=<?php echo $result['id']; ?>">
+                                                <button>View Order</button>
+                                            </a>
                                         </td>
                                     </tr>
-                                    <?php
-                                }
-
-
-                                ?>
+                                <?php } ?>
                             </tbody>
                         </table>
+
+                        <!-- Pagination -->
+                        <div class="pagination">
+                            <?php if ($page > 1): ?>
+                                <a href="?page=<?php echo $page - 1; ?>">«</a>
+                            <?php endif; ?>
+
+                            <?php for ($i = 1; $i <= $total_pages; $i++): ?>
+                                <a href="?page=<?php echo $i; ?>" class="<?php echo $i == $page ? 'active-page' : ''; ?>">
+                                    <?php echo $i; ?>
+                                </a>
+                            <?php endfor; ?>
+
+                            <?php if ($page < $total_pages): ?>
+                                <a href="?page=<?php echo $page + 1; ?>">»</a>
+                            <?php endif; ?>
+                        </div>
+
+
                     </div>
-
-
-
-
-
-
-
-
-
                 </div>
             </div>
-
-
         </div>
     </section>
 
-
     <?php include("./components/footer.php"); ?>
     <?php include("./components/footscript.php"); ?>
-
-
-
-
-
-
-
-
-
-
-
 </body>
 
 </html>
