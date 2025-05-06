@@ -101,7 +101,7 @@ $data = mysqli_query($conn, $query);
                                                 <?php
                                             } else {
                                                 ?>
-                                                                <span class="status"><?php echo $result['status']; ?></span>
+                                                                <span class="status">Placed</span>
                                                 <?php
                                             }
 
