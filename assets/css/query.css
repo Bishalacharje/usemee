@@ -659,6 +659,7 @@
 
     .productGrid {
         grid-template-columns: 1fr 1fr 1fr 1fr;
+        min-height: 50vh;
     }
 
     .shopSidebar .shopSidebarBox {
@@ -690,6 +691,8 @@
         display: flex;
         align-items: center;
         gap: 20px;
+
+
     }
 
     .filterBtn a img {
@@ -1141,24 +1144,48 @@
 
     .filterBtn {
         gap: 8px;
+        width: 100%;
+        justify-content: space-between;
+    }
+
+    #sortForm {
+        width: 100%;
+    }
+
+    #sortForm select {
+        font-size: 10px;
     }
 
     .filterSort {
         flex-direction: column;
         align-items: start;
         gap: 8px;
+        width: 100%;
     }
 
     .filterBtn button {
         height: 32px;
+        width: 100%;
+    }
+
+    .filterBtn button.resetButton {
+        width: fit-content;
+        padding: 10px;
+        background-color: var(--text_color);
+        border-color: var(--text_color);
     }
 
     .productBox .productImg {
         height: 160px;
     }
 
+
     .shopSidebar .shopSidebarBox {
-        width: 90%;
+        top: auto;
+        bottom: -4px;
+        width: calc(100% - 8vw);
+        padding: 4vw 4vw 5vw;
+        margin-bottom: 0;
     }
 
     /* -------------------------------  Single Product Page  -------------------------------------- */
@@ -1508,6 +1535,11 @@
 
     .custom-modal {
         width: 80%;
+    }
+
+    .noProductsMessage h2 {
+        text-align: center;
+        font-size: 18px;
     }
 
 }

@@ -66,8 +66,19 @@ if (mysqli_num_rows($data) > 0) {
     }
 } else {
     // If no products found, show message
-    $output = '<div class="noProductsMessage" style="text-align: center; padding: 20px;">
-                   <h3>No products found in this category or subcategory.</h3>
+    $output = '<div class="noProductsMessage">
+                  
+                    <div class="emptyCartCon">
+                        <script src="https://unpkg.com/@dotlottie/player-component@2.7.12/dist/dotlottie-player.mjs"
+                                    type="module"></script>
+                                <dotlottie-player
+                                    src="https://lottie.host/f38bfa84-2aa7-433c-bd28-dc99de95923e/PXb2Pvqhty.lottie"
+                                    background="transparent" speed="1" style="width: 160px; height: 160px" loop
+                                    autoplay></dotlottie-player>
+                        <h2>No products found in this category or subcategory.</h2>
+                        <p>Shop available products.</p>
+                        <a href="shop.php"><button>Shop now</button></a>
+                    </div>
                </div>';
 }
 

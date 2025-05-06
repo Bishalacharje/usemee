@@ -80,7 +80,8 @@ $selectedSubcategories = isset($_GET['subcategory']) ? explode(',', $_GET['subca
 
                         <div class="filterSort">
                             <div class="filterBtn">
-                                <a href="shop.php"><img src="assets/images/imgicon/rotate.png" alt=""></a>
+                                <button class="resetButton"><a href="shop.php"><img
+                                            src="assets/images/imgicon/rotate.png" alt=""></a></button>
                                 <button class="categoryFilterBtn">Category</button>
                                 <button class="subCategoryFilterBtn">Sub Category</button>
                             </div>
