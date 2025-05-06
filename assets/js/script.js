@@ -94,63 +94,42 @@ var swiper = new Swiper(".slide-content-category", {
   },
 });
 
-// CATEGORY filter toggle
+//////////////////////////////////////////// mobile and tab category Filter
 document
   .querySelector(".categoryFilterBtn")
-  .addEventListener("click", function (e) {
-    e.stopPropagation(); // Prevent triggering document click
-    const categoryFilter = document.querySelector("#categoryFilter");
-    const subCategoryFilter = document.querySelector("#subCategoryFilter");
-
-    // Close sub-category filter if open
-    subCategoryFilter.style.display = "none";
-
-    // Toggle category filter
-    categoryFilter.style.display =
-      categoryFilter.style.display === "block" ? "none" : "block";
+  .addEventListener("click", function () {
+    var categoryFilter = document.querySelector("#categoryFilter");
+    // Toggle display property
+    if (categoryFilter.style.display === "block") {
+      categoryFilter.style.display = "none";
+    } else {
+      categoryFilter.style.display = "block";
+    }
   });
 
-// SUB-CATEGORY filter toggle
-document
-  .querySelector(".subCategoryFilterBtn")
-  .addEventListener("click", function (e) {
-    e.stopPropagation();
-    const categoryFilter = document.querySelector("#categoryFilter");
-    const subCategoryFilter = document.querySelector("#subCategoryFilter");
-
-    // Close category filter if open
-    categoryFilter.style.display = "none";
-
-    // Toggle sub-category filter
-    subCategoryFilter.style.display =
-      subCategoryFilter.style.display === "block" ? "none" : "block";
-  });
-
-// Close buttons
+// Close button functionality
 document
   .querySelector(".closeCategoryFilter")
   .addEventListener("click", function () {
     document.querySelector("#categoryFilter").style.display = "none";
   });
+
+//////////////////////////////////////////// mobile and tab Sub category Filter
+document
+  .querySelector(".subCategoryFilterBtn")
+  .addEventListener("click", function () {
+    var subCategoryFilter = document.querySelector("#subCategoryFilter");
+    // Toggle display property
+    if (subCategoryFilter.style.display === "block") {
+      subCategoryFilter.style.display = "none";
+    } else {
+      subCategoryFilter.style.display = "block";
+    }
+  });
+
+// Close button functionality
 document
   .querySelector(".closeSubCategoryFilter")
   .addEventListener("click", function () {
     document.querySelector("#subCategoryFilter").style.display = "none";
   });
-
-// Close both if clicking outside
-document.addEventListener("click", function (e) {
-  const categoryFilter = document.querySelector("#categoryFilter");
-  const subCategoryFilter = document.querySelector("#subCategoryFilter");
-
-  // Check if click is outside both filters and buttons
-  if (
-    !e.target.closest("#categoryFilter") &&
-    !e.target.closest(".categoryFilterBtn") &&
-    !e.target.closest("#subCategoryFilter") &&
-    !e.target.closest(".subCategoryFilterBtn")
-  ) {
-    categoryFilter.style.display = "none";
-    subCategoryFilter.style.display = "none";
-  }
-});
