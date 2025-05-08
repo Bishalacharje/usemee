@@ -4,11 +4,15 @@ error_reporting(0);
 include("connection.php");
 session_start();
 
+include("enc_dec.php");
+
 if (isset($_GET['id'])) {
     $product_id = $_GET['id'];
 
+    // Decryp the ID
+    $decryptId = decryptId($product_id);
     // Fetch product
-    $query = "SELECT * FROM product WHERE id = '$product_id'";
+    $query = "SELECT * FROM product WHERE id = '$decryptId'";
     $data = mysqli_query($conn, $query);
     $result = mysqli_fetch_assoc($data);
 
@@ -27,7 +31,7 @@ if (isset($_GET['id'])) {
     $subCategoryName = $resultns['name'];
 
     // Fetch all variants
-    $queryp = "SELECT * FROM product_variant WHERE product_id = '$product_id' ORDER BY sale_price ASC";
+    $queryp = "SELECT * FROM product_variant WHERE product_id = '$decryptId' ORDER BY sale_price ASC";
     $datap = mysqli_query($conn, $queryp);
     $variants = [];
     while ($v = mysqli_fetch_assoc($datap)) {
@@ -118,7 +122,7 @@ if (isset($_GET['id'])) {
                     <div class="buyProductButtonCon">
                         <!-- ----------------------------------------- -->
                         <form action="checkout_single.php" method="POST" id="buyNowForm">
-                            <input type="hidden" name="product_id" id="buyNowProductId" value="<?php echo $product_id; ?>">
+                            <input type="hidden" name="product_id" id="buyNowProductId" value="<?php echo $decryptId; ?>">
                             <input type="hidden" name="variant_id" id="buyNowVariantId" value="<?php echo $default_variant['id']; ?>">
                             <input type="hidden" name="variant_data" id="buyNowVariantData" value='<?php echo json_encode($default_variant); ?>'>
                             <button type="submit" class="buyButton"> Buy now</button>
@@ -188,6 +192,12 @@ if (isset($_GET['id'])) {
                             ?>
                             <?php
                             $id = $result['id'];
+
+                            // Encrypt the ID
+                            $encryptedId = encryptId($id);
+
+
+
                             $queryp = "SELECT * FROM `product_variant` WHERE `product_id` = '$id' ORDER BY `sale_price` ASC LIMIT 1";
                             $datap = mysqli_query($conn, $queryp);
                             $resultp = mysqli_fetch_assoc($datap);
@@ -196,7 +206,7 @@ if (isset($_GET['id'])) {
                             $discount = round((($mrp - $sale_price) / $mrp) * 100);
 
                             ?>
-                            <a href="product.php?id=<?php echo $result['id']; ?>" class="productBox">
+                            <a href="product.php?id=<?php echo $encryptedId; ?>" class="productBox">
                                 <div class="productImg">
                                     <img src="superadmin/<?php echo $result['image']; ?>" alt="">
                                     <span class="subCategory"><?php echo $subCategoryName; ?></span>
@@ -262,7 +272,7 @@ if (isset($_GET['id'])) {
                 url: 'add-to-cart.php',
                 type: 'POST',
                 data: {
-                    product_id: <?php echo $product_id; ?>,
+                    product_id: <?php echo $decryptId; ?>,
                     variant_data: JSON.stringify(variantData)
                 },
                 dataType: 'json',
@@ -277,7 +287,7 @@ if (isset($_GET['id'])) {
                     } else if (response.status === 'not_logged_in') {
                         toastr.warning(response.message);
                         setTimeout(function () {
-                            window.location.href = 'login.php?redirect=product.php?id=<?php echo $product_id; ?>';
+                            window.location.href = 'login.php?redirect=product.php?id=<?php echo $decryptId; ?>';
                         }, 1500);
                     } else {
                         toastr.error(response.message);
