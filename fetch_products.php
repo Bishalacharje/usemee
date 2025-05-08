@@ -75,7 +75,7 @@ if (mysqli_num_rows($data) > 0) {
                                     src="https://lottie.host/f38bfa84-2aa7-433c-bd28-dc99de95923e/PXb2Pvqhty.lottie"
                                     background="transparent" speed="1" style="width: 160px; height: 160px" loop
                                     autoplay></dotlottie-player>
-                        <h2>No products found in this category or subcategory.</h2>
+                        <h2>No products found in this category & subcategory.</h2>
                         <p>Shop available products.</p>
                         <a href="shop.php"><button>Shop now</button></a>
                     </div>

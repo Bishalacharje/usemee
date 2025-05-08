@@ -12,7 +12,7 @@ $selectedSubcategories = isset($_GET['subcategory']) ? explode(',', $_GET['subca
 
 <head>
     <?php include("./components/headlink.php"); ?>
-    <title>MY-Shop - eCommerce Website</title>
+    <title>Shop - eCommerce Website</title>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 
@@ -104,7 +104,7 @@ $selectedSubcategories = isset($_GET['subcategory']) ? explode(',', $_GET['subca
 
                     <!-- No Product Message -->
                     <div id="noProductMessage" style="display: none; text-align: center; padding: 20px;">
-                        <h3>No products found in this category and subcategory.</h3>
+                        <h3>No products found in this category & subcategory.</h3>
                     </div>
 
                 </div>
