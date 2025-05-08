@@ -42,10 +42,12 @@ $totalcart = mysqli_num_rows($datacart);
                     </div>
                 </div>
 
-                <form action="" class="searchCon">
+                <form action="./search.php" class="searchCon" method="GET">
                     <img src="./assets/images/imgicon/search.png" alt="">
-                    <input type="search" placeholder="Search here...">
+                    <input type="search" name="search" placeholder="Search here..." required
+                        value="<?php echo isset($_GET['search']) ? htmlspecialchars($_GET['search']) : ''; ?>">
                 </form>
+
 
             </div>
             <div class="headerRight">
