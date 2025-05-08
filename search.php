@@ -50,9 +50,9 @@ if ($query !== '') {
         <div class="container">
             <div class="title">
                 <div>
-                    <h2><?php echo htmlspecialchars($query); ?></h2>
+                    <h2>Search (<?php echo htmlspecialchars($query); ?>)</h2>
                     <p><a href="index.php">Home</a>-
-                        <span><?php echo htmlspecialchars($query); ?></span>
+                        <span>Search (<?php echo htmlspecialchars($query); ?>)</span>
                     </p>
                 </div>
             </div>

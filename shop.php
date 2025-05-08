@@ -3,6 +3,8 @@ error_reporting(0);
 include("connection.php");
 session_start();
 
+
+
 $selectedCategory = isset($_GET['category']) ? $_GET['category'] : "";
 $selectedSubcategories = isset($_GET['subcategory']) ? explode(',', $_GET['subcategory']) : [];
 ?>

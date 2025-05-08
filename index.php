@@ -3,6 +3,9 @@ error_reporting(0);
 include("connection.php");
 session_start();
 // include("checked-login.php");
+
+
+include("enc_dec.php");
 ?>
 
 
@@ -27,36 +30,37 @@ session_start();
   </div>
   <!-- ---------------------------------  Banner Section  ------------------------------------ -->
   <section class="conSection bannerSec">
-  <div class="container">
-    <div class="bannerSlider">
-      <div class="slider-wrapper">
-        <?php
-        // Fetch header banners where visibility is set to visible
-        $headerBannerQuery = "SELECT * FROM `header_banners` WHERE `visibility` = 1 ORDER BY id DESC";
-        $headerBannerData = mysqli_query($conn, $headerBannerQuery);
+    <div class="container">
+      <div class="bannerSlider">
+        <div class="slider-wrapper">
+          <?php
+          // Fetch header banners where visibility is set to visible
+          $headerBannerQuery = "SELECT * FROM `header_banners` WHERE `visibility` = 1 ORDER BY id DESC";
+          $headerBannerData = mysqli_query($conn, $headerBannerQuery);
 
-        if (mysqli_num_rows($headerBannerData) > 0) {
-          while ($banner = mysqli_fetch_assoc($headerBannerData)) {
-        ?>
-          <a href="<?php echo htmlspecialchars($banner['link']); ?>" class="banner">
-            <div class="bannerImage">
-              <img src="superadmin/<?php echo $banner['image_path']; ?>" alt="<?php echo htmlspecialchars($banner['title']); ?>" />
-            </div>
-          </a>
-        <?php 
+          if (mysqli_num_rows($headerBannerData) > 0) {
+            while ($banner = mysqli_fetch_assoc($headerBannerData)) {
+              ?>
+              <a href="<?php echo htmlspecialchars($banner['link']); ?>" class="banner">
+                <div class="bannerImage">
+                  <img src="superadmin/<?php echo $banner['image_path']; ?>"
+                    alt="<?php echo htmlspecialchars($banner['title']); ?>" />
+                </div>
+              </a>
+              <?php
+            }
+          } else {
+            // Fallback if no banners are available
+            echo '<div class="no-banners">No header banners available</div>';
           }
-        } else {
-          // Fallback if no banners are available
-          echo '<div class="no-banners">No header banners available</div>';
-        }
-        ?>
-      </div>
+          ?>
+        </div>
 
-      <button class="prev" onclick="prevSlide()">&#8592;</button>
-      <button class="next" onclick="nextSlide()">&#8594;</button>
+        <button class="prev" onclick="prevSlide()">&#8592;</button>
+        <button class="next" onclick="nextSlide()">&#8594;</button>
+      </div>
     </div>
-  </div>
-</section>
+  </section>
 
 
   <!-- ---------------------------------  Subcategory Cards  ------------------------------------ -->
@@ -112,6 +116,8 @@ session_start();
             while ($resultSelling = mysqli_fetch_assoc($dataSelling)) {
 
               $pid = $resultSelling['id'];
+              // Encrypt the ID
+              $encryptedPId = encryptId($pid);
 
               $cid = $resultSelling['categoryId'];
               $queryn = "SELECT * FROM `category` WHERE `id`='$cid'";
@@ -141,7 +147,7 @@ session_start();
 
               ?>
               <div class="card swiper-slide">
-                <a href="product.php?id=<?php echo $pid; ?>" class="productBox">
+                <a href="product.php?id=<?php echo $encryptedPId; ?>" class="productBox">
                   <div class="productImg">
                     <img src="superadmin/<?php echo $resultSelling['image']; ?>" alt="">
                     <span class="subCategory"><?php echo $subCategoryName; ?></span>
@@ -190,52 +196,54 @@ session_start();
     </div>
   </section>
 
- <!-- ---------------------------------  Center Banner Section  ------------------------------------ -->
+  <!-- ---------------------------------  Center Banner Section  ------------------------------------ -->
 
- <section class="conSection centerBannerSec">
-  <div class="container">
-    <div class="centerBannerGrid">
-      <?php
-      // Fetch center cards that are visible, ordered by position
-      $centerCardsQuery = "SELECT * FROM `center_cards` WHERE `visibility` = 1 ORDER BY position ASC";
-      $centerCardsResult = mysqli_query($conn, $centerCardsQuery);
-
-      $centerCards = [];
-      while ($card = mysqli_fetch_assoc($centerCardsResult)) {
-        $centerCards[] = $card;
-      }
-
-      // Large banner (position 1)
-      if (!empty($centerCards[0])) {
-        $large = $centerCards[0];
-      ?>
-        <div class="centerBannerLg">
-          <a href="<?php echo !empty($large['link']) ? htmlspecialchars($large['link']) : '#'; ?>">
-            <img src="superadmin/<?php echo $large['image_path']; ?>" alt="<?php echo htmlspecialchars($large['title']); ?>">
-          </a>
-        </div>
-      <?php } ?>
-
-      <div class="centerBannerSmall">
+  <section class="conSection centerBannerSec">
+    <div class="container">
+      <div class="centerBannerGrid">
         <?php
-        // Two small banners
-        for ($i = 1; $i <= 2; $i++) {
-          if (!empty($centerCards[$i])) {
-            $small = $centerCards[$i];
-        ?>
-            <div class="centerBanner">
-              <a href="<?php echo !empty($small['link']) ? htmlspecialchars($small['link']) : '#'; ?>">
-                <img src="superadmin/<?php echo $small['image_path']; ?>" alt="<?php echo htmlspecialchars($small['title']); ?>">
-              </a>
-            </div>
-        <?php
-          }
+        // Fetch center cards that are visible, ordered by position
+        $centerCardsQuery = "SELECT * FROM `center_cards` WHERE `visibility` = 1 ORDER BY position ASC";
+        $centerCardsResult = mysqli_query($conn, $centerCardsQuery);
+
+        $centerCards = [];
+        while ($card = mysqli_fetch_assoc($centerCardsResult)) {
+          $centerCards[] = $card;
         }
-        ?>
+
+        // Large banner (position 1)
+        if (!empty($centerCards[0])) {
+          $large = $centerCards[0];
+          ?>
+          <div class="centerBannerLg">
+            <a href="<?php echo !empty($large['link']) ? htmlspecialchars($large['link']) : '#'; ?>">
+              <img src="superadmin/<?php echo $large['image_path']; ?>"
+                alt="<?php echo htmlspecialchars($large['title']); ?>">
+            </a>
+          </div>
+        <?php } ?>
+
+        <div class="centerBannerSmall">
+          <?php
+          // Two small banners
+          for ($i = 1; $i <= 2; $i++) {
+            if (!empty($centerCards[$i])) {
+              $small = $centerCards[$i];
+              ?>
+              <div class="centerBanner">
+                <a href="<?php echo !empty($small['link']) ? htmlspecialchars($small['link']) : '#'; ?>">
+                  <img src="superadmin/<?php echo $small['image_path']; ?>"
+                    alt="<?php echo htmlspecialchars($small['title']); ?>">
+                </a>
+              </div>
+              <?php
+            }
+          }
+          ?>
+        </div>
       </div>
     </div>
-  </div>
-</section>
+  </section>
 
 
 
@@ -332,6 +340,8 @@ session_start();
           ?>
           <?php
           $id = $result['id'];
+          // Encrypt the ID
+          $encryptedPId = encryptId($id);
           $queryp = "SELECT * FROM `product_variant` WHERE `product_id` = '$id' ORDER BY `sale_price` ASC LIMIT 1";
           $datap = mysqli_query($conn, $queryp);
           $resultp = mysqli_fetch_assoc($datap);
@@ -340,7 +350,7 @@ session_start();
           $discount = round((($mrp - $sale_price) / $mrp) * 100);
 
           ?>
-          <a href="product.php?id=<?php echo $result['id']; ?>" class="productBox">
+          <a href="product.php?id=<?php echo $encryptedPId; ?>" class="productBox">
             <div class="productImg">
               <img src="superadmin/<?php echo $result['image']; ?>" alt="">
               <span class="subCategory"><?php echo $subCategoryName; ?></span>
@@ -375,30 +385,31 @@ session_start();
   <!-- ---------------------------------  Footer card Section  ------------------------------------ -->
 
   <section class="conSection">
-  <div class="container">
-    <div class="footerCardGrid">
-      <?php
-      // Fetch all footer cards
-      $footerCardQuery = "SELECT * FROM `footer_cards` ORDER BY id ASC";
-      $footerCardResult = mysqli_query($conn, $footerCardQuery);
+    <div class="container">
+      <div class="footerCardGrid">
+        <?php
+        // Fetch all footer cards
+        $footerCardQuery = "SELECT * FROM `footer_cards` ORDER BY id ASC";
+        $footerCardResult = mysqli_query($conn, $footerCardQuery);
 
-      // Check if we have any cards
-      if (mysqli_num_rows($footerCardResult) > 0) {
-        while ($card = mysqli_fetch_assoc($footerCardResult)) {
-      ?>
-          <a href="<?php echo !empty($card['link']) ? htmlspecialchars($card['link']) : '#'; ?>" class="footerCard">
-            <img src="superadmin/<?php echo $card['image_path']; ?>" alt="<?php echo htmlspecialchars($card['title']); ?>">
-          </a>
-      <?php
+        // Check if we have any cards
+        if (mysqli_num_rows($footerCardResult) > 0) {
+          while ($card = mysqli_fetch_assoc($footerCardResult)) {
+            ?>
+            <a href="<?php echo !empty($card['link']) ? htmlspecialchars($card['link']) : '#'; ?>" class="footerCard">
+              <img src="superadmin/<?php echo $card['image_path']; ?>"
+                alt="<?php echo htmlspecialchars($card['title']); ?>">
+            </a>
+            <?php
+          }
+        } else {
+          // Fallback if no footer cards are found
+          echo '<div class="no-cards">No footer cards available</div>';
         }
-      } else {
-        // Fallback if no footer cards are found
-        echo '<div class="no-cards">No footer cards available</div>';
-      }
-      ?>
+        ?>
+      </div>
     </div>
-  </div>
-</section>
+  </section>
 
 
   <?php include("./components/footer.php"); ?>

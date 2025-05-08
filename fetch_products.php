@@ -1,6 +1,8 @@
 <?php
 include("connection.php");
 
+include("enc_dec.php");
+
 $category = isset($_POST['category']) ? $_POST['category'] : "";
 $subcategories = isset($_POST['subcategories']) ? $_POST['subcategories'] : "";
 $sort_option = isset($_POST['sort_option']) ? $_POST['sort_option'] : "relevance";
@@ -45,12 +47,14 @@ $output = "";
 // Check if any products are returned
 if (mysqli_num_rows($data) > 0) {
     while ($result = mysqli_fetch_assoc($data)) {
+        // Encrypt the ID
+        $encryptedPId = encryptId($result['id']);
         $mrp = $result['mrp'];
         $sale_price = $result['min_variant_price'];
         $discount = ($mrp > 0) ? round((($mrp - $sale_price) / $mrp) * 100) : 0;
 
         $output .= '
-            <a href="product.php?id=' . $result['id'] . '" class="productBox">
+            <a href="product.php?id=' . $encryptedPId . '" class="productBox">
                 <div class="productImg">
                     <img src="superadmin/' . $result['image'] . '" alt="">
                 </div>
