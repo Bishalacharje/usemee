@@ -3,6 +3,7 @@ error_reporting(0);
 include("connection.php");
 session_start();
 // include("checked-login.php");
+include("enc_dec.php");
 
 ?>
 
@@ -39,11 +40,14 @@ session_start();
                 $queryns = "SELECT * FROM `subcategory`";
                 $datans = mysqli_query($conn, $queryns);
 
+
+
                 while ($resultns = mysqli_fetch_assoc($datans)) {
+                    $encryptedSubCatId = encryptId($resultns['id']);
                     $subCategoryName = $resultns['name'];
                     $subCategoryImg = $resultns['image'];
                     ?>
-                    <a href="shop.php?subcategory=<?php echo $resultns['id']; ?>" class="subCategoryCard">
+                    <a href="shop.php?subcategory=<?php echo $encryptedSubCatId; ?>" class="subCategoryCard">
                         <div class="subCategoryCardImg">
                             <img src="superadmin/<?php echo $subCategoryImg; ?>" alt="">
                         </div>
@@ -76,11 +80,12 @@ session_start();
                         $datac = mysqli_query($conn, $queryc);
 
                         while ($resultc = mysqli_fetch_assoc($datac)) {
+                            $encryptedCatId = encryptId($resultc['id']);
                             $categoryName = $resultc['name'];
                             $categoryImg = $resultc['image'];
                             ?>
                             <div class="card swiper-slide categoryCard">
-                                <a href="shop.php?category=<?php echo $resultc['id']; ?>" class="subCategoryCard">
+                                <a href="shop.php?category=<?php echo $encryptedCatId; ?>" class="subCategoryCard">
                                     <div class="subCategoryCardImg">
                                         <img src="superadmin/<?php echo $categoryImg; ?>" alt="">
                                     </div>
@@ -157,6 +162,8 @@ session_start();
                     ?>
                     <?php
                     $id = $result['id'];
+                    // Encrypt the ID
+                    $encryptedPId = encryptId($id);
                     $queryp = "SELECT * FROM `product_variant` WHERE `product_id` = '$id' ORDER BY `sale_price` ASC LIMIT 1";
                     $datap = mysqli_query($conn, $queryp);
                     $resultp = mysqli_fetch_assoc($datap);
@@ -165,7 +172,7 @@ session_start();
                     $discount = round((($mrp - $sale_price) / $mrp) * 100);
 
                     ?>
-                    <a href="product.php?id=<?php echo $result['id']; ?>" class="productBox">
+                    <a href="product.php?id=<?php echo $encryptedPId ?>" class="productBox">
                         <div class="productImg">
                             <img src="superadmin/<?php echo $result['image']; ?>" alt="">
                             <span class="subCategory"><?php echo $subCategoryName; ?></span>

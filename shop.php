@@ -1,12 +1,23 @@
 <?php
 error_reporting(0);
-include("connection.php");
 session_start();
+include("connection.php");
+include("enc_dec.php"); // <-- Include your encryption/decryption functions here
 
+// Decrypt category ID
+$selectedCategory = "";
+if (isset($_GET['category'])) {
+    $selectedCategory = decryptId($_GET['category']);
+}
 
-
-$selectedCategory = isset($_GET['category']) ? $_GET['category'] : "";
-$selectedSubcategories = isset($_GET['subcategory']) ? explode(',', $_GET['subcategory']) : [];
+// Decrypt subcategory IDs
+$selectedSubcategories = [];
+if (isset($_GET['subcategory'])) {
+    $encryptedSubs = explode(',', $_GET['subcategory']);
+    foreach ($encryptedSubs as $encSub) {
+        $selectedSubcategories[] = decryptId($encSub);
+    }
+}
 ?>
 
 <!DOCTYPE html>
@@ -19,8 +30,6 @@ $selectedSubcategories = isset($_GET['subcategory']) ? explode(',', $_GET['subca
 </head>
 
 <body>
-
-    <!-- HEADER -->
     <div><?php include("./components/header.php"); ?></div>
 
     <section class="conSection shopSection otherPageSection">
@@ -30,9 +39,7 @@ $selectedSubcategories = isset($_GET['subcategory']) ? explode(',', $_GET['subca
                 <!-- Sidebar -->
                 <div class="shopSidebar">
                     <div class="shopSidebarBox" id="categoryFilter">
-                        <div class="closeCategoryFilter">
-                            x
-                        </div>
+                        <div class="closeCategoryFilter">x</div>
                         <h4>Category</h4>
                         <label>
                             <input type="radio" name="category" value="" class="category_filter"
@@ -44,6 +51,7 @@ $selectedSubcategories = isset($_GET['subcategory']) ? explode(',', $_GET['subca
                         $queryCategory = "SELECT * FROM `category`";
                         $dataCategory = mysqli_query($conn, $queryCategory);
                         while ($resultCategory = mysqli_fetch_assoc($dataCategory)) {
+                            $encryptedCatId = encryptId($resultCategory['id']);
                             $checked = ($selectedCategory == $resultCategory['id']) ? "checked" : "";
                             echo '<label>
                                     <input type="radio" name="category" value="' . $resultCategory['id'] . '" class="category_filter" ' . $checked . '>
@@ -54,9 +62,7 @@ $selectedSubcategories = isset($_GET['subcategory']) ? explode(',', $_GET['subca
                     </div>
 
                     <div class="shopSidebarBox" id="subCategoryFilter">
-                        <div class="closeSubCategoryFilter">
-                            x
-                        </div>
+                        <div class="closeSubCategoryFilter">x</div>
                         <h4>Sub Category</h4>
                         <?php
                         $querySubCategory = "SELECT * FROM `subcategory`";
@@ -87,7 +93,7 @@ $selectedSubcategories = isset($_GET['subcategory']) ? explode(',', $_GET['subca
                                 <button class="categoryFilterBtn">Category</button>
                                 <button class="subCategoryFilterBtn">Sub Category</button>
                             </div>
-                            <!-- Sorting Form -->
+
                             <form id="sortForm">
                                 <select name="sort_option" id="sort_option">
                                     <option value="relevance">Sorting By Relevance</option>
@@ -96,15 +102,11 @@ $selectedSubcategories = isset($_GET['subcategory']) ? explode(',', $_GET['subca
                                 </select>
                             </form>
                         </div>
-
                     </div>
 
                     <!-- Product Grid (AJAX Loaded) -->
-                    <div class="productGrid" id="productGrid">
-                        <!-- Products will be dynamically loaded here via AJAX -->
-                    </div>
+                    <div class="productGrid" id="productGrid"></div>
 
-                    <!-- No Product Message -->
                     <div id="noProductMessage" style="display: none; text-align: center; padding: 20px;">
                         <h3>No products found in this category & subcategory.</h3>
                     </div>
@@ -114,7 +116,6 @@ $selectedSubcategories = isset($_GET['subcategory']) ? explode(',', $_GET['subca
         </div>
     </section>
 
-    <!-- FOOTER -->
     <?php include("./components/footer.php"); ?>
     <?php include("./components/footscript.php"); ?>
 
@@ -123,13 +124,10 @@ $selectedSubcategories = isset($_GET['subcategory']) ? explode(',', $_GET['subca
         $(document).ready(function () {
             function loadProducts() {
                 let category = $("input[name='category']:checked").val() || "";
-
-                // Collect all checked subcategory values
                 let subcategories = [];
                 $("input[name='subcategory[]']:checked").each(function () {
                     subcategories.push($(this).val());
                 });
-
                 let sortOption = $("#sort_option").val();
 
                 $.ajax({
@@ -137,7 +135,7 @@ $selectedSubcategories = isset($_GET['subcategory']) ? explode(',', $_GET['subca
                     type: "POST",
                     data: {
                         category: category,
-                        subcategories: subcategories.join(","), // Convert array to a comma-separated string
+                        subcategories: subcategories.join(","),
                         sort_option: sortOption
                     },
                     success: function (response) {
@@ -152,21 +150,17 @@ $selectedSubcategories = isset($_GET['subcategory']) ? explode(',', $_GET['subca
                 });
             }
 
-            // Load default products on page load
             loadProducts();
 
-            // Handle sorting change
             $("#sort_option").change(function () {
                 loadProducts();
             });
 
-            // Handle category & subcategory filter change
             $(".category_filter, .subcategory_filter").change(function () {
                 loadProducts();
             });
         });
     </script>
-
 </body>
 
 </html>
