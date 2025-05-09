@@ -1,5 +1,7 @@
 <?php include("connection.php");
 session_start();
+
+include("enc_dec.php");
 include("checked-login.php");
 if (isset($_GET['id'])) {
     $id = $_GET['id'];
@@ -224,13 +226,15 @@ $order_id = $result['id']; ?>
                         // Calculate total price
                         $totalPrice = $resultOrder['price'] * $resultOrder['quantity'];
                         $product_id = $resultOrder['product_id'];
+                        // Encrypt the ID
+                        $encryptedPId = encryptId($product_id);
 
                         $queryp = "SELECT * FROM `product` WHERE `id`='$product_id'";
                         $datap = mysqli_query($conn, $queryp);
                         $resultp = mysqli_fetch_assoc($datap);
                         $productImage = $resultp['image'];
                         ?>
-                        <div class="orderProductBox">
+                        <a href="product.php?id=<?php echo $encryptedPId; ?>" class="orderProductBox">
                             <div>
                                 <img src="superadmin/<?php echo $productImage ?>" alt="">
                             </div>
@@ -245,7 +249,7 @@ $order_id = $result['id']; ?>
                             <div>
                                 <h4>Total: ₹<span class="totalVeriant"><?php echo $totalPrice; ?></span></h4>
                             </div>
-                        </div>
+                        </a>
 
                         <?php
                     }
