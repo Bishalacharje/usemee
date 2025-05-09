@@ -73,10 +73,11 @@ include("enc_dec.php");
         $datans = mysqli_query($conn, $queryns);
 
         while ($resultns = mysqli_fetch_assoc($datans)) {
+          $encryptedSubCatId = encryptId($resultns['id']);
           $subCategoryName = $resultns['name'];
           $subCategoryImg = $resultns['image'];
           ?>
-          <a href="shop.php?subcategory=<?php echo $resultns['id']; ?>" class="subCategoryCard">
+          <a href="shop.php?subcategory=<?php echo $encryptedSubCatId; ?>" class="subCategoryCard">
             <div class="subCategoryCardImg">
               <img src="superadmin/<?php echo $subCategoryImg; ?>" alt="">
             </div>
@@ -260,11 +261,12 @@ include("enc_dec.php");
             $datac = mysqli_query($conn, $queryc);
 
             while ($resultc = mysqli_fetch_assoc($datac)) {
+              $encryptedCatId = encryptId($resultc['id']);
               $categoryName = $resultc['name'];
               $categoryImg = $resultc['image'];
               ?>
               <div class="card swiper-slide categoryCard">
-                <a href="shop.php?category=<?php echo $resultc['id']; ?>" class="subCategoryCard">
+                <a href="shop.php?category=<?php echo $encryptedCatId; ?>" class="subCategoryCard">
                   <div class="subCategoryCardImg">
                     <img src="superadmin/<?php echo $categoryImg; ?>" alt="">
                   </div>
