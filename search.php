@@ -36,7 +36,7 @@ if ($query !== '') {
 
 <head>
     <?php include("./components/headlink.php"); ?>
-    <title>Search - eCommerce Website</title>
+    <title>Search | Usemee - Your one-stop online store for all your shopping needs!</title>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 
@@ -58,7 +58,7 @@ if ($query !== '') {
             </div>
 
             <?php if ($products && $products->num_rows > 0): ?>
-                <div class="productGrid grid5">
+                <div class="productGrid grid5 scrollToReveal">
                     <?php while ($result = $products->fetch_assoc()): ?>
                         <?php
                         // Get subcategory name
@@ -83,7 +83,7 @@ if ($query !== '') {
                             $mrp = $sale_price = $discount = 0;
                         }
                         ?>
-                        <a href="product.php?id=<?php echo $result['id']; ?>" class="productBox">
+                        <a href="product.php?id=<?php echo $result['id']; ?>" class="productBox scrollToReveal">
                             <div class="productImg">
                                 <img src="superadmin/<?php echo htmlspecialchars($result['image']); ?>" alt="">
                                 <span class="subCategory"><?php echo html_entity_decode($subCategoryName); ?></span>
@@ -100,7 +100,7 @@ if ($query !== '') {
                     <?php endwhile; ?>
                 </div>
             <?php else: ?>
-                <div class="emptyCartCon">
+                <div class="emptyCartCon scrollToReveal">
                     <script src="https://unpkg.com/@dotlottie/player-component@2.7.12/dist/dotlottie-player.mjs"
                         type="module"></script>
                     <dotlottie-player src="https://lottie.host/f38bfa84-2aa7-433c-bd28-dc99de95923e/PXb2Pvqhty.lottie"
@@ -126,7 +126,7 @@ if ($query !== '') {
 
 
             <?php if ($subcategories && $subcategories->num_rows > 0): ?>
-                <div class="subCategoryCardGrid">
+                <div class="subCategoryCardGrid scrollToReveal">
                     <?php while ($row = $subcategories->fetch_assoc()): ?>
                         <a href="shop.php?subcategory=<?php echo $row['id']; ?>" class="subCategoryCard">
                             <div class="subCategoryCardImg">

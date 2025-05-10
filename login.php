@@ -10,7 +10,7 @@ session_start();
 
 <head>
     <?php include("./components/headlink.php"); ?>
-    <title>Usemee - Login</title>
+    <title>Login | Usemee - Your one-stop online store for all your shopping needs!</title>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 
@@ -27,7 +27,7 @@ session_start();
             </div>
 
             <div class="loginGrid">
-                <div class="loginForm">
+                <div class="loginForm scrollToRevealRight">
                     <form class="form-horizontal mt-3" method="post">
                         <div class="formGrid grid1">
                             <div class="inputCon">
@@ -48,7 +48,7 @@ session_start();
                                 <button class="btn btn-info w-100 waves-effect waves-light" name="submit"
                                     type="submit">Log
                                     In</button>
-                                    <p style="text-align: center; margin-top: 10px;">
+                                <p style="text-align: center; margin-top: 10px;">
                                     <a href="forgot_password.php">Forgot Password?</a>
                                 </p>
                             </div>
@@ -57,7 +57,7 @@ session_start();
 
                     </form>
                 </div>
-                <div class="loginRight">
+                <div class="loginRight scrollToRevealLeft">
                     <h3>DON'T HAVE AN ACCOUNT?</h3>
                     <p>Add items to your wishlistget personalised recommendations
                         check out more quickly track your orders register</p>

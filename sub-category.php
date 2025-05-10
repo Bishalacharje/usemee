@@ -12,7 +12,7 @@ include("enc_dec.php");
 
 <head>
     <?php include("./components/headlink.php"); ?>
-    <title>Usemee - Sub-Category</title>
+    <title>Category & Subcategory | Usemee - Your one-stop online store for all your shopping needs!</title>
 
 
 </head>
@@ -35,7 +35,7 @@ include("enc_dec.php");
                     <p><a href="index.php">Home</a> - <a href="sub-category.php">Sub-Category</a></p>
                 </div>
             </div>
-            <div class="subCategoryCardGrid">
+            <div class="subCategoryCardGrid scrollToReveal">
                 <?php
                 $queryns = "SELECT * FROM `subcategory`";
                 $datans = mysqli_query($conn, $queryns);
@@ -84,7 +84,7 @@ include("enc_dec.php");
                             $categoryName = $resultc['name'];
                             $categoryImg = $resultc['image'];
                             ?>
-                            <div class="card swiper-slide categoryCard">
+                            <div class="card swiper-slide categoryCard scrollToReveal">
                                 <a href="shop.php?category=<?php echo $encryptedCatId; ?>" class="subCategoryCard">
                                     <div class="subCategoryCardImg">
                                         <img src="superadmin/<?php echo $categoryImg; ?>" alt="">
@@ -136,7 +136,7 @@ include("enc_dec.php");
         <div class="container">
             <h2 class="sectionTitle">Featured Products</h2>
 
-            <div class="productGrid grid5">
+            <div class="productGrid grid5 scrollToReveal">
                 <?php
                 $query = "SELECT * FROM `product` ORDER BY RAND() LIMIT 10";
                 $data = mysqli_query($conn, $query);

@@ -9,7 +9,7 @@ include("checked-login.php");
 
 <head>
     <?php include("./components/headlink.php"); ?>
-    <title>My Cart - eCommerce Website</title>
+    <title>Order Placed | Usemee - Your one-stop online store for all your shopping needs!</title>
 
 </head>
 

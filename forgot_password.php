@@ -70,7 +70,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
 <head>
     <?php include("./components/headlink.php"); ?>
-    <title>Forgot Password</title>
+    <title>Forgot Password | Usemee - Your one-stop online store for all your shopping needs!</title>
 </head>
 
 <body>
