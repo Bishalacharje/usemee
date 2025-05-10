@@ -1,7 +1,7 @@
 <footer>
     <div class="footerMain">
 
-        <div class="footerFeatureGrid">
+        <div class="footerFeatureGrid scrollToReveal">
             <div class="footerFeature">
                 <img src="assets/images/imgicon/original.png" alt="">
                 <div>

@@ -30,7 +30,7 @@ while ($row = mysqli_fetch_assoc($cartData)) {
 
 <head>
   <?php include("./components/headlink.php"); ?>
-  <title>My Cart - eCommerce Website</title>
+  <title>Cart | Usemee - Your one-stop online store for all your shopping needs!</title>
 
 </head>
 

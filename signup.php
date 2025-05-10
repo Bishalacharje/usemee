@@ -10,7 +10,7 @@ session_start();
 
 <head>
     <?php include("./components/headlink.php"); ?>
-    <title>Usemee - Signup</title>
+    <title>Signup | Usemee - Your one-stop online store for all your shopping needs!</title>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 
@@ -25,7 +25,7 @@ session_start();
                 <h2>To Your Account</h2>
                 <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit.</p>
             </div>
-            <div class="signupCon">
+            <div class="signupCon scrollToReveal">
                 <form class="form-horizontal mt-3" method="post">
                     <div class="formGrid grid1">
                         <div> <input type="text" required="" name="name" placeholder="Full name*"></div>
@@ -42,7 +42,8 @@ session_start();
 
 
                             <input type="checkbox" id="c1" required>
-                            <label for="c1"> I consent to Usemee processing my personal data to send me personalized marketing content, 
+                            <label for="c1"> I consent to Usemee processing my personal data to send me personalized
+                                marketing content,
                                 in accordance with the consent form and privacy policy.</label>
                         </div>
                         <div class="chekboxCon">
@@ -81,7 +82,7 @@ session_start();
         // Password_validation
         $uppercase = preg_match('@[A-Z]@', $password);
         $lowercase = preg_match('@[a-z]@', $password);
-        $number    = preg_match('@[0-9]@', $password);
+        $number = preg_match('@[0-9]@', $password);
         $specialChars = preg_match('@[^\w]@', $password);
         $minLength = strlen($password) >= 8;
 
