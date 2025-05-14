@@ -37,6 +37,7 @@ switch ($type) {
 <head>
     <?php include("./components/headlink.php"); ?>
     <title><?php echo $title; ?> | Usemee</title>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 
 <body data-topbar="dark">
@@ -53,7 +54,7 @@ switch ($type) {
                     </div>
 
                     <div class="table-responsive">
-                        <table class="table table-bordered">
+                        <table class="table table-bordered" id="bannerTable">
                             <thead class="table-light">
                                 <tr>
                                     <th>#</th>
@@ -76,7 +77,7 @@ switch ($type) {
                                 $result = mysqli_query($conn, $sql);
                                 $count = 1;
                                 while ($row = mysqli_fetch_assoc($result)) {
-                                    echo "<tr>";
+                                    echo "<tr data-id='{$row['id']}'>";
                                     echo "<td>$count</td>";
                                     echo "<td>" . htmlspecialchars($row['title']) . "</td>";
                                     echo "<td><img src='" . htmlspecialchars($row['image_path']) . "' style='max-width:100px;'></td>";
@@ -105,7 +106,7 @@ switch ($type) {
                                                 " . ($has_position ? "data-position='" . htmlspecialchars($row['position']) . "'" : '') . "
                                                 " . ($has_visibility ? "data-visibility='" . $row['visibility'] . "'" : '') . "
                                                 data-created_at='" . htmlspecialchars($row['created_at']) . "'>Edit</button>
-                                            <a href='?type=$type&delete={$row['id']}' class='btn btn-danger btn-sm' onclick='return confirm(\"Are you sure?\");'>Delete</a>
+                                            <button class='btn btn-danger btn-sm deleteBannerBtn' data-id='{$row['id']}'>Delete</button>
                                         </td>";
                                     echo "</tr>";
                                     $count++;
@@ -119,7 +120,7 @@ switch ($type) {
                     <div class="modal fade" id="addBannerModal" tabindex="-1">
                         <div class="modal-dialog modal-lg modal-dialog-centered">
                             <div class="modal-content">
-                                <form method="POST" enctype="multipart/form-data" class="needs-validation was-validated" novalidate>
+                                <form id="addBannerForm" enctype="multipart/form-data" class="needs-validation" novalidate>
                                     <div class="modal-header">
                                         <h5 class="modal-title">Add <?php echo $type === 'footer' ? 'Card' : 'Banner'; ?></h5>
                                         <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
@@ -149,13 +150,14 @@ switch ($type) {
                                                     <label class="form-label">Visibility</label>
                                                     <select name="visibility" class="form-control" required>
                                                         <option value="1">Visible</option>
+                                                        <option value="0">Hidden</option>
                                                     </select>
                                                 </div>
                                             <?php endif; ?>
                                         </div>
                                     </div>
                                     <div class="modal-footer">
-                                        <button type="submit" name="addBanner" class="btn btn-dark">Add <?php echo $type === 'footer' ? 'Card' : 'Banner'; ?></button>
+                                        <button type="submit" class="btn btn-dark">Add <?php echo $type === 'footer' ? 'Card' : 'Banner'; ?></button>
                                     </div>
                                 </form>
                             </div>
@@ -189,7 +191,7 @@ switch ($type) {
                     <div class="modal fade" id="editBannerModal" tabindex="-1">
                         <div class="modal-dialog modal-lg modal-dialog-centered">
                             <div class="modal-content">
-                                <form method="POST" enctype="multipart/form-data" class="needs-validation was-validated" novalidate>
+                                <form id="editBannerForm" enctype="multipart/form-data" class="needs-validation" novalidate>
                                     <div class="modal-header">
                                         <h5 class="modal-title">Edit <?php echo $type === 'footer' ? 'Card' : 'Banner'; ?></h5>
                                         <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
@@ -202,8 +204,9 @@ switch ($type) {
                                                 <input type="text" class="form-control" id="editBannerTitle" name="title" required>
                                             </div>
                                             <div class="col-md-6 mb-3">
-                                                <label class="form-label">Image</label>
+                                                <label class="form-label">Image (optional)</label>
                                                 <input type="file" class="form-control" name="image" accept="image/*">
+                                                <small class="form-text text-muted">Leave blank to keep current image.</small>
                                             </div>
                                             <div class="col-md-6 mb-3">
                                                 <label class="form-label">Link</label>
@@ -227,131 +230,65 @@ switch ($type) {
                                         </div>
                                     </div>
                                     <div class="modal-footer">
-                                        <button type="submit" name="editBanner" class="btn btn-dark">Update <?php echo $type === 'footer' ? 'Card' : 'Banner'; ?></button>
+                                        <button type="submit" class="btn btn-dark">Update <?php echo $type === 'footer' ? 'Card' : 'Banner'; ?></button>
                                     </div>
                                 </form>
                             </div>
                         </div>
                     </div>
 
-                    <?php
-                    if (isset($_POST['addBanner'])) {
-                        $title = htmlspecialchars(mysqli_real_escape_string($conn, $_POST['title']));
-                        $link = htmlspecialchars(mysqli_real_escape_string($conn, $_POST['link']));
-                        $image_name = $_FILES['image']['name'];
-                        $image_tmp = $_FILES['image']['tmp_name'];
-                        $image_path = "banner/" . mysqli_real_escape_string($conn, $image_name);
-
-                        $columns = "title, image_path, link";
-                        $values = "'$title', '$image_path', '$link'";
-                        $placeholders = "?, ?, ?";
-
-                        $params = [$title, $image_path, $link];
-                        $types = "sss";
-
-                        if ($has_position) {
-                            $position = htmlspecialchars(mysqli_real_escape_string($conn, $_POST['position']));
-                            $columns .= ", position";
-                            $values .= ", '$position'";
-                            $placeholders .= ", ?";
-                            $params[] = $position;
-                            $types .= "i";
-                        }
-                        if ($has_visibility) {
-                            // Type cast to integer (0 or 1)
-                            $visibility = isset($_POST['visibility']) ? (int)$_POST['visibility'] : 0;
-                            // Ensure it's either 0 or 1
-                            $visibility = ($visibility == 1) ? 1 : 0;
-                            
-                            $columns .= ", visibility";
-                            $values .= ", $visibility";
-                            $placeholders .= ", ?";
-                            $params[] = $visibility;
-                            $types .= "i";
-                        }
-                        if (move_uploaded_file($image_tmp, $image_path)) {
-                            $insert = "INSERT INTO $table ($columns) VALUES ($values)";
-                            $stmt = mysqli_prepare($conn, "INSERT INTO $table ($columns) VALUES ($placeholders)");
-                            mysqli_stmt_bind_param($stmt, $types, ...$params);
-
-                            if (mysqli_stmt_execute($stmt)) {
-                                echo "<script src='https://cdn.jsdelivr.net/npm/sweetalert2@11'></script>";
-                                echo "<script>Swal.fire({icon: 'success', title: 'Success!', text: '" . ($type === 'footer' ? 'Card' : 'Banner') . " added successfully!', timer: 2000, showConfirmButton: false}).then(() => { window.location.href = 'banner.php?type=$type'; });</script>";
-                            } else {
-                                echo "<script>Swal.fire({icon: 'error', title: 'Error!', text: 'Failed to add " . ($type === 'footer' ? 'card' : 'banner') . "!'});</script>";
-                            }
-                            mysqli_stmt_close($stmt);
-                        }
-                    }
-
-                    if (isset($_GET['delete'])) {
-                        $banner_id = $_GET['delete'];
-                        $delete_query = "DELETE FROM $table WHERE id = ?";
-                        $stmt = mysqli_prepare($conn, $delete_query);
-                        mysqli_stmt_bind_param($stmt, "i", $banner_id);
-
-                        if (mysqli_stmt_execute($stmt)) {
-                            echo "<script>Swal.fire({icon: 'success', title: 'Deleted!', text: 'The " . ($type === 'footer' ? 'card' : 'banner') . " has been deleted.', timer: 1500, showConfirmButton: false}).then(() => { window.location.href = 'banner.php?type=$type'; });</script>";
-                        } else {
-                            echo "<script>Swal.fire({icon: 'error', title: 'Error!', text: 'Failed to delete the " . ($type === 'footer' ? 'card' : 'banner') . ".'});</script>";
-                        }
-                        mysqli_stmt_close($stmt);
-                    }
-
-                    if (isset($_POST['editBanner'])) {
-                        $banner_id = $_POST['banner_id'];
-                        $title = htmlspecialchars(mysqli_real_escape_string($conn, $_POST['title']));
-                        $link = htmlspecialchars(mysqli_real_escape_string($conn, $_POST['link']));
-
-                        $updates = "title = ?, image_path = ?, link = ?";
-                        $params = [$title, null, $link];
-                        $types = "sss";
-
-                        if ($_FILES['image']['name']) {
-                            $image_name = $_FILES['image']['name'];
-                            $image_tmp = $_FILES['image']['tmp_name'];
-                            $image_path = "banner/" . mysqli_real_escape_string($conn, $image_name);
-                            move_uploaded_file($image_tmp, $image_path);
-                            $params[1] = $image_path;
-                        } else {
-                            $params[1] = $_POST['current_image'] ?? null;
-                        }
-
-                        if ($has_position) {
-                            $position = htmlspecialchars(mysqli_real_escape_string($conn, $_POST['position']));
-                            $updates .= ", position = ?";
-                            $params[] = $position;
-                            $types .= "i";
-                        }
-                        if ($has_visibility) {
-                            // Type cast to integer (0 or 1)
-                            $visibility = isset($_POST['visibility']) ? (int)$_POST['visibility'] : 0;
-                            // Ensure it's either 0 or 1
-                            $visibility = ($visibility == 1) ? 1 : 0;
-                            
-                            $updates .= ", visibility = ?";
-                            $params[] = $visibility;
-                            $types .= "i";
-                        }
-
-                        $params[] = $banner_id;
-                        $types .= "i";
-
-                        $update_query = "UPDATE $table SET $updates WHERE id = ?";
-                        $stmt = mysqli_prepare($conn, $update_query);
-                        mysqli_stmt_bind_param($stmt, $types, ...$params);
-
-                        if (mysqli_stmt_execute($stmt)) {
-                            echo "<script>Swal.fire({icon: 'success', title: 'Updated!', text: 'The " . ($type === 'footer' ? 'card' : 'banner') . " has been updated.', timer: 1500, showConfirmButton: false}).then(() => { window.location.href = 'banner.php?type=$type'; });</script>";
-                        } else {
-                            echo "<script>Swal.fire({icon: 'error', title: 'Error!', text: 'Failed to update the " . ($type === 'footer' ? 'card' : 'banner') . ".'});</script>";
-                        }
-                        mysqli_stmt_close($stmt);
-                    }
-                    ?>
-
                     <script>
-                        document.addEventListener("DOMContentLoaded", function () {
+                        // Common SweetAlert2 configuration
+                        const swalConfig = {
+                            icon: 'success',
+                            title: 'Success!',
+                            timer: 1500,
+                            showConfirmButton: false
+                        };
+
+                        // Function to refresh table row
+                        function refreshTableRow(data) {
+                            const row = document.querySelector(`#bannerTable tr[data-id='${data.id}']`) || document.createElement('tr');
+                            row.setAttribute('data-id', data.id);
+                            row.innerHTML = `
+                                <td>${document.querySelectorAll('#bannerTable tbody tr').length + 1}</td>
+                                <td>${data.title}</td>
+                                <td><img src='${data.image_path}' style='max-width:100px;'></td>
+                                <td>${data.link}</td>
+                                <?php if ($has_position): ?>
+                                    <td>${data.position}</td>
+                                <?php endif; ?>
+                                <?php if ($has_visibility): ?>
+                                    <td>${data.visibility == 1 ? 'Visible' : 'Hidden'}</td>
+                                <?php endif; ?>
+                                <td>${data.created_at}</td>
+                                <td>
+                                    <button class='btn btn-info btn-sm viewBannerBtn' data-bs-toggle='modal' data-bs-target='#viewBannerModal'
+                                        data-id='${data.id}'
+                                        data-title='${data.title}'
+                                        data-image='${data.image_path}'
+                                        data-link='${data.link}'
+                                        <?php if ($has_position): ?>data-position='${data.position}'<?php endif; ?>
+                                        <?php if ($has_visibility): ?>data-visibility='${data.visibility}'<?php endif; ?>
+                                        data-created_at='${data.created_at}'>View</button>
+                                    <button class='btn btn-warning btn-sm editBannerBtn' data-bs-toggle='modal' data-bs-target='#editBannerModal'
+                                        data-id='${data.id}'
+                                        data-title='${data.title}'
+                                        data-image='${data.image_path}'
+                                        data-link='${data.link}'
+                                        <?php if ($has_position): ?>data-position='${data.position}'<?php endif; ?>
+                                        <?php if ($has_visibility): ?>data-visibility='${data.visibility}'<?php endif; ?>
+                                        data-created_at='${data.created_at}'>Edit</button>
+                                    <button class='btn btn-danger btn-sm deleteBannerBtn' data-id='${data.id}'>Delete</button>
+                                </td>`;
+                            if (!row.parentNode) {
+                                document.querySelector('#bannerTable tbody').prepend(row);
+                            }
+                            attachButtonListeners();
+                        }
+
+                        // Function to attach event listeners
+                        function attachButtonListeners() {
                             document.querySelectorAll(".viewBannerBtn").forEach(button => {
                                 button.addEventListener("click", function () {
                                     document.getElementById("viewBannerName").textContent = this.getAttribute("data-title");
@@ -380,6 +317,87 @@ switch ($type) {
                                     <?php endif; ?>
                                 });
                             });
+
+                            document.querySelectorAll(".deleteBannerBtn").forEach(button => {
+                                button.addEventListener("click", function () {
+                                    Swal.fire({
+                                        title: 'Are you sure?',
+                                        text: "You won't be able to revert this!",
+                                        icon: 'warning',
+                                        showCancelButton: true,
+                                        confirmButtonColor: '#3085d6',
+                                        cancelButtonColor: '#d33',
+                                        confirmButtonText: 'Yes, delete it!'
+                                    }).then(result => {
+                                        if (result.isConfirmed) {
+                                            fetch(`banner_action.php?type=<?php echo $type; ?>&delete=${this.getAttribute('data-id')}`, {
+                                                method: "POST"
+                                            })
+                                            .then(response => response.json())
+                                            .then(data => {
+                                                if (data.success) {
+                                                    Swal.fire({ ...swalConfig, text: '<?php echo $type === 'footer' ? 'Card' : 'Banner'; ?> deleted successfully!' });
+                                                    document.querySelector(`#bannerTable tr[data-id='${this.getAttribute('data-id')}']`).remove();
+                                                } else {
+                                                    Swal.fire({ icon: 'error', title: 'Error!', text: data.message });
+                                                }
+                                            })
+                                            .catch(() => Swal.fire({ icon: 'error', title: 'Error!', text: 'Something went wrong!' }));
+                                        }
+                                    });
+                                });
+                            });
+                        }
+
+                        // Initial attachment of event listeners
+                        document.addEventListener("DOMContentLoaded", attachButtonListeners);
+
+                        // Add banner via AJAX
+                        document.getElementById("addBannerForm").addEventListener("submit", function (e) {
+                            e.preventDefault();
+                            const formData = new FormData(this);
+                            formData.append("addBanner", true);
+                            fetch("banner_action.php?type=<?php echo $type; ?>", {
+                                method: "POST",
+                                body: formData
+                            })
+                            .then(response => response.json())
+                            .then(data => {
+                                if (data.success) {
+                                    Swal.fire({ ...swalConfig, text: '<?php echo $type === 'footer' ? 'Card' : 'Banner'; ?> added successfully!' });
+                                    refreshTableRow(data.data);
+                                    bootstrap.Modal.getInstance(document.getElementById('addBannerModal')).hide();
+                                    this.reset();
+                                    this.classList.remove('was-validated');
+                                } else {
+                                    Swal.fire({ icon: 'error', title: 'Error!', text: data.message });
+                                }
+                            })
+                            .catch(() => Swal.fire({ icon: 'error', title: 'Error!', text: 'Something went wrong!' }));
+                        });
+
+                        // Edit banner via AJAX
+                        document.getElementById("editBannerForm").addEventListener("submit", function (e) {
+                            e.preventDefault();
+                            const formData = new FormData(this);
+                            formData.append("editBanner", true);
+                            fetch("banner_action.php?type=<?php echo $type; ?>", {
+                                method: "POST",
+                                body: formData
+                            })
+                            .then(response => response.json())
+                            .then(data => {
+                                if (data.success) {
+                                    Swal.fire({ ...swalConfig, text: '<?php echo $type === 'footer' ? 'Card' : 'Banner'; ?> updated successfully!' });
+                                    refreshTableRow(data.data);
+                                    bootstrap.Modal.getInstance(document.getElementById('editBannerModal')).hide();
+                                    this.reset();
+                                    this.classList.remove('was-validated');
+                                } else {
+                                    Swal.fire({ icon: 'error', title: 'Error!', text: data.message });
+                                }
+                            })
+                            .catch(() => Swal.fire({ icon: 'error', title: 'Error!', text: 'Something went wrong!' }));
                         });
                     </script>
 
