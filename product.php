@@ -54,7 +54,7 @@ if (isset($_GET['id'])) {
 
 <head>
     <?php include("./components/headlink.php"); ?>
-    <title><?php echo $result['name']; ?> - eCommerce Website</title>
+    <title><?php echo $result['name']; ?> | Usemee - Your one-stop online store for all your shopping needs!</title>
 </head>
 
 <body>
@@ -72,12 +72,12 @@ if (isset($_GET['id'])) {
             </div>
         </div>
             <div class="singleProduct">
-                <div class="showcase-banner">
+                <div class="showcase-banner scrollToRevealRight">
                     <img src="superadmin/<?php echo $result['image']; ?>" alt="<?php echo $result['name']; ?>"
                         class="showcase-img" />
                 </div>
 
-                <div class="showcase-content">
+                <div class="showcase-content scrollToRevealLeft">
                     <div class="categorySubcategory">
                         <span class="category"><?php echo $categoryName; ?></span>
                         <span class="subCategory"><?php echo $subCategoryName; ?></span>
@@ -162,7 +162,7 @@ if (isset($_GET['id'])) {
                 <p class="showcase-desc"><?php echo $result['description']; ?></p>
             </div>
 
-            <div class="relatedProductSection">
+            <div class="relatedProductSection scrollToReveal">
                 <h4>// <?php echo $categoryName; ?></h4>
                 <h2 class="relatedProductTitle">Related Products<span>.</span></h2>
 

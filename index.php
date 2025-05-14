@@ -14,12 +14,37 @@ include("enc_dec.php");
 
 <head>
   <?php include("./components/headlink.php"); ?>
-  <title>Usemee - eCommerce Website</title>
+  <title>Usemee - Your one-stop online store for all your shopping needs!</title>
 
 
 </head>
 
 <body>
+
+  <!-- ---------------------------------------------------- Loading  section ------------------------- ------------ -->
+
+  <section class="loadingSec">
+    <div class="loadingCon">
+      <div class="logo">
+        <img src="assets/images/logo/logo.png" alt="" />
+      </div>
+      <div class="loader">
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+      </div>
+    </div>
+  </section>
+  <script>
+    window.addEventListener("load", () => {
+      // Ensure at least 2 seconds before hiding loader
+      setTimeout(() => {
+        document.querySelector(".loadingSec").classList.add("hide");
+      }, 300);
+    });
+
+  </script>
 
 
   <div>
@@ -65,7 +90,7 @@ include("enc_dec.php");
 
   <!-- ---------------------------------  Subcategory Cards  ------------------------------------ -->
 
-  <section class="conSection SubcategoryCardSec homeSubcategoryCardSec">
+  <section class="conSection SubcategoryCardSec homeSubcategoryCardSec scrollToReveal">
     <div class="container">
       <div class="subCategoryCardGrid">
         <?php
@@ -100,7 +125,7 @@ include("enc_dec.php");
 
   <!-- ---------------------------------  Top Selling Products  ------------------------------------ -->
 
-  <section class="conSection sellingSec">
+  <section class="conSection sellingSec scrollToReveal">
     <div class="containerSlider">
       <h2 class="sectionTitle">Top Selling Products</h2>
 
@@ -216,7 +241,7 @@ include("enc_dec.php");
         if (!empty($centerCards[0])) {
           $large = $centerCards[0];
           ?>
-          <div class="centerBannerLg">
+          <div class="centerBannerLg scrollToRevealRight">
             <a href="<?php echo !empty($large['link']) ? htmlspecialchars($large['link']) : '#'; ?>">
               <img src="superadmin/<?php echo $large['image_path']; ?>"
                 alt="<?php echo htmlspecialchars($large['title']); ?>">
@@ -231,7 +256,7 @@ include("enc_dec.php");
             if (!empty($centerCards[$i])) {
               $small = $centerCards[$i];
               ?>
-              <div class="centerBanner">
+              <div class="centerBanner scrollToRevealLeft">
                 <a href="<?php echo !empty($small['link']) ? htmlspecialchars($small['link']) : '#'; ?>">
                   <img src="superadmin/<?php echo $small['image_path']; ?>"
                     alt="<?php echo htmlspecialchars($small['title']); ?>">
@@ -250,7 +275,7 @@ include("enc_dec.php");
 
   <!-- ---------------------------------  Category Cards  ------------------------------------ -->
 
-  <section class="conSection SubcategoryCardSec">
+  <section class="conSection SubcategoryCardSec scrollToReveal">
     <div class="containerSlider">
 
       <div class="slide-container swiper">
@@ -312,7 +337,7 @@ include("enc_dec.php");
 
   <!-- ---------------------------------  Featured Product Section  ------------------------------------ -->
 
-  <section class="conSection sellingSec">
+  <section class="conSection sellingSec scrollToReveal">
     <div class="container">
       <h2 class="sectionTitle">Featured Products</h2>
 
@@ -377,7 +402,7 @@ include("enc_dec.php");
       </div>
       <br>
       <center>
-        <a href="shop.php"><button>View all</button></a>
+        <a href="shop.php" class="scrollToRevealTop"><button>View all</button></a>
       </center>
 
     </div>
@@ -386,7 +411,7 @@ include("enc_dec.php");
 
   <!-- ---------------------------------  Footer card Section  ------------------------------------ -->
 
-  <section class="conSection">
+  <section class="conSection scrollToReveal">
     <div class="container">
       <div class="footerCardGrid">
         <?php

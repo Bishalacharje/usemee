@@ -29,7 +29,7 @@ $data = mysqli_query($conn, $query);
 
 <head>
     <?php include("./components/headlink.php"); ?>
-    <title>My Cart - eCommerce Website</title>
+    <title>Orders | Usemee - Your one-stop online store for all your shopping needs!</title>
 </head>
 
 <body>

@@ -87,7 +87,7 @@ if (isset($_POST['submit'])) {
 
 <head>
     <?php include("./components/headlink.php"); ?>
-    <title>Usemee - Signup</title>
+    <title>Signup | Usemee - Your one-stop online store for all your shopping needs!</title>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 
@@ -102,7 +102,7 @@ if (isset($_POST['submit'])) {
                 <h2>To Your Account</h2>
                 <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit.</p>
             </div>
-            <div class="signupCon">
+            <div class="signupCon scrollToReveal">
                 <form class="form-horizontal mt-3" method="post">
                     <div class="formGrid grid1">
                         <div>
@@ -124,10 +124,14 @@ if (isset($_POST['submit'])) {
 
                         <div class="chekboxCon">
                             <input type="checkbox" id="c1" required>
+
                             <label for="c1">
                                 I consent to Usemee processing my personal data to send me personalized marketing content,
                                 in accordance with the consent form and privacy policy.
                             </label>
+                            <label for="c1"> I consent to Usemee processing my personal data to send me personalized
+                                marketing content,
+                                in accordance with the consent form and privacy policy.</label>
                         </div>
 
                         <div class="chekboxCon">
@@ -153,9 +157,43 @@ if (isset($_POST['submit'])) {
         </div>
     </section>
 
+
     <?php include("./components/footer.php"); ?>
     <?php include("./components/footscript.php"); ?>
     
+
+    <?php
+    if (isset($_POST['submit'])) {
+        // Sanitize input data
+        $name = htmlspecialchars(mysqli_real_escape_string($conn, $_POST['name']));
+        $phone = htmlspecialchars(mysqli_real_escape_string($conn, $_POST['phone']));
+        $email = htmlspecialchars(mysqli_real_escape_string($conn, $_POST['email']));
+        $password = htmlspecialchars(mysqli_real_escape_string($conn, $_POST['password']));
+        // Password_validation
+        $uppercase = preg_match('@[A-Z]@', $password);
+        $lowercase = preg_match('@[a-z]@', $password);
+        $number = preg_match('@[0-9]@', $password);
+        $specialChars = preg_match('@[^\w]@', $password);
+        $minLength = strlen($password) >= 8;
+
+        $errors = [];
+
+        if (!$uppercase) {
+            $errors[] = "• Password must include at least one uppercase letter.";
+        }
+        if (!$lowercase) {
+            $errors[] = "• Password must include at least one lowercase letter.";
+        }
+        if (!$number) {
+            $errors[] = "• Password must include at least one number.";
+        }
+        if (!$specialChars) {
+            $errors[] = "• Password must include at least one special character.";
+        }
+        if (!$minLength) {
+            $errors[] = "• Password must be at least 8 characters long.";
+        }
+
 
 
     <script>

@@ -25,7 +25,7 @@ if (isset($_GET['subcategory'])) {
 
 <head>
     <?php include("./components/headlink.php"); ?>
-    <title>Shop - eCommerce Website</title>
+    <title>Shop | Usemee - Your one-stop online store for all your shopping needs!</title>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 
@@ -105,7 +105,7 @@ if (isset($_GET['subcategory'])) {
                     </div>
 
                     <!-- Product Grid (AJAX Loaded) -->
-                    <div class="productGrid" id="productGrid"></div>
+                    <div class="productGrid scrollToReveal" id="productGrid"></div>
 
                     <div id="noProductMessage" style="display: none; text-align: center; padding: 20px;">
                         <h3>No products found in this category & subcategory.</h3>

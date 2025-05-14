@@ -18,7 +18,7 @@ $order_id = $result['id']; ?>
 
 <head>
     <?php include("./components/headlink.php"); ?>
-    <title>My Cart - eCommerce Website</title>
+    <title>Track Order | Usemee - Your one-stop online store for all your shopping needs!</title>
 
 </head>
 

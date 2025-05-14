@@ -9,7 +9,7 @@ include("checked-login.php");
 
 <head>
     <?php include("./components/headlink.php"); ?>
-    <title>My Cart - eCommerce Website</title>
+    <title>My Account | Usemee - Your one-stop online store for all your shopping needs!</title>
 
 </head>
 
@@ -153,7 +153,7 @@ include("checked-login.php");
                             // Password_validation
                             $uppercase = preg_match('@[A-Z]@', $password);
                             $lowercase = preg_match('@[a-z]@', $password);
-                            $number    = preg_match('@[0-9]@', $password);
+                            $number = preg_match('@[0-9]@', $password);
                             $specialChars = preg_match('@[^\w]@', $password);
                             $minLength = strlen($password) >= 8;
 
@@ -205,8 +205,7 @@ include("checked-login.php");
                                     window.location.href = 'logout.php'; 
                                 });
                             </script>";
-                            }
-                            else {
+                            } else {
                                 // Error alert
                                 echo "<script src='https://cdn.jsdelivr.net/npm/sweetalert2@11'></script>";
                                 echo "<script>

@@ -57,7 +57,7 @@ $pin = $user['pin'];
 
 <head>
     <?php include("./components/headlink.php"); ?>
-    <title>Checkout</title>
+    <title>Checkout | Usemee - Your one-stop online store for all your shopping needs!</title>
 </head>
 
 <body>
