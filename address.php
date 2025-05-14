@@ -83,8 +83,8 @@ include("checked-login.php");
                             </div>
 
                             <div>
-                                <label for="">Pin</label>
-                                <input type="text" name="pin" value="<?php echo $pin ?>" required>
+                                <label for="">Pin <span id="pin-guidelines" style="font-size: 12px; color: green; margin-left: 10px;">[ Must be exactly 6 digits ]</span></label>
+                                <input type="text" name="pin" id="pin-input" value="<?php echo $pin ?>" maxlength="6" pattern="[0-9]{6}" required>
                             </div>
                         </div>
                         <div class="formGrid grid1">
@@ -102,62 +102,67 @@ include("checked-login.php");
 
                     <?php
                     if (isset($_POST['updateAccount'])) {
-
-
-
                         // Sanitize input
                         $id = $_POST['uid'];
                         $zone = htmlspecialchars(mysqli_real_escape_string($conn, $_POST['zone']));
                         $pin = htmlspecialchars(mysqli_real_escape_string($conn, $_POST['pin']));
                         $address = htmlspecialchars(mysqli_real_escape_string($conn, $_POST['address']));
-
-                        $query2 = "UPDATE `user` SET `zone`='$zone',`pin`='$pin',`address`='$address' WHERE `id`='$id'";
-                        // Execute the query
-                        $data2 = mysqli_query($conn, $query2);
-
-                        // Start output buffering
-                        ob_start();
-
-                        // Success alert
-                        if ($data2) {
+                        
+                        // PIN validation
+                        if (!preg_match('/^\d{6}$/', $pin)) {
+                            // Invalid PIN format
                             echo "<script src='https://cdn.jsdelivr.net/npm/sweetalert2@11'></script>";
                             echo "<script>
-            Swal.fire({
-                title: 'Success!',
-                text: 'Address Updated.',
-                icon: 'success',
-                showConfirmButton: false,
-                timer: 2000 
-            }).then(() => {
-                window.location.href = 'address.php'; 
-            });
-        </script>";
+                                Swal.fire({
+                                    title: 'Error!',
+                                    text: 'PIN must be exactly 6 digits.',
+                                    icon: 'error',
+                                    confirmButtonText: 'OK'
+                                });
+                            </script>";
                         } else {
-                            // Error alert
-                            echo "<script src='https://cdn.jsdelivr.net/npm/sweetalert2@11'></script>";
-                            echo "<script>
-            Swal.fire({
-                title: 'Error!',
-                text: 'Failed. Please try again.',
-                icon: 'error',
-                confirmButtonText: 'OK'
-            });
-        </script>";
-                        }
+                            // Proceed with update
+                            $query2 = "UPDATE `user` SET `zone`='$zone',`pin`='$pin',`address`='$address' WHERE `id`='$id'";
+                            // Execute the query
+                            $data2 = mysqli_query($conn, $query2);
 
-                        // Flush output buffer
-                        ob_end_flush();
+                            // Start output buffering
+                            ob_start();
+
+                            // Success alert
+                            if ($data2) {
+                                echo "<script src='https://cdn.jsdelivr.net/npm/sweetalert2@11'></script>";
+                                echo "<script>
+                                    Swal.fire({
+                                        title: 'Success!',
+                                        text: 'Address Updated.',
+                                        icon: 'success',
+                                        showConfirmButton: false,
+                                        timer: 2000 
+                                    }).then(() => {
+                                        window.location.href = 'address.php'; 
+                                    });
+                                </script>";
+                            } else {
+                                // Error alert
+                                echo "<script src='https://cdn.jsdelivr.net/npm/sweetalert2@11'></script>";
+                                echo "<script>
+                                    Swal.fire({
+                                        title: 'Error!',
+                                        text: 'Failed. Please try again.',
+                                        icon: 'error',
+                                        confirmButtonText: 'OK'
+                                    });
+                                </script>";
+                            }
+
+                            // Flush output buffer
+                            ob_end_flush();
+                        }
                     }
                     ?>
-
-
-
-
-
                 </div>
             </div>
-
-
         </div>
     </section>
 
@@ -165,15 +170,23 @@ include("checked-login.php");
     <?php include("./components/footer.php"); ?>
     <?php include("./components/footscript.php"); ?>
 
+    <script>
+      const pinInput = document.getElementById("pin-input");
+      const pinGuideSpan = document.getElementById("pin-guidelines");
 
-
-
-
-
-
-
-
-
+      pinInput?.addEventListener("input", () => {
+        // Allow only digits and limit to 6 characters
+        pinInput.value = pinInput.value.replace(/\D/g, '').slice(0, 6);
+        
+        if (/^\d{6}$/.test(pinInput.value)) {
+          pinGuideSpan.innerText = "[ ✅ Valid ]";
+          pinGuideSpan.style.color = "green";
+        } else {
+          pinGuideSpan.innerText = "[ Must be exactly 6 digits ]";
+          pinGuideSpan.style.color = "red";
+        }
+      });
+    </script>
 
 </body>
 

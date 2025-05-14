@@ -1,7 +1,15 @@
 * [x] DELETE Delivery Boy.
-* [x] Order Confirm page left.
-* [x] Password validation when resetting password of admin and Delhivery boy.
-* [x] Bug fixes like after password strenght warning needs to redirect to the modal of resseting passwrd.
-* [x] Link Fixtation.
+
+* [✔️] Order Confirm page left.
+
+* [✔️] Password validation when resetting password of admin and Delhivery boy.
+
+* [✔️] Bug fixes like after password strenght warning needs to redirect to the modal of resseting passwrd.
+
+* [✔️] Link Fixtation.
+
 * [x] Need to see the details of cod filtering by month.
-* [x] Search Bar backend implementation.
+
+* [✔️] Search Bar backend implementation.
+
+* [✔️] Pin and Phone number validation.
