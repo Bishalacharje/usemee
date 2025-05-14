@@ -130,8 +130,12 @@ include("checked-login.php");
                             <input type="hidden" value="<?php echo $userid ?>" name="uid">
                             <div class="formGrid" style="align-items: end;">
                                 <div>
-                                    <label for="">New Password</label>
-                                    <input type="password" name="password" required>
+                                <label for="password">New Password 
+                                <span id="password-guidelines" style="font-size: 12px; color: green; margin-left: 10px;">
+                                    [ Min 8 - chars, A, z, 0-9, @#$% ]
+                                </span>
+                                </label>
+                                <input type="password" name="password" id="password" required>
                                 </div>
                                 <button type="submit" name="updatePassword" class="updatePassword">Update
                                     Password</button>
@@ -172,17 +176,10 @@ include("checked-login.php");
                             }
 
                             if (!empty($errors)) {
-                                $errorMessage = implode("<br>", $errors);
-                                echo "<script src='https://cdn.jsdelivr.net/npm/sweetalert2@11'></script>";
-                                echo "<script>
-                                    Swal.fire({
-                                        icon: 'warning',
-                                        title: 'Weak Password',
-                                        html: '$errorMessage'
-                                    });
-                                </script>";
-                                exit;
+                              
+
                             }
+                            else {
 
                             // Hash the password
                             $hashedPassword = password_hash($password, PASSWORD_BCRYPT);
@@ -225,6 +222,7 @@ include("checked-login.php");
                             // Flush output buffer
                             ob_end_flush();
                         }
+                    }
                         ?>
                     </div>
 
@@ -242,10 +240,29 @@ include("checked-login.php");
 
 
 
+    <script>
+  const passwordInput = document.getElementById("password");
+  const guideSpan = document.getElementById("password-guidelines");
 
+  passwordInput?.addEventListener("input", () => {
+    const value = passwordInput.value;
+    const rules = [];
 
+    if (!/.{8,}/.test(value)) rules.push("8+ chars");
+    if (!/[A-Z]/.test(value)) rules.push("A");
+    if (!/[a-z]/.test(value)) rules.push("z");
+    if (!/[0-9]/.test(value)) rules.push("0-9");
+    if (!/[!@#$%^&*(),.?\":{}|<>]/.test(value)) rules.push("@#$%");
 
-
+    if (rules.length === 0) {
+      guideSpan.innerText = "[ ✅ Strong ]";
+      guideSpan.style.color = "green";
+    } else {
+      guideSpan.innerText = `[ ${rules.join(', ')} ]`;
+      guideSpan.style.color = "red";
+    }
+  });
+</script>
 
 
 
