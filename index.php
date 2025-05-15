@@ -28,12 +28,12 @@ include("enc_dec.php");
       <div class="logo">
         <img src="assets/images/logo/logo.png" alt="" />
       </div>
-      <div class="loader">
+      <!-- <div class="loader">
         <div></div>
         <div></div>
         <div></div>
         <div></div>
-      </div>
+      </div> -->
     </div>
   </section>
   <script>
