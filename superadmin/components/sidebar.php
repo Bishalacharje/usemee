@@ -86,7 +86,12 @@
                         <span>Admin Wallet</span>
                     </a>
                 </li>
-
+                <li>
+                    <a href="profit.php" class="waves-effect">
+                        <i class="ri-dashboard-line"></i>
+                        <span>Profit</span>
+                    </a>
+                </li>
                 <li class="menu-title">CMS</li>
                 <li>
                     <a href="javascript: void(0);" class="has-arrow waves-effect">
