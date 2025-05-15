@@ -57,4 +57,132 @@
         font-weight: bold !important;
         color: red;
     }
+
+    .loadingSec {
+        position: fixed;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-color: rgba(255, 255, 255, 0.685);
+        /* semi-transparent */
+        backdrop-filter: blur(10px);
+        /* blur effect */
+        -webkit-backdrop-filter: blur(10px);
+        /* for Safari support */
+        z-index: 99999;
+        transition: opacity 0.5s ease;
+    }
+
+    .loadingSec.hide {
+        opacity: 0;
+        pointer-events: none;
+    }
+
+    .loadingCon {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .loadingSec .logo img {
+        height: 100px;
+        margin-bottom: 8px;
+    }
+
+    /* From Uiverse.io by kerolos23 */
+    .loader {
+        display: inline-block;
+        position: relative;
+        width: 80px;
+        height: 80px;
+    }
+
+    .loader div {
+        position: absolute;
+        top: 33px;
+        width: 13px;
+        height: 13px;
+        border-radius: 50%;
+        background: #80B500;
+        animation-timing-function: cubic-bezier(0, 1, 1, 0);
+    }
+
+    .loader div:nth-child(1) {
+        left: 8px;
+        animation: flip1 0.6s infinite;
+    }
+
+    .loader div:nth-child(2) {
+        left: 8px;
+        animation: flip2 0.6s infinite;
+    }
+
+    .loader div:nth-child(3) {
+        left: 32px;
+        animation: flip2 0.6s infinite;
+    }
+
+    .loader div:nth-child(4) {
+        left: 56px;
+        animation: flip3 0.6s infinite;
+    }
+
+    @keyframes flip1 {
+        0% {
+            transform: scale(0);
+        }
+
+        100% {
+            transform: scale(1);
+        }
+    }
+
+    @keyframes flip3 {
+        0% {
+            transform: scale(1);
+        }
+
+        100% {
+            transform: scale(0);
+        }
+    }
+
+    @keyframes flip2 {
+        0% {
+            transform: translate(0, 0);
+        }
+
+        100% {
+            transform: translate(24px, 0);
+        }
+    }
+
+
+
+
+    @media (max-width: 700px) {
+        .loginCard {
+            height: 100vh;
+            border-radius: 0;
+        }
+
+        .loginCard .card-body {
+
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .wrapper-page {
+            margin: 0;
+        }
+
+        .auth-body-bg {
+            height: 100vh;
+        }
+    }
 </style>
