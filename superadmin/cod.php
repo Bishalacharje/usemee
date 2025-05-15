@@ -11,7 +11,7 @@ include("checked-login.php");
 
 <head>
     <?php include("./components/headlink.php"); ?>
-    <title>Orders | Usemee</title>
+    <title>COD | Super Admin | Usemee</title>
 </head>
 
 <body data-topbar="dark">
@@ -39,8 +39,8 @@ include("checked-login.php");
 
                                 <div class="page-title-right">
                                     <ol class="breadcrumb m-0">
-                                        <li class="breadcrumb-item"><a href="javascript:void(0);">Upcube</a></li>
-                                        <li class="breadcrumb-item active">COD History</li>
+                                        <li class="breadcrumb-item"><a href="javascript:void(0);">Usemee</a></li>
+                                        <li class="breadcrumb-item active">COD</li>
                                     </ol>
                                 </div>
 

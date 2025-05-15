@@ -55,3 +55,17 @@ if (isset($_GET['confirm_delete']) && $_GET['confirm_delete'] == 1) {
     </script>";
 }
 ?>
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <?php include("./components/headlink.php"); ?>
+</head>
+
+<body>
+
+</body>
+
+</html>

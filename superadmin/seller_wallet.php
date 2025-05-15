@@ -9,7 +9,7 @@ include("checked-login.php");
 
 <head>
     <?php include("./components/headlink.php"); ?>
-    <title>Seller Wallet | Usemee</title>
+    <title>Seller Wallet | Super Admin | Usemee</title>
 </head>
 
 <body data-topbar="dark">

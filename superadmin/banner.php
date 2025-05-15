@@ -36,7 +36,7 @@ switch ($type) {
 
 <head>
     <?php include("./components/headlink.php"); ?>
-    <title><?php echo $title; ?> | Usemee</title>
+    <title><?php echo $title; ?> | Super Admin | Usemee</title>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 
@@ -50,7 +50,8 @@ switch ($type) {
                 <div class="container-fluid">
                     <div class="d-flex justify-content-between align-items-center mb-4">
                         <h4 class="mb-0">Manage <?php echo $title; ?></h4>
-                        <button class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#addBannerModal">Add <?php echo $type === 'footer' ? 'Card' : 'Banner'; ?></button>
+                        <button class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#addBannerModal">Add
+                            <?php echo $type === 'footer' ? 'Card' : 'Banner'; ?></button>
                     </div>
 
                     <div class="table-responsive">
@@ -120,9 +121,11 @@ switch ($type) {
                     <div class="modal fade" id="addBannerModal" tabindex="-1">
                         <div class="modal-dialog modal-lg modal-dialog-centered">
                             <div class="modal-content">
-                                <form id="addBannerForm" enctype="multipart/form-data" class="needs-validation" novalidate>
+                                <form id="addBannerForm" enctype="multipart/form-data" class="needs-validation"
+                                    novalidate>
                                     <div class="modal-header">
-                                        <h5 class="modal-title">Add <?php echo $type === 'footer' ? 'Card' : 'Banner'; ?></h5>
+                                        <h5 class="modal-title">Add
+                                            <?php echo $type === 'footer' ? 'Card' : 'Banner'; ?></h5>
                                         <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                                     </div>
                                     <div class="modal-body">
@@ -133,7 +136,8 @@ switch ($type) {
                                             </div>
                                             <div class="col-md-6 mb-3">
                                                 <label class="form-label">Image</label>
-                                                <input type="file" class="form-control" name="image" accept="image/*" required>
+                                                <input type="file" class="form-control" name="image" accept="image/*"
+                                                    required>
                                             </div>
                                             <div class="col-md-6 mb-3">
                                                 <label class="form-label">Link</label>
@@ -142,7 +146,8 @@ switch ($type) {
                                             <?php if ($has_position): ?>
                                                 <div class="col-md-6 mb-3">
                                                     <label class="form-label">Position</label>
-                                                    <input type="number" class="form-control" name="position" value="0" required>
+                                                    <input type="number" class="form-control" name="position" value="0"
+                                                        required>
                                                 </div>
                                             <?php endif; ?>
                                             <?php if ($has_visibility): ?>
@@ -157,7 +162,8 @@ switch ($type) {
                                         </div>
                                     </div>
                                     <div class="modal-footer">
-                                        <button type="submit" class="btn btn-dark">Add <?php echo $type === 'footer' ? 'Card' : 'Banner'; ?></button>
+                                        <button type="submit" class="btn btn-dark">Add
+                                            <?php echo $type === 'footer' ? 'Card' : 'Banner'; ?></button>
                                     </div>
                                 </form>
                             </div>
@@ -173,7 +179,8 @@ switch ($type) {
                                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                                 </div>
                                 <div class="modal-body">
-                                    <img id="viewBannerImage" src="" class="img-fluid rounded mb-3" style="max-width: 200px;">
+                                    <img id="viewBannerImage" src="" class="img-fluid rounded mb-3"
+                                        style="max-width: 200px;">
                                     <p><strong>Link:</strong> <span id="viewBannerLink"></span></p>
                                     <?php if ($has_position): ?>
                                         <p><strong>Position:</strong> <span id="viewBannerPosition"></span></p>
@@ -191,9 +198,11 @@ switch ($type) {
                     <div class="modal fade" id="editBannerModal" tabindex="-1">
                         <div class="modal-dialog modal-lg modal-dialog-centered">
                             <div class="modal-content">
-                                <form id="editBannerForm" enctype="multipart/form-data" class="needs-validation" novalidate>
+                                <form id="editBannerForm" enctype="multipart/form-data" class="needs-validation"
+                                    novalidate>
                                     <div class="modal-header">
-                                        <h5 class="modal-title">Edit <?php echo $type === 'footer' ? 'Card' : 'Banner'; ?></h5>
+                                        <h5 class="modal-title">Edit
+                                            <?php echo $type === 'footer' ? 'Card' : 'Banner'; ?></h5>
                                         <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                                     </div>
                                     <div class="modal-body">
@@ -201,12 +210,14 @@ switch ($type) {
                                         <div class="row">
                                             <div class="col-md-6 mb-3">
                                                 <label class="form-label">Title</label>
-                                                <input type="text" class="form-control" id="editBannerTitle" name="title" required>
+                                                <input type="text" class="form-control" id="editBannerTitle"
+                                                    name="title" required>
                                             </div>
                                             <div class="col-md-6 mb-3">
                                                 <label class="form-label">Image (optional)</label>
                                                 <input type="file" class="form-control" name="image" accept="image/*">
-                                                <small class="form-text text-muted">Leave blank to keep current image.</small>
+                                                <small class="form-text text-muted">Leave blank to keep current
+                                                    image.</small>
                                             </div>
                                             <div class="col-md-6 mb-3">
                                                 <label class="form-label">Link</label>
@@ -215,13 +226,15 @@ switch ($type) {
                                             <?php if ($has_position): ?>
                                                 <div class="col-md-6 mb-3">
                                                     <label class="form-label">Position</label>
-                                                    <input type="number" class="form-control" id="editBannerPosition" name="position" required>
+                                                    <input type="number" class="form-control" id="editBannerPosition"
+                                                        name="position" required>
                                                 </div>
                                             <?php endif; ?>
                                             <?php if ($has_visibility): ?>
                                                 <div class="col-md-6 mb-3">
                                                     <label class="form-label">Visibility</label>
-                                                    <select name="visibility" class="form-control" id="editBannerVisibility" required>
+                                                    <select name="visibility" class="form-control" id="editBannerVisibility"
+                                                        required>
                                                         <option value="1">Visible</option>
                                                         <option value="0">Hidden</option>
                                                     </select>
@@ -230,7 +243,8 @@ switch ($type) {
                                         </div>
                                     </div>
                                     <div class="modal-footer">
-                                        <button type="submit" class="btn btn-dark">Update <?php echo $type === 'footer' ? 'Card' : 'Banner'; ?></button>
+                                        <button type="submit" class="btn btn-dark">Update
+                                            <?php echo $type === 'footer' ? 'Card' : 'Banner'; ?></button>
                                     </div>
                                 </form>
                             </div>
@@ -333,16 +347,16 @@ switch ($type) {
                                             fetch(`banner_action.php?type=<?php echo $type; ?>&delete=${this.getAttribute('data-id')}`, {
                                                 method: "POST"
                                             })
-                                            .then(response => response.json())
-                                            .then(data => {
-                                                if (data.success) {
-                                                    Swal.fire({ ...swalConfig, text: '<?php echo $type === 'footer' ? 'Card' : 'Banner'; ?> deleted successfully!' });
-                                                    document.querySelector(`#bannerTable tr[data-id='${this.getAttribute('data-id')}']`).remove();
-                                                } else {
-                                                    Swal.fire({ icon: 'error', title: 'Error!', text: data.message });
-                                                }
-                                            })
-                                            .catch(() => Swal.fire({ icon: 'error', title: 'Error!', text: 'Something went wrong!' }));
+                                                .then(response => response.json())
+                                                .then(data => {
+                                                    if (data.success) {
+                                                        Swal.fire({ ...swalConfig, text: '<?php echo $type === 'footer' ? 'Card' : 'Banner'; ?> deleted successfully!' });
+                                                        document.querySelector(`#bannerTable tr[data-id='${this.getAttribute('data-id')}']`).remove();
+                                                    } else {
+                                                        Swal.fire({ icon: 'error', title: 'Error!', text: data.message });
+                                                    }
+                                                })
+                                                .catch(() => Swal.fire({ icon: 'error', title: 'Error!', text: 'Something went wrong!' }));
                                         }
                                     });
                                 });
@@ -361,19 +375,19 @@ switch ($type) {
                                 method: "POST",
                                 body: formData
                             })
-                            .then(response => response.json())
-                            .then(data => {
-                                if (data.success) {
-                                    Swal.fire({ ...swalConfig, text: '<?php echo $type === 'footer' ? 'Card' : 'Banner'; ?> added successfully!' });
-                                    refreshTableRow(data.data);
-                                    bootstrap.Modal.getInstance(document.getElementById('addBannerModal')).hide();
-                                    this.reset();
-                                    this.classList.remove('was-validated');
-                                } else {
-                                    Swal.fire({ icon: 'error', title: 'Error!', text: data.message });
-                                }
-                            })
-                            .catch(() => Swal.fire({ icon: 'error', title: 'Error!', text: 'Something went wrong!' }));
+                                .then(response => response.json())
+                                .then(data => {
+                                    if (data.success) {
+                                        Swal.fire({ ...swalConfig, text: '<?php echo $type === 'footer' ? 'Card' : 'Banner'; ?> added successfully!' });
+                                        refreshTableRow(data.data);
+                                        bootstrap.Modal.getInstance(document.getElementById('addBannerModal')).hide();
+                                        this.reset();
+                                        this.classList.remove('was-validated');
+                                    } else {
+                                        Swal.fire({ icon: 'error', title: 'Error!', text: data.message });
+                                    }
+                                })
+                                .catch(() => Swal.fire({ icon: 'error', title: 'Error!', text: 'Something went wrong!' }));
                         });
 
                         // Edit banner via AJAX
@@ -385,19 +399,19 @@ switch ($type) {
                                 method: "POST",
                                 body: formData
                             })
-                            .then(response => response.json())
-                            .then(data => {
-                                if (data.success) {
-                                    Swal.fire({ ...swalConfig, text: '<?php echo $type === 'footer' ? 'Card' : 'Banner'; ?> updated successfully!' });
-                                    refreshTableRow(data.data);
-                                    bootstrap.Modal.getInstance(document.getElementById('editBannerModal')).hide();
-                                    this.reset();
-                                    this.classList.remove('was-validated');
-                                } else {
-                                    Swal.fire({ icon: 'error', title: 'Error!', text: data.message });
-                                }
-                            })
-                            .catch(() => Swal.fire({ icon: 'error', title: 'Error!', text: 'Something went wrong!' }));
+                                .then(response => response.json())
+                                .then(data => {
+                                    if (data.success) {
+                                        Swal.fire({ ...swalConfig, text: '<?php echo $type === 'footer' ? 'Card' : 'Banner'; ?> updated successfully!' });
+                                        refreshTableRow(data.data);
+                                        bootstrap.Modal.getInstance(document.getElementById('editBannerModal')).hide();
+                                        this.reset();
+                                        this.classList.remove('was-validated');
+                                    } else {
+                                        Swal.fire({ icon: 'error', title: 'Error!', text: data.message });
+                                    }
+                                })
+                                .catch(() => Swal.fire({ icon: 'error', title: 'Error!', text: 'Something went wrong!' }));
                         });
                     </script>
 

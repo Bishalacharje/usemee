@@ -20,7 +20,7 @@ echo "<script>
     document.addEventListener('DOMContentLoaded', function() {
         Swal.fire({
             title: 'Are you sure?',
-            text: 'Do you really want to delete this Sub category?',
+            text: 'Do you really want to delete this zone?',
             icon: 'warning',
             showCancelButton: true,
             confirmButtonColor: '#d33',
@@ -28,9 +28,9 @@ echo "<script>
             confirmButtonText: 'Yes, delete it!'
         }).then((result) => {
             if (result.isConfirmed) {
-                window.location.href = 'delete-sub-category.php?confirm_delete=1&id=$id';
+                window.location.href = 'delete-zone.php?confirm_delete=1&id=$id';
             } else {
-                window.location.href = 'sub-category.php';
+                window.location.href = 'zone.php';
             }
         });
     });
@@ -38,24 +38,23 @@ echo "<script>
 
 // Execute the delete query only if the user confirmed
 if (isset($_GET['confirm_delete']) && $_GET['confirm_delete'] == 1) {
-    $query2 = "DELETE FROM `subcategory` WHERE `id`='$id'";
+    $query2 = "DELETE FROM `zone` WHERE `id`='$id'";
     $data2 = mysqli_query($conn, $query2);
 
     echo "<script>
         document.addEventListener('DOMContentLoaded', function() {
             Swal.fire({
                 title: '" . ($data2 ? 'Deleted!' : 'Error!') . "',
-                text: '" . ($data2 ? 'Category Deleted Successfully.' : 'Failed to Delete. Please try again.') . "',
+                text: '" . ($data2 ? 'Zone Deleted Successfully.' : 'Failed to Delete. Please try again.') . "',
                 icon: '" . ($data2 ? 'success' : 'error') . "',
                 confirmButtonText: 'OK'
             }).then(() => {
-                window.location.href = 'sub-category.php';
+                window.location.href = 'zone.php';
             });
         });
     </script>";
 }
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
 

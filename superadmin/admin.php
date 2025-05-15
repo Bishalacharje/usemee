@@ -11,7 +11,7 @@ include("checked-login.php");
 
 <head>
     <?php include("./components/headlink.php"); ?>
-    <title>Admin | Usemee</title>
+    <title>Admin | Super Admin | Usemee</title>
 </head>
 
 <body data-topbar="dark">
@@ -46,7 +46,7 @@ include("checked-login.php");
 
                                 <div class="page-title-right">
                                     <ol class="breadcrumb m-0">
-                                        <li class="breadcrumb-item"><a href="javascript: void(0);">Upcube</a></li>
+                                        <li class="breadcrumb-item"><a href="javascript: void(0);">Usemee</a></li>
                                         <li class="breadcrumb-item active">Admin</li>
                                     </ol>
                                 </div>
@@ -126,8 +126,8 @@ include("checked-login.php");
                                                                 </button>
 
                                                                 <a href="<?php echo "delete-admin.php?id=$result[id]" ?>"
-                                                                class="btn btn-danger btn-sm"> <i
-                                                                class="ri-delete-bin-fill"></i> </a>
+                                                                    class="btn btn-danger btn-sm"> <i
+                                                                        class="ri-delete-bin-fill"></i> </a>
                                                             </td>
                                                         </tr>
                                                         <?php
@@ -244,10 +244,10 @@ include("checked-login.php");
                                         $email = htmlspecialchars(mysqli_real_escape_string($conn, $_POST['email']));
                                         $password = htmlspecialchars(mysqli_real_escape_string($conn, $_POST['password']));
 
-                                         // Password_validation
+                                        // Password_validation
                                         // $uppercase = preg_match('@[A-Z]@', $password);
                                         $lowercase = preg_match('@[a-z]@', $password);
-                                        $number    = preg_match('@[0-9]@', $password);
+                                        $number = preg_match('@[0-9]@', $password);
                                         $specialChars = preg_match('@[^\w]@', $password);
                                         $minLength = strlen($password) >= 8;
 

@@ -25,8 +25,7 @@ include("checked-login.php");
                 <script src="https://unpkg.com/@dotlottie/player-component@2.7.12/dist/dotlottie-player.mjs"
                     type="module"></script>
                 <dotlottie-player src="https://lottie.host/037a8e60-9d0a-4005-abb6-3082fea8b726/jOdzqc2z0l.lottie"
-                    background="transparent" speed="0.5" style="width: 160px; height: 160px"
-                    autoplay></dotlottie-player>
+                    background="transparent" speed="1" style="width: 160px; height: 160px" autoplay></dotlottie-player>
                 <h2>Order Placed</h2>
                 <p>Our team will call you to confirm the products from your order.</p>
                 <div class="centerBtnContainer">

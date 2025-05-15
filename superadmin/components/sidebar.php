@@ -53,6 +53,16 @@
                 <li>
                     <a href="javascript: void(0);" class="has-arrow waves-effect">
                         <i class="ri-shopping-bag-line"></i>
+                        <span>Order</span>
+                    </a>
+                    <ul class="sub-menu" aria-expanded="false">
+                        <li><a href="today_order.php">Today Order</a></li>
+                        <li><a href="order.php">Order History</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="javascript: void(0);" class="has-arrow waves-effect">
+                        <i class="ri-shopping-bag-line"></i>
                         <span>COD</span>
                     </a>
                     <ul class="sub-menu" aria-expanded="false">
