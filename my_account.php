@@ -60,10 +60,11 @@ include("checked-login.php");
                         </div>
                         <div class="formGrid">
 
-                            <div>
-                                <label for="">Phone number</label>
-                                <input type="number" name="phone" value="<?php echo $user_phone ?>" required>
-                            </div>
+                             <div class="inputCon">
+                                    <label>Phone No</label>
+                                    <input type="text" name="phone_no" id="phone_no" value="<?php echo $phone; ?>" pattern="[0-9]{10}" maxlength="10" required>
+                                    <span class="error-message" id="phone-error">Phone number must be exactly 10 digits</span>
+                                </div>
                             <div>
                                 <label for="">Email</label>
                                 <input type="email" name="email" value="<?php echo $user_email ?>" required>

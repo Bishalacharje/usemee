@@ -85,6 +85,7 @@ include("checked-login.php");
                                                         <th>Category</th>
                                                         <th>Sub-Category</th>
                                                         <!-- <th>Category Description</th> -->
+                                                          <th>Status</th>
                                                         <th>Action</th>
                                                     </tr>
                                                 </thead>
@@ -133,6 +134,16 @@ include("checked-login.php");
                                                                 </p>
                                                             </td> -->
 
+                                                            <td>
+                                                                <div class="form-check form-switch form-switch-lg" dir="ltr">
+                                                                    <input type="checkbox" class="form-check-input status-toggle" 
+                                                                    data-id="<?php echo $result['id']; ?>"
+                                                                    <?php echo ($result['status'] == 1) ? 'checked' : ''; ?>>
+                                                                    <label class="form-check-label status-label" for="customSwitchsizelg">
+                                                                        <?php echo ($result['status'] == 1) ? 'In Stock' : 'Out of Stock'; ?>
+                                                                    </label>
+                                                                </div>
+                                                            </td>
                                                             <td>
 
 
@@ -183,13 +194,6 @@ include("checked-login.php");
                             </div>
                         </div>
                     </div>
-
-
-
-
-
-
-
 
                     <!--  Modal content for add Product -->
                     <div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog"
@@ -263,8 +267,6 @@ include("checked-login.php");
                                                     </div>
                                                 </div>
 
-
-
                                             </div>
 
                                             <div class="col-md-12">
@@ -332,11 +334,6 @@ include("checked-login.php");
 
 
                                         </div>
-
-
-
-
-
 
                                         <div>
                                             <button class="btn btn-dark" type="submit" name="submit">Add
@@ -440,8 +437,6 @@ include("checked-login.php");
                                     </script>
 
 
-
-
                                     <!-------------- Calculate discount percentage dynamically when MRP & Sale Price change. ------------------------ -->
 
                                     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -482,20 +477,10 @@ include("checked-login.php");
                                         });
                                     </script>
 
-
-
-
-
-
-
-
-
                                 </div>
                             </div><!-- /.modal-content -->
                         </div><!-- /.modal-dialog -->
                     </div><!-- /.modal -->
-
-
 
 
                     <!--  Modal content for edit product -->
@@ -577,8 +562,6 @@ include("checked-login.php");
                                                     </div>
                                                 </div>
 
-
-
                                             </div>
 
                                             <div class="col-md-12">
@@ -620,19 +603,19 @@ include("checked-login.php");
                                         if (!empty($filename)) {
                                             move_uploaded_file($tempname, $folder);
                                             $query2 = "UPDATE `product` SET 
-                    `categoryId`='$category',
-                    `subCategoryId`='$subcategory',
-                    `name`='$name',
-                    `image`='$folder',
-                    `description`='$description'
-                    WHERE `id`='$id'";
-                                        } else {
-                                            $query2 = "UPDATE `product` SET 
-                    `categoryId`='$category',
-                    `subCategoryId`='$subcategory',
-                    `name`='$name',
-                    `description`='$description'
-                    WHERE `id`='$id'";
+                                            `categoryId`='$category',
+                                            `subCategoryId`='$subcategory',
+                                            `name`='$name',
+                                            `image`='$folder',
+                                            `description`='$description'
+                                            WHERE `id`='$id'";
+                                                                } else {
+                                                                    $query2 = "UPDATE `product` SET 
+                                            `categoryId`='$category',
+                                            `subCategoryId`='$subcategory',
+                                            `name`='$name',
+                                            `description`='$description'
+                                            WHERE `id`='$id'";
                                         }
 
                                         // Execute the query
@@ -645,37 +628,33 @@ include("checked-login.php");
                                         if ($data2) {
                                             echo "<script src='https://cdn.jsdelivr.net/npm/sweetalert2@11'></script>";
                                             echo "<script>
-            Swal.fire({
-                title: 'Success!',
-                text: 'Product Updated.',
-                icon: 'success',
-                showConfirmButton: false,
-                timer: 2000 
-            }).then(() => {
-                window.location.href = 'product.php'; 
-            });
-        </script>";
+                                        Swal.fire({
+                                            title: 'Success!',
+                                            text: 'Product Updated.',
+                                            icon: 'success',
+                                            showConfirmButton: false,
+                                            timer: 2000 
+                                        }).then(() => {
+                                            window.location.href = 'product.php'; 
+                                        });
+                                    </script>";
                                         } else {
                                             // Error alert
                                             echo "<script src='https://cdn.jsdelivr.net/npm/sweetalert2@11'></script>";
                                             echo "<script>
-            Swal.fire({
-                title: 'Error!',
-                text: 'Failed. Please try again.',
-                icon: 'error',
-                confirmButtonText: 'OK'
-            });
-        </script>";
+                                            Swal.fire({
+                                                title: 'Error!',
+                                                text: 'Failed. Please try again.',
+                                                icon: 'error',
+                                                confirmButtonText: 'OK'
+                                            });
+                                        </script>";
                                         }
 
                                         // Flush output buffer
                                         ob_end_flush();
                                     }
                                     ?>
-
-
-
-
 
                                 </div>
                             </div>
@@ -725,11 +704,6 @@ include("checked-login.php");
                             });
                         });
                     </script>
-
-
-
-
-
 
 
                     <!--  Modal content for view product -->
@@ -905,10 +879,6 @@ include("checked-login.php");
                     </script>
 
 
-
-
-
-
                     <!--  Modal content for add Product Variants  -->
                     <div class="modal fade bs-example-modal-lg-variant" tabindex="-1" role="dialog"
                         aria-labelledby="myLargeModalLabel" aria-hidden="true">
@@ -1019,27 +989,27 @@ include("checked-login.php");
                                         if ($data2) {
                                             echo "<script src='https://cdn.jsdelivr.net/npm/sweetalert2@11'></script>";
                                             echo "<script>
-Swal.fire({
-title: 'Success!',
-text: 'New Product Variant added.',
-icon: 'success',
-showConfirmButton: false,
-timer: 2000 
-}).then(() => {
-window.location.href = 'product.php'; 
-});
-</script>";
+                                            Swal.fire({
+                                            title: 'Success!',
+                                            text: 'New Product Variant added.',
+                                            icon: 'success',
+                                            showConfirmButton: false,
+                                            timer: 2000 
+                                            }).then(() => {
+                                            window.location.href = 'product.php'; 
+                                            });
+                                            </script>";
                                         } else {
                                             // Error alert
                                             echo "<script src='https://cdn.jsdelivr.net/npm/sweetalert2@11'></script>";
                                             echo "<script>
-Swal.fire({
-title: 'Error!',
-text: 'Failed. Please try again.',
-icon: 'error',
-confirmButtonText: 'OK'
-});
-</script>";
+                                            Swal.fire({
+                                            title: 'Error!',
+                                            text: 'Failed. Please try again.',
+                                            icon: 'error',
+                                            confirmButtonText: 'OK'
+                                            });
+                                            </script>";
                                         }
 
                                         // Flush output buffer
@@ -1094,6 +1064,53 @@ confirmButtonText: 'OK'
 
     <!-- JAVASCRIPT -->
     <?php include("./components/footscript.php"); ?>
+
+    <script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Add event listener to all status toggle switches
+    document.querySelectorAll('.status-toggle').forEach(function(toggle) {
+        toggle.addEventListener('change', function() {
+            const productId = this.getAttribute('data-id');
+            const isChecked = this.checked ? 1 : 0;
+            const statusLabel = this.nextElementSibling;
+            
+            // Update label text immediately for user feedback
+            statusLabel.textContent = isChecked ? 'In Stock' : 'Out of Stock';
+            
+            // Send AJAX request to update status
+            fetch('status.php', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                body: `id=${productId}&status=${isChecked}`
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    // Success notification
+                    Swal.fire({
+                        position: 'top-end',
+                        icon: 'success',
+                        title: `Product is now ${isChecked ? 'In Stock' : 'Out of Stock'}`,
+                        showConfirmButton: false,
+                        timer: 1500
+                    });
+                } else {
+                    // Error notification and revert toggle
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error',
+                        text: 'Failed to update product status'
+                    });
+                    this.checked = !this.checked;
+                    statusLabel.textContent = this.checked ? 'In Stock' : 'Out of Stock';
+                }
+            });
+        });
+    });
+});
+</script>
 
 </body>
 
