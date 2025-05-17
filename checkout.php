@@ -55,6 +55,14 @@ $total_price = $sub_total + $delivery_cost;
 <head>
     <?php include("./components/headlink.php"); ?>
     <title>Checkout | Usemee - Your one-stop online store for all your shopping needs!</title>
+    <style>
+        .error-message {
+            color: #d9534f;
+            font-size: 12px;
+            margin-top: 5px;
+            display: none;
+        }
+    </style>
 </head>
 
 <body>
@@ -73,7 +81,7 @@ $total_price = $sub_total + $delivery_cost;
             <div class="checkoutGrid">
                 <div>
 
-                    <form action="place_order.php" method="POST">
+                    <form action="place_order.php" method="POST" id="checkoutForm">
                         <h3>Shipping Address</h3>
 
                         <div class="chekoutBox">
@@ -85,7 +93,8 @@ $total_price = $sub_total + $delivery_cost;
 
                                 <div class="inputCon">
                                     <label>Phone No</label>
-                                    <input type="text" name="phone_no" value="<?php echo $phone; ?>" required>
+                                    <input type="text" name="phone_no" id="phone_no" value="<?php echo $phone; ?>" pattern="[0-9]{10}" maxlength="10" required>
+                                    <span class="error-message" id="phone-error">Phone number must be exactly 10 digits</span>
                                 </div>
 
                             </div>
@@ -117,7 +126,8 @@ $total_price = $sub_total + $delivery_cost;
                                 </div>
                                 <div class="inputCon">
                                     <label>Pin</label>
-                                    <input type="text" name="pin" value="<?php echo $pin; ?>" required>
+                                    <input type="text" name="pin" id="pin" value="<?php echo $pin; ?>" pattern="[0-9]{6}" maxlength="6" required>
+                                    <span class="error-message" id="pin-error">PIN must be exactly 6 digits</span>
                                 </div>
                             </div>
 
@@ -166,10 +176,63 @@ $total_price = $sub_total + $delivery_cost;
         </div>
     </section>
 
-
-
     <?php include("./components/footer.php"); ?>
     <?php include("./components/footscript.php"); ?>
-</body>
 
-</html>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const form = document.getElementById('checkoutForm');
+            const phoneInput = document.getElementById('phone_no');
+            const pinInput = document.getElementById('pin');
+            const phoneError = document.getElementById('phone-error');
+            const pinError = document.getElementById('pin-error');
+
+            // Phone validation
+            phoneInput.addEventListener('input', function() {
+                // Remove any non-digit characters
+                this.value = this.value.replace(/\D/g, '');
+                
+                // Show error if not exactly 10 digits
+                if (this.value.length > 0 && this.value.length !== 10) {
+                    phoneError.style.display = 'block';
+                } else {
+                    phoneError.style.display = 'none';
+                }
+            });
+
+            // PIN validation
+            pinInput.addEventListener('input', function() {
+                // Remove any non-digit characters
+                this.value = this.value.replace(/\D/g, '');
+                
+                // Show error if not exactly 6 digits
+                if (this.value.length > 0 && this.value.length !== 6) {
+                    pinError.style.display = 'block';
+                } else {
+                    pinError.style.display = 'none';
+                }
+            });
+
+            // Form submission validation
+            form.addEventListener('submit', function(e) {
+                // Check phone validation
+                if (phoneInput.value.length !== 10) {
+                    e.preventDefault();
+                    phoneError.style.display = 'block';
+                    phoneInput.focus();
+                    return false;
+                }
+                
+                // Check PIN validation
+                if (pinInput.value.length !== 6) {
+                    e.preventDefault();
+                    pinError.style.display = 'block';
+                    pinInput.focus();
+                    return false;
+                }
+                
+                return true;
+            });
+        });
+    </script>
+</body>

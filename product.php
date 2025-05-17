@@ -1,4 +1,3 @@
-
 <?php
 error_reporting(0);
 include("connection.php");
@@ -9,8 +8,9 @@ include("enc_dec.php");
 if (isset($_GET['id'])) {
     $product_id = $_GET['id'];
 
-    // Decryp the ID
+    // Decrypt the ID
     $decryptId = decryptId($product_id);
+
     // Fetch product
     $query = "SELECT * FROM product WHERE id = '$decryptId'";
     $data = mysqli_query($conn, $query);
@@ -55,22 +55,52 @@ if (isset($_GET['id'])) {
 <head>
     <?php include("./components/headlink.php"); ?>
     <title><?php echo $result['name']; ?> | Usemee - Your one-stop online store for all your shopping needs!</title>
+    <style>
+        .stock-status {
+            margin-bottom: 15px;
+        }
+        .stock-status .in-stock {
+            color: green;
+            font-weight: bold;
+        }
+        .stock-status .out-of-stock {
+            color: red;
+            font-weight: bold;
+        }
+        .buyButton:disabled, .add-cart-btn:disabled {
+            background-color: #ccc;
+            cursor: not-allowed;
+            opacity: 0.6;
+        }
+        .stock-badge.out-of-stock {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background-color: red;
+            color: white;
+            padding: 5px 10px;
+            font-size: 12px;
+            border-radius: 3px;
+        }
+        .productBox.out-of-stock {
+            opacity: 0.7;
+        }
+    </style>
 </head>
 
 <body>
     <div>
-
         <?php include("./components/header.php"); ?>
     </div>
 
     <section class="conSection otherPageSection">
         <div class="container">
-        <div class="title">
-            <div>
-                <h2><?php echo $result['name']; ?></h2>
-                <p><a href="index.php">Home</a> - <a href="shop.php">Shop</a> - <span><?php echo $result['name']; ?></span> </p>
+            <div class="title">
+                <div>
+                    <h2><?php echo $result['name']; ?></h2>
+                    <p><a href="index.php">Home</a> - <a href="shop.php">Shop</a> - <span><?php echo $result['name']; ?></span></p>
+                </div>
             </div>
-        </div>
             <div class="singleProduct">
                 <div class="showcase-banner scrollToRevealRight">
                     <img src="superadmin/<?php echo $result['image']; ?>" alt="<?php echo $result['name']; ?>"
@@ -83,19 +113,24 @@ if (isset($_GET['id'])) {
                         <span class="subCategory"><?php echo $subCategoryName; ?></span>
                     </div>
 
-
                     <h3 class="showcase-title"><?php echo $result['name']; ?></h3>
+
+                    <!-- Stock Status Display -->
+                    <div class="stock-status">
+                        <p><strong>Availability: </strong>
+                            <span id="stock-status" class="<?php echo $result['status'] == 1 ? 'in-stock' : 'out-of-stock'; ?>">
+                                <?php echo $result['status'] == 1 ? 'In Stock' : 'Out of Stock'; ?>
+                            </span>
+                        </p>
+                    </div>
 
                     <div class="price-box">
                         <div class="flex">
-                            <del>&#8377; <span id="variant-mrp"><?php echo $mrp; ?></span></del>
+                            <del>₹ <span id="variant-mrp"><?php echo $mrp; ?></span></del>
                             <h5><span id="variant-discount"><?php echo $discount; ?></span> % off</h5>
                         </div>
-
-
-                        <p class="price">&#8377; <span id="variant-sale-price"><?php echo $sale_price; ?></span></p>
+                        <p class="price">₹ <span id="variant-sale-price"><?php echo $sale_price; ?></span></p>
                     </div>
-
 
                     <div class="variantSection">
                         <?php foreach ($variants as $index => $v) { ?>
@@ -116,16 +151,16 @@ if (isset($_GET['id'])) {
                                 this.classList.add("selected");
                             });
                         });
-
                     </script>
 
                     <div class="buyProductButtonCon">
-                        <!-- ----------------------------------------- -->
                         <form action="checkout_single.php" method="POST" id="buyNowForm">
                             <input type="hidden" name="product_id" id="buyNowProductId" value="<?php echo $decryptId; ?>">
                             <input type="hidden" name="variant_id" id="buyNowVariantId" value="<?php echo $default_variant['id']; ?>">
                             <input type="hidden" name="variant_data" id="buyNowVariantData" value='<?php echo json_encode($default_variant); ?>'>
-                            <button type="submit" class="buyButton"> Buy now</button>
+                            <button type="submit" class="buyButton" <?php echo $result['status'] == 0 ? 'disabled' : ''; ?>>
+                                Buy now
+                            </button>
                         </form>
 
                         <script>
@@ -135,18 +170,29 @@ if (isset($_GET['id'])) {
                                     const variantData = JSON.parse(this.value);
                                     document.getElementById('buyNowVariantId').value = variantData.id;
                                     document.getElementById('buyNowVariantData').value = JSON.stringify(variantData);
+
+                                    // Update price box
+                                    let mrp = variantData.mrp;
+                                    let salePrice = variantData.sale_price;
+                                    let discount = Math.round(((mrp - salePrice) / mrp) * 100);
+                                    document.getElementById('variant-sale-price').innerText = salePrice;
+                                    document.getElementById('variant-mrp').innerText = mrp;
+                                    document.getElementById('variant-discount').innerText = discount;
+
+                                    // Ensure buttons remain disabled if out of stock
+                                    let stockStatus = <?php echo $result['status']; ?>;
+                                    if (stockStatus == 0) {
+                                        document.querySelector('.buyButton').disabled = true;
+                                        document.querySelector('#addToCartBtn').disabled = true;
+                                    }
                                 });
                             });
                         </script>
 
-                        <!-- ----------------------------------------------------- -->
-
-
-
-                        <button class="add-cart-btn" id="addToCartBtn"><img src="./assets/images/imgicon/cart-white.png" alt=""> Add to cart</button>
+                        <button class="add-cart-btn" id="addToCartBtn" <?php echo $result['status'] == 0 ? 'disabled' : ''; ?>>
+                            <img src="./assets/images/imgicon/cart-white.png" alt=""> Add to cart
+                        </button>
                     </div>
-
-
 
                     <div class="productFooter">
                         <p><img src="assets/images/imgicon/original.png" alt="">100% Original Products</p>
@@ -154,8 +200,6 @@ if (isset($_GET['id'])) {
                         <p><img src="assets/images/imgicon/exchange.png" alt="">Easy Exchange Policy</p>
                     </div>
                 </div>
-                
-                
             </div>
             <div class="productDescription">
                 <h3>Description</h3>
@@ -167,68 +211,56 @@ if (isset($_GET['id'])) {
                 <h2 class="relatedProductTitle">Related Products<span>.</span></h2>
 
                 <div class="productGrid grid5">
-                        <?php
-                        $query = "SELECT * FROM `product` where `categoryId`='$cid'";
-                        $data = mysqli_query($conn, $query);
-                        $total = mysqli_num_rows($data);
+                    <?php
+                    $query = "SELECT * FROM `product` WHERE `categoryId`='$cid'";
+                    $data = mysqli_query($conn, $query);
+                    $total = mysqli_num_rows($data);
 
+                    while ($result = mysqli_fetch_assoc($data)) {
+                        $cid = $result['categoryId'];
+                        $queryn = "SELECT * FROM `category` WHERE `id`='$cid'";
+                        $datan = mysqli_query($conn, $queryn);
+                        $resultn = mysqli_fetch_assoc($datan);
+                        $categoryName = $resultn['name'];
+                        $categoryId = $resultn['id'];
 
-                        while ($result = mysqli_fetch_assoc($data)) {
-                            $cid = $result['categoryId'];
-                            $queryn = "SELECT * FROM `category` WHERE `id`='$cid'";
-                            $datan = mysqli_query($conn, $queryn);
-                            $resultn = mysqli_fetch_assoc($datan);
-                            $categoryName = $resultn['name'];
-                            $categoryId = $resultn['id'];
-                            ?>
-                            <?php
-                            $scid = $result['subCategoryId'];
-                            $queryns = "SELECT * FROM `subcategory` WHERE `id`='$scid'";
-                            $datans = mysqli_query($conn, $queryns);
-                            $resultns = mysqli_fetch_assoc($datans);
-                            $subCategoryName = $resultns['name'];
-                            $subCategoryId = $resultns['id'];
+                        $scid = $result['subCategoryId'];
+                        $queryns = "SELECT * FROM `subcategory` WHERE `id`='$scid'";
+                        $datans = mysqli_query($conn, $queryns);
+                        $resultns = mysqli_fetch_assoc($datans);
+                        $subCategoryName = $resultns['name'];
+                        $subCategoryId = $resultns['id'];
 
-                            ?>
-                            <?php
-                            $id = $result['id'];
+                        $id = $result['id'];
+                        // Encrypt the ID
+                        $encryptedId = encryptId($id);
 
-                            // Encrypt the ID
-                            $encryptedId = encryptId($id);
-
-
-
-                            $queryp = "SELECT * FROM `product_variant` WHERE `product_id` = '$id' ORDER BY `sale_price` ASC LIMIT 1";
-                            $datap = mysqli_query($conn, $queryp);
-                            $resultp = mysqli_fetch_assoc($datap);
-                            $mrp = $resultp['mrp'];
-                            $sale_price = $resultp['sale_price'];
-                            $discount = round((($mrp - $sale_price) / $mrp) * 100);
-
-                            ?>
-                            <a href="product.php?id=<?php echo $encryptedId; ?>" class="productBox">
-                                <div class="productImg">
-                                    <img src="superadmin/<?php echo $result['image']; ?>" alt="">
-                                    <span class="subCategory"><?php echo $subCategoryName; ?></span>
+                        $queryp = "SELECT * FROM `product_variant` WHERE `product_id` = '$id' ORDER BY `sale_price` ASC LIMIT 1";
+                        $datap = mysqli_query($conn, $queryp);
+                        $resultp = mysqli_fetch_assoc($datap);
+                        $mrp = $resultp['mrp'];
+                        $sale_price = $resultp['sale_price'];
+                        $discount = round((($mrp - $sale_price) / $mrp) * 100);
+                    ?>
+                        <a href="product.php?id=<?php echo $encryptedId; ?>" class="productBox <?php echo $result['status'] == 0 ? 'out-of-stock' : ''; ?>">
+                            <div class="productImg">
+                                <img src="superadmin/<?php echo $result['image']; ?>" alt="">
+                                <span class="subCategory"><?php echo $subCategoryName; ?></span>
+                                <?php if ($result['status'] == 0) { ?>
+                                    <span class="stock-badge out-of-stock">Out of Stock</span>
+                                <?php } ?>
+                            </div>
+                            <div class="productDes">
+                                <h4><?php echo $result['name']; ?></h4>
+                                <div class="productFlex">
+                                    <del>₹ <?php echo $mrp; ?></del>
+                                    <h3><?php echo $discount; ?>%</h3>
                                 </div>
-                                <div class="productDes">
-                                    <h4> <?php echo $result['name']; ?></h4>
-                                    <div class="productFlex">
-                                        <del>&#8377; <?php echo $mrp; ?></del>
-                                        <h3><?php echo $discount; ?>%</h3>
-                                    </div>
-                                    <h2>&#8377; <?php echo $sale_price; ?></h2>
-
-                                </div>
-
-                            </a>
-
-                            <?php
-                        }
-
-
-                        ?>
-                    </div>
+                                <h2>₹ <?php echo $sale_price; ?></h2>
+                            </div>
+                        </a>
+                    <?php } ?>
+                </div>
             </div>
         </div>
     </section>
@@ -236,35 +268,11 @@ if (isset($_GET['id'])) {
     <?php include("./components/footer.php"); ?>
     <?php include("./components/footscript.php"); ?>
 
-
-
-
-
-
-
-
-
-
-
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
 
     <script>
-        // Change price box dynamically
-        document.querySelectorAll('.variant-radio').forEach(radio => {
-            radio.addEventListener('change', function () {
-                let variantData = JSON.parse(this.value);
-                let mrp = variantData.mrp;
-                let salePrice = variantData.sale_price;
-                let discount = Math.round(((mrp - salePrice) / mrp) * 100);
-
-                document.getElementById('variant-sale-price').innerText = salePrice;
-                document.getElementById('variant-mrp').innerText = mrp;
-                document.getElementById('variant-discount').innerText = discount;
-            });
-        });
-
         // Add to cart via AJAX
         $('#addToCartBtn').click(function () {
             let variantData = JSON.parse($('input[name="variant"]:checked').val());
@@ -296,7 +304,5 @@ if (isset($_GET['id'])) {
             });
         });
     </script>
-
 </body>
-
 </html>
