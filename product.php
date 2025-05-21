@@ -55,37 +55,7 @@ if (isset($_GET['id'])) {
 <head>
     <?php include("./components/headlink.php"); ?>
     <title><?php echo $result['name']; ?> | Usemee - Your one-stop online store for all your shopping needs!</title>
-    <style>
-        .stock-status {
-            margin-bottom: 15px;
-        }
-        .stock-status .in-stock {
-            color: green;
-            font-weight: bold;
-        }
-        .stock-status .out-of-stock {
-            color: red;
-            font-weight: bold;
-        }
-        .buyButton:disabled, .add-cart-btn:disabled {
-            background-color: #ccc;
-            cursor: not-allowed;
-            opacity: 0.6;
-        }
-        .stock-badge.out-of-stock {
-            position: absolute;
-            top: 10px;
-            right: 10px;
-            background-color: red;
-            color: white;
-            padding: 5px 10px;
-            font-size: 12px;
-            border-radius: 3px;
-        }
-        .productBox.out-of-stock {
-            opacity: 0.7;
-        }
-    </style>
+    
 </head>
 
 <body>
@@ -117,7 +87,7 @@ if (isset($_GET['id'])) {
 
                     <!-- Stock Status Display -->
                     <div class="stock-status">
-                        <p><strong>Availability: </strong>
+                        <p><strong>Availability : </strong>
                             <span id="stock-status" class="<?php echo $result['status'] == 1 ? 'in-stock' : 'out-of-stock'; ?>">
                                 <?php echo $result['status'] == 1 ? 'In Stock' : 'Out of Stock'; ?>
                             </span>
@@ -245,10 +215,16 @@ if (isset($_GET['id'])) {
                         <a href="product.php?id=<?php echo $encryptedId; ?>" class="productBox <?php echo $result['status'] == 0 ? 'out-of-stock' : ''; ?>">
                             <div class="productImg">
                                 <img src="superadmin/<?php echo $result['image']; ?>" alt="">
-                                <span class="subCategory"><?php echo $subCategoryName; ?></span>
                                 <?php if ($result['status'] == 0) { ?>
-                                    <span class="stock-badge out-of-stock">Out of Stock</span>
-                                <?php } ?>
+                                        <div class="outOfStockBand">
+                                        <p>Out of Stock</p>
+                                        </div>
+                                    <?php } else {
+                                        ?>
+                                        <span class="subCategory"><?php echo $subCategoryName; ?></span>
+                                        <?php
+                                    }
+                                    ?>
                             </div>
                             <div class="productDes">
                                 <h4><?php echo $result['name']; ?></h4>

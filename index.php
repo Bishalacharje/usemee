@@ -173,10 +173,20 @@ include("enc_dec.php");
 
               ?>
               <div class="card swiper-slide">
-                <a href="product.php?id=<?php echo $encryptedPId; ?>" class="productBox">
+                <a href="product.php?id=<?php echo $encryptedPId; ?>"
+                  class="productBox  <?php echo $resultSelling['status'] == 0 ? 'out-of-stock' : ''; ?>">
                   <div class="productImg">
                     <img src="superadmin/<?php echo $resultSelling['image']; ?>" alt="">
-                    <span class="subCategory"><?php echo $subCategoryName; ?></span>
+                    <?php if ($resultSelling['status'] == 0) { ?>
+                      <div class="outOfStockBand">
+                        <p>Out of Stock</p>
+                      </div>
+                    <?php } else {
+                      ?>
+                      <span class="subCategory"><?php echo $subCategoryName; ?></span>
+                      <?php
+                    }
+                    ?>
                   </div>
                   <div class="productDes">
                     <h4><?php echo $resultSelling['name']; ?> </h4>
@@ -377,10 +387,23 @@ include("enc_dec.php");
           $discount = round((($mrp - $sale_price) / $mrp) * 100);
 
           ?>
-          <a href="product.php?id=<?php echo $encryptedPId; ?>" class="productBox">
+          <a href="product.php?id=<?php echo $encryptedPId; ?>"
+            class="productBox <?php echo $result['status'] == 0 ? 'out-of-stock' : ''; ?>">
+
             <div class="productImg">
               <img src="superadmin/<?php echo $result['image']; ?>" alt="">
-              <span class="subCategory"><?php echo $subCategoryName; ?></span>
+              <?php if ($result['status'] == 0) { ?>
+                <div class="outOfStockBand">
+                  <p>Out of Stock</p>
+                </div>
+              <?php } else {
+                ?>
+                <span class="subCategory"><?php echo $subCategoryName; ?></span>
+                <?php
+              }
+              ?>
+
+
             </div>
             <div class="productDes">
               <h4> <?php echo $result['name']; ?></h4>

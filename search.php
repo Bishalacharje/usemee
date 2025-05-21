@@ -3,6 +3,8 @@ error_reporting(0);
 include("connection.php");
 session_start();
 
+include("enc_dec.php");
+
 $query = isset($_GET['search']) ? trim($_GET['search']) : '';
 
 if ($query !== '') {
@@ -70,6 +72,8 @@ if ($query !== '') {
 
                         // Get lowest sale price variant
                         $pid = $result['id'];
+                        // Encrypt the ID
+                        $encryptedPId = encryptId($pid);
                         $variant_query = "SELECT * FROM product_variant WHERE product_id = '$pid' ORDER BY sale_price ASC LIMIT 1";
                         $variant_res = mysqli_query($conn, $variant_query);
                         $variant = mysqli_fetch_assoc($variant_res);
@@ -83,10 +87,20 @@ if ($query !== '') {
                             $mrp = $sale_price = $discount = 0;
                         }
                         ?>
-                        <a href="product.php?id=<?php echo $result['id']; ?>" class="productBox scrollToReveal">
+                        <a href="product.php?id=<?php echo $encryptedPId; ?>"
+                            class="productBox scrollToReveal <?php echo $result['status'] == 0 ? 'out-of-stock' : ''; ?>">
                             <div class="productImg">
                                 <img src="superadmin/<?php echo htmlspecialchars($result['image']); ?>" alt="">
-                                <span class="subCategory"><?php echo html_entity_decode($subCategoryName); ?></span>
+                                <?php if ($result['status'] == 0) { ?>
+                                    <div class="outOfStockBand">
+                                        <p>Out of Stock</p>
+                                    </div>
+                                <?php } else {
+                                    ?>
+                                    <span class="subCategory"><?php echo $subCategoryName; ?></span>
+                                    <?php
+                                }
+                                ?>
                             </div>
                             <div class="productDes">
                                 <h4><?php echo html_entity_decode($result['name']); ?></h4>
@@ -127,8 +141,14 @@ if ($query !== '') {
 
             <?php if ($subcategories && $subcategories->num_rows > 0): ?>
                 <div class="subCategoryCardGrid scrollToReveal">
-                    <?php while ($row = $subcategories->fetch_assoc()): ?>
-                        <a href="shop.php?subcategory=<?php echo $row['id']; ?>" class="subCategoryCard">
+                    <?php while ($row = $subcategories->fetch_assoc()):
+                        $subId = $row['id'];
+
+                        // Encrypt the ID
+                        $encryptedSubId = encryptId($subId);
+
+                        ?>
+                        <a href="shop.php?subcategory=<?php echo $encryptedSubId; ?>" class="subCategoryCard">
                             <div class="subCategoryCardImg">
                                 <img src="superadmin/<?php echo htmlspecialchars($row['image']); ?>" alt="">
                             </div>
@@ -146,8 +166,13 @@ if ($query !== '') {
 
             <?php if ($categories && $categories->num_rows > 0): ?>
                 <div class="subCategoryCardGrid">
-                    <?php while ($row = $categories->fetch_assoc()): ?>
-                        <a href="shop.php?category=<?php echo $row['id']; ?>" class="subCategoryCard">
+                    <?php while ($row = $categories->fetch_assoc()):
+
+                        $catId = $row['id'];
+                        // Encrypt the ID
+                        $encryptedCatId = encryptId($catId);
+                        ?>
+                        <a href="shop.php?category=<?php echo $encryptedCatId; ?>" class="subCategoryCard">
                             <div class="subCategoryCardImg">
                                 <img src="superadmin/<?php echo htmlspecialchars($row['image']); ?>" alt="">
                             </div>

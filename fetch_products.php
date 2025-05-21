@@ -1,6 +1,5 @@
 <?php
 include("connection.php");
-
 include("enc_dec.php");
 
 $category = isset($_POST['category']) ? $_POST['category'] : "";
@@ -53,37 +52,51 @@ if (mysqli_num_rows($data) > 0) {
         $sale_price = $result['min_variant_price'];
         $discount = ($mrp > 0) ? round((($mrp - $sale_price) / $mrp) * 100) : 0;
 
-        $output .= '
-            <a href="product.php?id=' . $encryptedPId . '" class="productBox">
-                <div class="productImg">
-                    <img src="superadmin/' . $result['image'] . '" alt="">
-                </div>
-                <div class="productDes">
-                    <h4>' . $result['name'] . '</h4>
-                    <div class="productFlex">
-                        <del>₹' . $mrp . '</del>
-                        <h3>' . $discount . '%</h3>
-                    </div>
-                    <h2>₹' . $sale_price . '</h2>
-                </div>
-            </a>';
+        // Fetch subcategory name
+        $subCatId = $result['subCategoryId'];
+        $subQuery = "SELECT name FROM subcategory WHERE id = '$subCatId'";
+        $subData = mysqli_query($conn, $subQuery);
+        $subResult = mysqli_fetch_assoc($subData);
+        $subCategoryName = $subResult ? $subResult['name'] : '';
+
+        // Check stock status
+        $isOutOfStock = ($result['status'] == 0);
+
+        // Set wrapper tag based on stock status
+        $productBoxStart = $isOutOfStock ? '<div class="productBox out-of-stock">' : '<a href="product.php?id=' . $encryptedPId . '" class="productBox">';
+        $productBoxEnd = $isOutOfStock ? '</div>' : '</a>';
+
+        // Append product box to output
+        $output .= '<a href="product.php?id=' . $encryptedPId . '" class="productBox' . ($isOutOfStock ? ' out-of-stock' : '') . '">
+        <div class="productImg">
+            <img src="superadmin/' . $result['image'] . '" alt="">' .
+            ($isOutOfStock
+                ? '<div class="outOfStockBand"><p>Out of Stock</p></div>'
+                : '<span class="subCategory">' . $subCategoryName . '</span>') .
+            '</div>
+        <div class="productDes">
+            <h4>' . $result['name'] . '</h4>
+            <div class="productFlex">
+                <del>₹' . $mrp . '</del>
+                <h3>' . $discount . '%</h3>
+            </div>
+            <h2>₹' . $sale_price . '</h2>
+        </div>
+    </a>';
     }
 } else {
     // If no products found, show message
     $output = '<div class="noProductsMessage">
-                  
-                    <div class="emptyCartCon">
-                        <script src="https://unpkg.com/@dotlottie/player-component@2.7.12/dist/dotlottie-player.mjs"
-                                    type="module"></script>
-                                <dotlottie-player
-                                    src="https://lottie.host/f38bfa84-2aa7-433c-bd28-dc99de95923e/PXb2Pvqhty.lottie"
-                                    background="transparent" speed="1" style="width: 160px; height: 160px" loop
-                                    autoplay></dotlottie-player>
-                        <h2>No products found in this category & subcategory.</h2>
-                        <p>Shop available products.</p>
-                        <a href="shop.php"><button>Shop now</button></a>
-                    </div>
-               </div>';
+        <div class="emptyCartCon">
+            <script src="https://unpkg.com/@dotlottie/player-component@2.7.12/dist/dotlottie-player.mjs" type="module"></script>
+            <dotlottie-player
+                src="https://lottie.host/f38bfa84-2aa7-433c-bd28-dc99de95923e/PXb2Pvqhty.lottie"
+                background="transparent" speed="1" style="width: 160px; height: 160px" loop autoplay></dotlottie-player>
+            <h2>No products found in this category & subcategory.</h2>
+            <p>Shop available products.</p>
+            <a href="shop.php"><button>Shop now</button></a>
+        </div>
+    </div>';
 }
 
 echo $output;
