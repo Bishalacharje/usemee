@@ -1,5 +1,6 @@
 <?php
 include("connection.php");
+include("enc_dec.php");
 session_start();
 include("checked-login.php");
 ?>
@@ -60,11 +61,13 @@ include("checked-login.php");
                         </div>
                         <div class="formGrid">
 
-                             <div class="inputCon">
-                                    <label>Phone No</label>
-                                    <input type="text" name="phone_no" id="phone_no" value="<?php echo $phone; ?>" pattern="[0-9]{10}" maxlength="10" required>
-                                    <span class="error-message" id="phone-error">Phone number must be exactly 10 digits</span>
-                                </div>
+                            <div class="inputCon">
+                                <label>Phone No</label>
+                                <input type="text" name="phone_no" id="phone_no" value="<?php echo $phone; ?>"
+                                    pattern="[0-9]{10}" maxlength="10" required>
+                                <span class="error-message" id="phone-error">Phone number must be exactly 10
+                                    digits</span>
+                            </div>
                             <div>
                                 <label for="">Email</label>
                                 <input type="email" name="email" value="<?php echo $user_email ?>" required>
@@ -131,12 +134,13 @@ include("checked-login.php");
                             <input type="hidden" value="<?php echo $userid ?>" name="uid">
                             <div class="formGrid" style="align-items: end;">
                                 <div>
-                                <label for="password">New Password 
-                                <span id="password-guidelines" style="font-size: 12px; color: green; margin-left: 10px;">
-                                    [ Min 8 - chars, A, z, 0-9, @#$% ]
-                                </span>
-                                </label>
-                                <input type="password" name="password" id="password" required>
+                                    <label for="password">New Password
+                                        <span id="password-guidelines"
+                                            style="font-size: 12px; color: green; margin-left: 10px;">
+                                            [ Min 8 - chars, A, z, 0-9, @#$% ]
+                                        </span>
+                                    </label>
+                                    <input type="password" name="password" id="password" required>
                                 </div>
                                 <button type="submit" name="updatePassword" class="updatePassword">Update
                                     Password</button>
@@ -177,25 +181,24 @@ include("checked-login.php");
                             }
 
                             if (!empty($errors)) {
-                              
 
-                            }
-                            else {
 
-                            // Hash the password
-                            $hashedPassword = password_hash($password, PASSWORD_BCRYPT);
+                            } else {
 
-                            $query2 = "UPDATE `user` SET `password`='$hashedPassword' WHERE `id`='$id'";
-                            // Execute the query
-                            $data2 = mysqli_query($conn, $query2);
+                                // Hash the password
+                                $hashedPassword = password_hash($password, PASSWORD_BCRYPT);
 
-                            // Start output buffering
-                            ob_start();
+                                $query2 = "UPDATE `user` SET `password`='$hashedPassword' WHERE `id`='$id'";
+                                // Execute the query
+                                $data2 = mysqli_query($conn, $query2);
 
-                            // Success alert
-                            if ($data2) {
-                                echo "<script src='https://cdn.jsdelivr.net/npm/sweetalert2@11'></script>";
-                                echo "<script>
+                                // Start output buffering
+                                ob_start();
+
+                                // Success alert
+                                if ($data2) {
+                                    echo "<script src='https://cdn.jsdelivr.net/npm/sweetalert2@11'></script>";
+                                    echo "<script>
                                 Swal.fire({
                                     title: 'Success!',
                                     text: 'Password Updated.',
@@ -206,10 +209,10 @@ include("checked-login.php");
                                     window.location.href = 'logout.php'; 
                                 });
                             </script>";
-                            } else {
-                                // Error alert
-                                echo "<script src='https://cdn.jsdelivr.net/npm/sweetalert2@11'></script>";
-                                echo "<script>
+                                } else {
+                                    // Error alert
+                                    echo "<script src='https://cdn.jsdelivr.net/npm/sweetalert2@11'></script>";
+                                    echo "<script>
                                 Swal.fire({
                                     title: 'Error!',
                                     text: 'Failed. Please try again.',
@@ -217,12 +220,12 @@ include("checked-login.php");
                                     confirmButtonText: 'OK'
                                 });
                             </script>";
-                            }
+                                }
 
-                            // Flush output buffer
-                            ob_end_flush();
+                                // Flush output buffer
+                                ob_end_flush();
+                            }
                         }
-                    }
                         ?>
                     </div>
 
@@ -241,28 +244,28 @@ include("checked-login.php");
 
 
     <script>
-  const passwordInput = document.getElementById("password");
-  const guideSpan = document.getElementById("password-guidelines");
+        const passwordInput = document.getElementById("password");
+        const guideSpan = document.getElementById("password-guidelines");
 
-  passwordInput?.addEventListener("input", () => {
-    const value = passwordInput.value;
-    const rules = [];
+        passwordInput?.addEventListener("input", () => {
+            const value = passwordInput.value;
+            const rules = [];
 
-    if (!/.{8,}/.test(value)) rules.push("8+ chars");
-    if (!/[A-Z]/.test(value)) rules.push("A");
-    if (!/[a-z]/.test(value)) rules.push("z");
-    if (!/[0-9]/.test(value)) rules.push("0-9");
-    if (!/[!@#$%^&*(),.?\":{}|<>]/.test(value)) rules.push("@#$%");
+            if (!/.{8,}/.test(value)) rules.push("8+ chars");
+            if (!/[A-Z]/.test(value)) rules.push("A");
+            if (!/[a-z]/.test(value)) rules.push("z");
+            if (!/[0-9]/.test(value)) rules.push("0-9");
+            if (!/[!@#$%^&*(),.?\":{}|<>]/.test(value)) rules.push("@#$%");
 
-    if (rules.length === 0) {
-      guideSpan.innerText = "[ ✅ Strong ]";
-      guideSpan.style.color = "green";
-    } else {
-      guideSpan.innerText = `[ ${rules.join(', ')} ]`;
-      guideSpan.style.color = "red";
-    }
-  });
-</script>
+            if (rules.length === 0) {
+                guideSpan.innerText = "[ ✅ Strong ]";
+                guideSpan.style.color = "green";
+            } else {
+                guideSpan.innerText = `[ ${rules.join(', ')} ]`;
+                guideSpan.style.color = "red";
+            }
+        });
+    </script>
 
 
 

@@ -1,5 +1,6 @@
 <?php
 include("connection.php");
+include("enc_dec.php");
 session_start();
 include("checked-login.php");
 
@@ -93,8 +94,10 @@ $total_price = $sub_total + $delivery_cost;
 
                                 <div class="inputCon">
                                     <label>Phone No</label>
-                                    <input type="text" name="phone_no" id="phone_no" value="<?php echo $phone; ?>" pattern="[0-9]{10}" maxlength="10" required>
-                                    <span class="error-message" id="phone-error">Phone number must be exactly 10 digits</span>
+                                    <input type="text" name="phone_no" id="phone_no" value="<?php echo $phone; ?>"
+                                        pattern="[0-9]{10}" maxlength="10" required>
+                                    <span class="error-message" id="phone-error">Phone number must be exactly 10
+                                        digits</span>
                                 </div>
 
                             </div>
@@ -126,7 +129,8 @@ $total_price = $sub_total + $delivery_cost;
                                 </div>
                                 <div class="inputCon">
                                     <label>Pin</label>
-                                    <input type="text" name="pin" id="pin" value="<?php echo $pin; ?>" pattern="[0-9]{6}" maxlength="6" required>
+                                    <input type="text" name="pin" id="pin" value="<?php echo $pin; ?>"
+                                        pattern="[0-9]{6}" maxlength="6" required>
                                     <span class="error-message" id="pin-error">PIN must be exactly 6 digits</span>
                                 </div>
                             </div>
@@ -180,7 +184,7 @@ $total_price = $sub_total + $delivery_cost;
     <?php include("./components/footscript.php"); ?>
 
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
+        document.addEventListener('DOMContentLoaded', function () {
             const form = document.getElementById('checkoutForm');
             const phoneInput = document.getElementById('phone_no');
             const pinInput = document.getElementById('pin');
@@ -188,10 +192,10 @@ $total_price = $sub_total + $delivery_cost;
             const pinError = document.getElementById('pin-error');
 
             // Phone validation
-            phoneInput.addEventListener('input', function() {
+            phoneInput.addEventListener('input', function () {
                 // Remove any non-digit characters
                 this.value = this.value.replace(/\D/g, '');
-                
+
                 // Show error if not exactly 10 digits
                 if (this.value.length > 0 && this.value.length !== 10) {
                     phoneError.style.display = 'block';
@@ -201,10 +205,10 @@ $total_price = $sub_total + $delivery_cost;
             });
 
             // PIN validation
-            pinInput.addEventListener('input', function() {
+            pinInput.addEventListener('input', function () {
                 // Remove any non-digit characters
                 this.value = this.value.replace(/\D/g, '');
-                
+
                 // Show error if not exactly 6 digits
                 if (this.value.length > 0 && this.value.length !== 6) {
                     pinError.style.display = 'block';
@@ -214,7 +218,7 @@ $total_price = $sub_total + $delivery_cost;
             });
 
             // Form submission validation
-            form.addEventListener('submit', function(e) {
+            form.addEventListener('submit', function (e) {
                 // Check phone validation
                 if (phoneInput.value.length !== 10) {
                     e.preventDefault();
@@ -222,7 +226,7 @@ $total_price = $sub_total + $delivery_cost;
                     phoneInput.focus();
                     return false;
                 }
-                
+
                 // Check PIN validation
                 if (pinInput.value.length !== 6) {
                     e.preventDefault();
@@ -230,7 +234,7 @@ $total_price = $sub_total + $delivery_cost;
                     pinInput.focus();
                     return false;
                 }
-                
+
                 return true;
             });
         });

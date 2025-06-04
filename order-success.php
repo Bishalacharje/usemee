@@ -1,5 +1,6 @@
 <?php
 include("connection.php");
+include("enc_dec.php");
 session_start();
 include("checked-login.php");
 ?>
