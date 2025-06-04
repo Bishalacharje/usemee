@@ -1,5 +1,6 @@
 <?php
 include("connection.php");
+include("enc_dec.php");
 session_start();
 include("checked-login.php");
 ?>
@@ -83,8 +84,11 @@ include("checked-login.php");
                             </div>
 
                             <div>
-                                <label for="">Pin <span id="pin-guidelines" style="font-size: 12px; color: green; margin-left: 10px;">[ Must be exactly 6 digits ]</span></label>
-                                <input type="text" name="pin" id="pin-input" value="<?php echo $pin ?>" maxlength="6" pattern="[0-9]{6}" required>
+                                <label for="">Pin <span id="pin-guidelines"
+                                        style="font-size: 12px; color: green; margin-left: 10px;">[ Must be exactly 6
+                                        digits ]</span></label>
+                                <input type="text" name="pin" id="pin-input" value="<?php echo $pin ?>" maxlength="6"
+                                    pattern="[0-9]{6}" required>
                             </div>
                         </div>
                         <div class="formGrid grid1">
@@ -107,7 +111,7 @@ include("checked-login.php");
                         $zone = htmlspecialchars(mysqli_real_escape_string($conn, $_POST['zone']));
                         $pin = htmlspecialchars(mysqli_real_escape_string($conn, $_POST['pin']));
                         $address = htmlspecialchars(mysqli_real_escape_string($conn, $_POST['address']));
-                        
+
                         // PIN validation
                         if (!preg_match('/^\d{6}$/', $pin)) {
                             // Invalid PIN format
@@ -171,21 +175,21 @@ include("checked-login.php");
     <?php include("./components/footscript.php"); ?>
 
     <script>
-      const pinInput = document.getElementById("pin-input");
-      const pinGuideSpan = document.getElementById("pin-guidelines");
+        const pinInput = document.getElementById("pin-input");
+        const pinGuideSpan = document.getElementById("pin-guidelines");
 
-      pinInput?.addEventListener("input", () => {
-        // Allow only digits and limit to 6 characters
-        pinInput.value = pinInput.value.replace(/\D/g, '').slice(0, 6);
-        
-        if (/^\d{6}$/.test(pinInput.value)) {
-          pinGuideSpan.innerText = "[ ✅ Valid ]";
-          pinGuideSpan.style.color = "green";
-        } else {
-          pinGuideSpan.innerText = "[ Must be exactly 6 digits ]";
-          pinGuideSpan.style.color = "red";
-        }
-      });
+        pinInput?.addEventListener("input", () => {
+            // Allow only digits and limit to 6 characters
+            pinInput.value = pinInput.value.replace(/\D/g, '').slice(0, 6);
+
+            if (/^\d{6}$/.test(pinInput.value)) {
+                pinGuideSpan.innerText = "[ ✅ Valid ]";
+                pinGuideSpan.style.color = "green";
+            } else {
+                pinGuideSpan.innerText = "[ Must be exactly 6 digits ]";
+                pinGuideSpan.style.color = "red";
+            }
+        });
     </script>
 
 </body>

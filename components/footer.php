@@ -56,7 +56,7 @@
             <div class="footerMenu">
                 <h3>Company</h3>
                 <ul>
-                    <a href="#">
+                    <a href="about.php">
                         <li>About</li>
                     </a>
                     <a href="#">
@@ -101,9 +101,10 @@
                     $datac = mysqli_query($conn, $queryc);
 
                     while ($resultc = mysqli_fetch_assoc($datac)) {
+                        $encryptedCatId = encryptId($resultc['id']);
                         $categoryName = $resultc['name'];
                         ?>
-                        <a href="shop.php?category=<?php echo $resultc['id']; ?>">
+                        <a href="shop.php?category=<?php echo $encryptedCatId; ?>">
                             <li><?php echo $categoryName; ?></li>
                         </a>
                         <?php

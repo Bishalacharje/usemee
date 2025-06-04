@@ -2,54 +2,62 @@
 error_reporting(0);
 session_start();
 include("connection.php");
+include("enc_dec.php");
 
-$old_name  = '';
+$old_name = '';
 $old_phone = '';
 $old_email = '';
-$errors    = [];
+$errors = [];
 
 // Handle form submission
 if (isset($_POST['submit'])) {
-    // Keep typed values for redisplay on error
-    $old_name  = htmlspecialchars($_POST['name']);
-    $old_phone = htmlspecialchars($_POST['phone']);
-    $old_email = htmlspecialchars($_POST['email']);
-    $password  = $_POST['password'];
+  // Keep typed values for redisplay on error
+  $old_name = htmlspecialchars($_POST['name']);
+  $old_phone = htmlspecialchars($_POST['phone']);
+  $old_email = htmlspecialchars($_POST['email']);
+  $password = $_POST['password'];
 
-    // Sanitize inputs
-    $name     = htmlspecialchars(mysqli_real_escape_string($conn, $_POST['name']));
-    $phone    = htmlspecialchars(mysqli_real_escape_string($conn, $_POST['phone']));
-    $email    = htmlspecialchars(mysqli_real_escape_string($conn, $_POST['email']));
-    $password = mysqli_real_escape_string($conn, $_POST['password']);
+  // Sanitize inputs
+  $name = htmlspecialchars(mysqli_real_escape_string($conn, $_POST['name']));
+  $phone = htmlspecialchars(mysqli_real_escape_string($conn, $_POST['phone']));
+  $email = htmlspecialchars(mysqli_real_escape_string($conn, $_POST['email']));
+  $password = mysqli_real_escape_string($conn, $_POST['password']);
 
-    // Password validation
-    if (!preg_match('@[A-Z]@', $password))   $errors[] = "Password must include at least one uppercase letter.";
-    if (!preg_match('@[a-z]@', $password))   $errors[] = "Password must include at least one lowercase letter.";
-    if (!preg_match('@[0-9]@', $password))   $errors[] = "Password must include at least one number.";
-    if (!preg_match('@[^\w]@', $password))   $errors[] = "Password must include at least one special character.";
-    if (strlen($password) < 8)               $errors[] = "Password must be at least 8 characters long.";
+  // Password validation
+  if (!preg_match('@[A-Z]@', $password))
+    $errors[] = "Password must include at least one uppercase letter.";
+  if (!preg_match('@[a-z]@', $password))
+    $errors[] = "Password must include at least one lowercase letter.";
+  if (!preg_match('@[0-9]@', $password))
+    $errors[] = "Password must include at least one number.";
+  if (!preg_match('@[^\w]@', $password))
+    $errors[] = "Password must include at least one special character.";
+  if (strlen($password) < 8)
+    $errors[] = "Password must be at least 8 characters long.";
 
-    // If validation passed, insert user
-    if (empty($errors)) {
-        $hashed = password_hash($password, PASSWORD_BCRYPT);
-        $sql    = "INSERT INTO `user` (`name`,`phone`,`email`,`password`)
+  // If validation passed, insert user
+  if (empty($errors)) {
+    $hashed = password_hash($password, PASSWORD_BCRYPT);
+    $sql = "INSERT INTO `user` (`name`,`phone`,`email`,`password`)
                    VALUES ('$name','$phone','$email','$hashed')";
-        if (mysqli_query($conn, $sql)) {
-            $_SESSION['signup_success'] = true;
-            $_SESSION['email']          = $email;
-        } else {
-            $_SESSION['signup_error'] = mysqli_error($conn);
-        }
+    if (mysqli_query($conn, $sql)) {
+      $_SESSION['signup_success'] = true;
+      $_SESSION['email'] = $email;
+    } else {
+      $_SESSION['signup_error'] = mysqli_error($conn);
     }
+  }
 }
 ?>
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <?php include("./components/headlink.php"); ?>
-    <title>Signup | Usemee</title>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <?php include("./components/headlink.php"); ?>
+  <title>Signup | Usemee</title>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
+
 <body>
   <div><?php include("./components/header.php"); ?></div>
 
@@ -64,11 +72,11 @@ if (isset($_POST['submit'])) {
         <form class="form-horizontal mt-3" method="post">
           <div class="formGrid grid1">
             <input type="text" name="name" required placeholder="Full name*" value="<?= $old_name ?>">
-            <input type="tel" name="phone" required placeholder="Phone Number*" 
-                   pattern="\d{10}" title="Enter exactly 10 digits" value="<?= $old_phone ?>">
+            <input type="tel" name="phone" required placeholder="Phone Number*" pattern="\d{10}"
+              title="Enter exactly 10 digits" value="<?= $old_phone ?>">
             <input type="email" name="email" required placeholder="Email*" value="<?= $old_email ?>">
             <div style="position: relative;">
-              <label for="password">Strong Password 
+              <label for="password">Strong Password
                 <span id="inline-rules" style="font-size:12px;color:green;margin-left:10px;">
                   [ Min 8 chars, A–Z, a–z, 0–9, @#$% ]
                 </span>
@@ -121,10 +129,10 @@ if (isset($_POST['submit'])) {
     const ruleSpan = document.getElementById("inline-rules");
     passwordInput.addEventListener("input", () => {
       const v = passwordInput.value, r = [];
-      if (!/.{8,}/.test(v))     r.push("8+ chars");
-      if (!/[A-Z]/.test(v))     r.push("A");
-      if (!/[a-z]/.test(v))     r.push("z");
-      if (!/[0-9]/.test(v))     r.push("0-9");
+      if (!/.{8,}/.test(v)) r.push("8+ chars");
+      if (!/[A-Z]/.test(v)) r.push("A");
+      if (!/[a-z]/.test(v)) r.push("z");
+      if (!/[0-9]/.test(v)) r.push("0-9");
       if (!/[!@#$%^&*(),.?\":{}|<>]/.test(v)) r.push("@#$%");
       if (r.length === 0) {
         ruleSpan.textContent = "[ ✅ strong ]";
@@ -169,4 +177,5 @@ if (isset($_POST['submit'])) {
     <?php unset($_SESSION['signup_error']); ?>
   <?php endif; ?>
 </body>
+
 </html>

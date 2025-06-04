@@ -1,6 +1,7 @@
 <?php
 error_reporting(0);
 include("connection.php");
+include("enc_dec.php");
 session_start();
 date_default_timezone_set('Asia/Kolkata');
 
