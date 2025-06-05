@@ -394,6 +394,7 @@
 
 
 
+
     /* --------------------------------------------------------------------- */
     /* ---------------------------------  Landing Page  ------------------------------------ */
     /* --------------------------------------------------------------------- */
@@ -483,6 +484,33 @@
     .footerCard {
         height: 164px;
         border-radius: 6px;
+    }
+
+    .bradCrumb {
+        margin-bottom: 4px;
+    }
+
+    .otherPageSection h1 {
+        font-size: 36px;
+        margin-bottom: 20px;
+    }
+
+    .aboutGrid p {
+        font-size: 13px;
+        line-height: 25px;
+    }
+
+    .aboutGrid p.borderText {
+        margin-bottom: 20px;
+        padding-left: 16px;
+    }
+
+    .featuresSec {
+        padding: 64px 0;
+    }
+
+    .featureGrid {
+        grid-template-columns: 1fr 1fr;
     }
 }
 
@@ -888,6 +916,46 @@
     .footerCard {
         height: 132px;
     }
+
+    .aboutGrid {
+        grid-template-columns: 1fr;
+        gap: 16px;
+    }
+
+    .aboutText {
+        grid-row: 1;
+    }
+
+
+
+    .featureGrid {
+        grid-template-columns: 1fr;
+        gap: 16px;
+    }
+
+    .contactGrid {
+        grid-template-columns: 1fr;
+        gap: 16px;
+    }
+
+    .contactGrid .contactBox {
+        padding: 25px 15px 20px;
+    }
+
+    .contactGrid .contactBox img {
+        height: 32px;
+        margin-bottom: 17px;
+    }
+
+    .contactGrid .contactBox h3 {
+        font-size: 18px;
+        margin-bottom: 8px;
+    }
+
+    .contactFormBox {
+        padding: 20px 25px 25px;
+    }
+
 
 }
 

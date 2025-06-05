@@ -25,7 +25,7 @@ session_start();
             <div class="aboutGrid">
                 <img class="scrollToRevealRight"
                     src="https://broccoli-omega.vercel.app/_next/image?url=%2Fimg%2Fothers%2F6.png&w=1200&q=75" alt="">
-                <div class="scrollToRevealLeft">
+                <div class="scrollToRevealLeft aboutText">
                     <p class="bradCrumb"><a href="index.php">Home</a> - <span>About Us</span>
                     </p>
                     <!-- <h6>Know More About Usemee</h6> -->

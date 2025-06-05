@@ -76,20 +76,20 @@
             <div class="footerMenu">
                 <h3>Services</h3>
                 <ul>
-                    <a href="#">
+                    <a href="order.php">
                         <li>Orders</li>
                     </a>
-                    <a href="#">
-                        <li>Login</li>
-                    </a>
-                    <a href="#">
+                    <a href="my_account.php">
                         <li>My account</li>
                     </a>
                     <a href="#">
-                        <li>Terms & Conditions</li>
+                        <li>Shipping Policy</li>
                     </a>
                     <a href="#">
-                        <li>Customer Policy</li>
+                        <li>Privacy Policy</li>
+                    </a>
+                    <a href="#">
+                        <li>Terms & Conditions</li>
                     </a>
                 </ul>
             </div>
