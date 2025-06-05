@@ -114,6 +114,8 @@ icon: 'error',
 title: 'Login Failed',
 text: 'Invalid email or password.',
 confirmButtonText: 'Try Again'
+}).then(() => {
+window.location.href = 'login.php'; // Redirect after the alert
 });
 </script>";
             }
@@ -126,6 +128,8 @@ icon: 'error',
 title: 'Login Failed',
 text: 'Invalid email or password.',
 confirmButtonText: 'Try Again'
+}).then(() => {
+window.location.href = 'login.php'; // Redirect after the alert
 });
 </script>";
         }
