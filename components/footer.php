@@ -68,7 +68,7 @@
                     <a href="#">
                         <li>FAQ</li>
                     </a>
-                    <a href="#">
+                    <a href="contact.php">
                         <li>Contact us</li>
                     </a>
                 </ul>

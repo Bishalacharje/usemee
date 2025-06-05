@@ -34,6 +34,7 @@ $data = mysqli_query($conn, $query);
 </head>
 
 <body>
+    <?php include("empty-address.php"); ?>
     <div>
         <?php include("./components/header.php"); ?>
     </div>
@@ -70,70 +71,82 @@ $data = mysqli_query($conn, $query);
                     </div>
 
                     <div class="ordersCon">
-                        <table>
-                            <tbody>
-                                <?php while ($result = mysqli_fetch_assoc($data)) { ?>
-                                    <tr>
-                                        <td>
-                                            <span class="date"><?php echo $result['order_date']; ?></span>
-                                            <h2>₹<?php echo $result['total_price']; ?></h2>
-                                        </td>
-                                        <td>
-                                            <?php
-                                            if ($result['status'] == 'Delivered') {
-                                                ?>
-                                                <span class="status delivered"><?php echo $result['status']; ?></span>
+                        <?php
+                        if ($total_orders == 0) {
+                            ?>
+                            <h1>Shop Your First Order</h1>
+                            <?php
+                        } else {
+                            ?>
+                            <table>
+                                <tbody>
+                                    <?php while ($result = mysqli_fetch_assoc($data)) { ?>
+                                        <tr>
+                                            <td>
+                                                <span class="date"><?php echo $result['order_date']; ?></span>
+                                                <h2>₹<?php echo $result['total_price']; ?></h2>
+                                            </td>
+                                            <td>
                                                 <?php
-                                            } else if ($result['status'] == 'Confirmed') {
-                                                ?>
-                                                    <span class="status confirmed"><?php echo $result['status']; ?></span>
-                                                <?php
-                                            } else if ($result['status'] == 'Packed') {
-                                                ?>
-                                                        <span class="status packed"><?php echo $result['status']; ?></span>
-                                                <?php
-                                            } else if ($result['status'] == 'Out for Delivery') {
-                                                ?>
-                                                            <span class="status outForDelivery"><?php echo $result['status']; ?></span>
-                                                <?php
-                                            } else if ($result['status'] == 'Cancelled') {
-                                                ?>
-                                                                <span class="status cancelled"><?php echo $result['status']; ?></span>
-                                                <?php
-                                            } else {
-                                                ?>
-                                                                <span class="status">Placed</span>
-                                                <?php
-                                            }
+                                                if ($result['status'] == 'Delivered') {
+                                                    ?>
+                                                    <span class="status delivered"><?php echo $result['status']; ?></span>
+                                                    <?php
+                                                } else if ($result['status'] == 'Confirmed') {
+                                                    ?>
+                                                        <span class="status confirmed"><?php echo $result['status']; ?></span>
+                                                    <?php
+                                                } else if ($result['status'] == 'Packed') {
+                                                    ?>
+                                                            <span class="status packed"><?php echo $result['status']; ?></span>
+                                                    <?php
+                                                } else if ($result['status'] == 'Out for Delivery') {
+                                                    ?>
+                                                                <span class="status outForDelivery"><?php echo $result['status']; ?></span>
+                                                    <?php
+                                                } else if ($result['status'] == 'Cancelled') {
+                                                    ?>
+                                                                    <span class="status cancelled"><?php echo $result['status']; ?></span>
+                                                    <?php
+                                                } else {
+                                                    ?>
+                                                                    <span class="status">Placed</span>
+                                                    <?php
+                                                }
 
-                                            ?>
-                                        </td>
-                                        <td>
-                                            <a href="track-order.php?id=<?php echo $result['id']; ?>">
-                                                <button>View Order</button>
-                                            </a>
-                                        </td>
-                                    </tr>
-                                <?php } ?>
-                            </tbody>
-                        </table>
+                                                ?>
+                                            </td>
+                                            <td>
+                                                <a href="track-order.php?id=<?php echo $result['id']; ?>">
+                                                    <button>View Order</button>
+                                                </a>
+                                            </td>
+                                        </tr>
+                                    <?php } ?>
+                                </tbody>
+                            </table>
 
-                        <!-- Pagination -->
-                        <div class="pagination">
-                            <?php if ($page > 1): ?>
-                                <a href="?page=<?php echo $page - 1; ?>">«</a>
-                            <?php endif; ?>
+                            <!-- Pagination -->
+                            <div class="pagination">
+                                <?php if ($page > 1): ?>
+                                    <a href="?page=<?php echo $page - 1; ?>">«</a>
+                                <?php endif; ?>
 
-                            <?php for ($i = 1; $i <= $total_pages; $i++): ?>
-                                <a href="?page=<?php echo $i; ?>" class="<?php echo $i == $page ? 'active-page' : ''; ?>">
-                                    <?php echo $i; ?>
-                                </a>
-                            <?php endfor; ?>
+                                <?php for ($i = 1; $i <= $total_pages; $i++): ?>
+                                    <a href="?page=<?php echo $i; ?>" class="<?php echo $i == $page ? 'active-page' : ''; ?>">
+                                        <?php echo $i; ?>
+                                    </a>
+                                <?php endfor; ?>
 
-                            <?php if ($page < $total_pages): ?>
-                                <a href="?page=<?php echo $page + 1; ?>">»</a>
-                            <?php endif; ?>
-                        </div>
+                                <?php if ($page < $total_pages): ?>
+                                    <a href="?page=<?php echo $page + 1; ?>">»</a>
+                                <?php endif; ?>
+                            </div>
+                            <?php
+                        }
+
+                        ?>
+
 
 
                     </div>

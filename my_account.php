@@ -15,6 +15,7 @@ include("checked-login.php");
 </head>
 
 <body>
+    <?php include("empty-address.php"); ?>
     <div>
 
         <?php include("./components/header.php"); ?>
@@ -62,11 +63,13 @@ include("checked-login.php");
                         <div class="formGrid">
 
                             <div class="inputCon">
-                                <label>Phone No</label>
-                                <input type="text" name="phone_no" id="phone_no" value="<?php echo $phone; ?>"
+                                <label>Phone No <span id="pin-guidelines"
+                                        style="font-size: 12px; color: green; margin-left: 10px;">[ Must be exactly 10
+                                        digits
+                                        ]</span></label>
+                                <input type="text" name="phone" id="phone_no" value="<?php echo $user_phone; ?>"
                                     pattern="[0-9]{10}" maxlength="10" required>
-                                <span class="error-message" id="phone-error">Phone number must be exactly 10
-                                    digits</span>
+
                             </div>
                             <div>
                                 <label for="">Email</label>
