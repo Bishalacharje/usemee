@@ -23,18 +23,21 @@ if (empty($start_date) && empty($end_date)) {
     <?php include("./components/headlink.php"); ?>
     <title>Dashboard | Admin | Usemee</title>
     <!-- Bootstrap Datepicker CSS -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css">
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css">
     <style>
         .filter-container {
             margin-bottom: 20px;
             padding: 15px;
             background-color: #fff;
             border-radius: 5px;
-            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         }
+
         .filter-container .btn-primary {
             margin-top: 22px;
         }
+
         .filter-title {
             margin-bottom: 15px;
             font-weight: 600;
@@ -70,18 +73,19 @@ if (empty($start_date) && empty($end_date)) {
                     <div class="row">
                         <div class="col-12">
                             <div class="filter-container">
-                                <h5 class="filter-title">Filter Orders by Date Range</h5>
                                 <form method="GET" action="" class="row">
                                     <div class="col-md-4">
                                         <div class="mb-3">
                                             <label class="form-label">Start Date</label>
-                                            <input type="date" class="form-control" name="start_date" value="<?php echo $start_date; ?>">
+                                            <input type="date" class="form-control" name="start_date"
+                                                value="<?php echo $start_date; ?>">
                                         </div>
                                     </div>
                                     <div class="col-md-4">
                                         <div class="mb-3">
                                             <label class="form-label">End Date</label>
-                                            <input type="date" class="form-control" name="end_date" value="<?php echo $end_date; ?>">
+                                            <input type="date" class="form-control" name="end_date"
+                                                value="<?php echo $end_date; ?>">
                                         </div>
                                     </div>
                                     <div class="col-md-2">
@@ -104,12 +108,12 @@ if (empty($start_date) && empty($end_date)) {
                                             <p class="text-truncate font-size-14 mb-2">Pending Order</p>
                                             <?php
                                             $query = "SELECT * FROM `orders` WHERE `zone`= '$admin_zone' AND `status`= 'Pending'";
-                                            
+
                                             // Add date range filter if set
                                             if (!empty($start_date) && !empty($end_date)) {
                                                 $query .= " AND DATE(order_date) BETWEEN '$start_date' AND '$end_date'";
                                             }
-                                            
+
                                             $data = mysqli_query($conn, $query);
                                             $total = mysqli_num_rows($data);
                                             ?>
@@ -133,12 +137,12 @@ if (empty($start_date) && empty($end_date)) {
                                             <p class="text-truncate font-size-14 mb-2">Confirmed Order</p>
                                             <?php
                                             $query = "SELECT * FROM `orders` WHERE `zone`= '$admin_zone' AND `status`= 'Confirmed'";
-                                            
+
                                             // Add date range filter if set
                                             if (!empty($start_date) && !empty($end_date)) {
                                                 $query .= " AND DATE(order_date) BETWEEN '$start_date' AND '$end_date'";
                                             }
-                                            
+
                                             $data = mysqli_query($conn, $query);
                                             $total = mysqli_num_rows($data);
                                             ?>
@@ -161,12 +165,12 @@ if (empty($start_date) && empty($end_date)) {
                                             <p class="text-truncate font-size-14 mb-2">Order Packed</p>
                                             <?php
                                             $query = "SELECT * FROM `orders` WHERE `zone`= '$admin_zone' AND `status`= 'Packed'";
-                                            
+
                                             // Add date range filter if set
                                             if (!empty($start_date) && !empty($end_date)) {
                                                 $query .= " AND DATE(order_date) BETWEEN '$start_date' AND '$end_date'";
                                             }
-                                            
+
                                             $data = mysqli_query($conn, $query);
                                             $total = mysqli_num_rows($data);
                                             ?>
@@ -189,12 +193,12 @@ if (empty($start_date) && empty($end_date)) {
                                             <p class="text-truncate font-size-14 mb-2">Order Out for Delivery</p>
                                             <?php
                                             $query = "SELECT * FROM `orders` WHERE `zone`= '$admin_zone' AND `status`= 'Out for Delivery'";
-                                            
+
                                             // Add date range filter if set
                                             if (!empty($start_date) && !empty($end_date)) {
                                                 $query .= " AND DATE(order_date) BETWEEN '$start_date' AND '$end_date'";
                                             }
-                                            
+
                                             $data = mysqli_query($conn, $query);
                                             $total = mysqli_num_rows($data);
                                             ?>
@@ -219,12 +223,12 @@ if (empty($start_date) && empty($end_date)) {
                                             <p class="text-truncate font-size-14 mb-2">Order Delivered</p>
                                             <?php
                                             $query = "SELECT * FROM `orders` WHERE `zone`= '$admin_zone' AND `status`= 'Delivered'";
-                                            
+
                                             // Add date range filter if set
                                             if (!empty($start_date) && !empty($end_date)) {
                                                 $query .= " AND DATE(delivered_date) BETWEEN '$start_date' AND '$end_date'";
                                             }
-                                            
+
                                             $data = mysqli_query($conn, $query);
                                             $total = mysqli_num_rows($data);
                                             ?>
@@ -249,12 +253,12 @@ if (empty($start_date) && empty($end_date)) {
                                             <p class="text-truncate font-size-14 mb-2">Order Cancelled</p>
                                             <?php
                                             $query = "SELECT * FROM `orders` WHERE `zone`= '$admin_zone' AND `status`= 'Cancelled'";
-                                            
+
                                             // Add date range filter if set
                                             if (!empty($start_date) && !empty($end_date)) {
                                                 $query .= " AND DATE(order_date) BETWEEN '$start_date' AND '$end_date'";
                                             }
-                                            
+
                                             $data = mysqli_query($conn, $query);
                                             $total = mysqli_num_rows($data);
                                             ?>
@@ -321,12 +325,12 @@ if (empty($start_date) && empty($end_date)) {
                                 <div class="card-body p-4">
                                     <div class="d-flex">
                                         <div class="flex-grow-1">
-                                            <p class="text-truncate font-size-14 mb-2">Today COD</p>
+                                            <p class="text-truncate font-size-14 mb-2"> COD</p>
                                             <?php
                                             // Always use current day for Total COD regardless of filter
                                             $today = date('Y-m-d');
                                             $query = "SELECT SUM(total_price) as total_cod FROM `orders` WHERE `zone` = '$admin_zone' AND `status`= 'Delivered' AND DATE(`delivered_date`) = '$today'";
-                                            
+
                                             $data = mysqli_query($conn, $query);
                                             $total_cod = 0;
                                             if ($row = mysqli_fetch_assoc($data)) {
@@ -349,7 +353,7 @@ if (empty($start_date) && empty($end_date)) {
                                 <div class="card-body p-4">
                                     <div class="d-flex">
                                         <div class="flex-grow-1">
-                                            <p class="text-truncate font-size-14 mb-2">Today Delivery Wallet</p>
+                                            <p class="text-truncate font-size-14 mb-2">Delivery Wallet</p>
 
                                             <?php
                                             // Always use current day for Delivery Wallet regardless of filter
@@ -398,7 +402,8 @@ if (empty($start_date) && empty($end_date)) {
     <!-- JAVASCRIPT -->
     <?php include("./components/footscript.php"); ?>
     <!-- Bootstrap Datepicker JS -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
+    <script
+        src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
 </body>
 
 </html>
