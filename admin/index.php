@@ -9,10 +9,10 @@ $start_date = isset($_GET['start_date']) ? $_GET['start_date'] : '';
 $end_date = isset($_GET['end_date']) ? $_GET['end_date'] : '';
 
 // If no dates are selected, default to current month
-if (empty($start_date) && empty($end_date)) {
-    $start_date = date('Y-m-01'); // First day of current month
-    $end_date = date('Y-m-d'); // Today
-}
+// if (empty($start_date) && empty($end_date)) {
+//     $start_date = date('Y-m-01'); // First day of current month
+//     $end_date = date('Y-m-d'); // Today
+// }
 ?>
 
 
@@ -78,14 +78,14 @@ if (empty($start_date) && empty($end_date)) {
                                         <div class="mb-3">
                                             <label class="form-label">Start Date</label>
                                             <input type="date" class="form-control" name="start_date"
-                                                value="<?php echo $start_date; ?>">
+                                                value="<?php echo htmlspecialchars($start_date); ?>">
                                         </div>
                                     </div>
                                     <div class="col-md-4">
                                         <div class="mb-3">
                                             <label class="form-label">End Date</label>
                                             <input type="date" class="form-control" name="end_date"
-                                                value="<?php echo $end_date; ?>">
+                                                value="<?php echo htmlspecialchars($end_date); ?>">
                                         </div>
                                     </div>
                                     <div class="col-md-2">
@@ -327,17 +327,21 @@ if (empty($start_date) && empty($end_date)) {
                                         <div class="flex-grow-1">
                                             <p class="text-truncate font-size-14 mb-2"> COD</p>
                                             <?php
-                                            // Always use current day for Total COD regardless of filter
-                                            $today = date('Y-m-d');
-                                            $query = "SELECT SUM(total_price) as total_cod FROM `orders` WHERE `zone` = '$admin_zone' AND `status`= 'Delivered' AND DATE(`delivered_date`) = '$today'";
+                                            $total_cod = 0;
+                                            $query = "SELECT SUM(total_price) as total_cod FROM `orders` WHERE `zone` = '$admin_zone' AND `status`= 'Delivered'";
+
+                                            // Apply date filter if both dates are provided
+                                            if (!empty($start_date) && !empty($end_date)) {
+                                                $query .= " AND DATE(delivered_date) BETWEEN '$start_date' AND '$end_date'";
+                                            }
 
                                             $data = mysqli_query($conn, $query);
-                                            $total_cod = 0;
                                             if ($row = mysqli_fetch_assoc($data)) {
-                                                $total_cod = $row['total_cod'] ?? 0; // Use the sum from the query
+                                                $total_cod = $row['total_cod'] ?? 0;
                                             }
                                             ?>
                                             <h4 class="mb-2">₹<?php echo $total_cod; ?></h4>
+
                                         </div>
                                         <div class="avatar-sm">
                                             <span class="avatar-title bg-light text-dark rounded-3">
@@ -356,10 +360,15 @@ if (empty($start_date) && empty($end_date)) {
                                             <p class="text-truncate font-size-14 mb-2">Delivery Wallet</p>
 
                                             <?php
-                                            // Always use current day for Delivery Wallet regardless of filter
-                                            $today = date('Y-m-d');
-                                            $query_order_count = "SELECT COUNT(*) as delivered_orders FROM `orders` WHERE `zone` = '$admin_zone' AND `status`= 'Delivered' AND DATE(`delivered_date`) = '$today'";
+                                            $delivered_orders = 0;
+                                            $query_order_count = "SELECT COUNT(*) as delivered_orders FROM `orders` WHERE `zone` = '$admin_zone' AND `status`= 'Delivered'";
 
+                                            // Apply date filter if both dates are provided
+                                            if (!empty($start_date) && !empty($end_date)) {
+                                                $query_order_count .= " AND DATE(delivered_date) BETWEEN '$start_date' AND '$end_date'";
+                                            }
+
+                                            // Optional: delivery boy filter (unchanged)
                                             $delivery = isset($_GET['delivery']) ? $_GET['delivery'] : '';
                                             if (!empty($delivery)) {
                                                 $query_order_count .= " AND `delivery` = '$delivery'";
@@ -369,10 +378,11 @@ if (empty($start_date) && empty($end_date)) {
                                             $row_order_count = mysqli_fetch_assoc($result_order_count);
                                             $delivered_orders = $row_order_count['delivered_orders'] ?? 0;
 
-                                            // Calculate Wallet Amount
+                                            // Calculate Wallet Amount (e.g., ₹20 per delivery)
                                             $wallet_amount = $delivered_orders * 20;
                                             ?>
                                             <h4 class="mb-2">₹<?php echo $wallet_amount; ?></h4>
+
                                         </div>
                                         <div class="avatar-sm">
                                             <span class="avatar-title bg-light text-primary rounded-3">
