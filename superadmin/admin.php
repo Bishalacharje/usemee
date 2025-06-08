@@ -108,11 +108,26 @@ include("checked-login.php");
 
                                                             <td>
                                                                 <button type="button"
+                                                                    class="btn btn-warning waves-effect waves-light btn-sm viewCategoryBtn"
+                                                                    data-id="<?php echo $result['id']; ?>"
+                                                                    data-name="<?php echo $result['name']; ?>"
+                                                                    data-phone="<?php echo $result['phone']; ?>"
+                                                                    data-zone="<?php echo $result['zone']; ?>"
+                                                                    data-email="<?php echo $result['email']; ?>"
+                                                                    data-aadhaarno="<?php echo $result['aadhaar_no']; ?>"
+                                                                    data-photo="<?php echo $result['photo']; ?>"
+                                                                    data-aadhaarphoto="<?php echo $result['aadhaar_photo']; ?>"
+                                                                    data-bs-toggle="modal"
+                                                                    data-bs-target=".bs-example-modal-lg-view">
+                                                                    <i class="ri-eye-fill"></i>
+                                                                </button>
+                                                                <button type="button"
                                                                     class="btn btn-info waves-effect waves-light btn-sm editCategoryBtn"
                                                                     data-id="<?php echo $result['id']; ?>"
                                                                     data-name="<?php echo $result['name']; ?>"
                                                                     data-phone="<?php echo $result['phone']; ?>"
                                                                     data-email="<?php echo $result['email']; ?>"
+                                                                    data-aadhaarno="<?php echo $result['aadhaar_no']; ?>"
                                                                     data-bs-toggle="modal"
                                                                     data-bs-target=".bs-example-modal-lg-edit">
                                                                     <i class="ri-pencil-fill"></i>
@@ -328,6 +343,68 @@ include("checked-login.php");
                         </div><!-- /.modal-dialog -->
                     </div><!-- /.modal -->
 
+
+                    <!--  Modal content for view category -->
+                    <div class="modal fade bs-example-modal-lg-view" tabindex="-1" role="dialog"
+                        aria-labelledby="myLargeModalLabel" aria-hidden="true">
+                        <div class="modal-dialog modal-lg modal-dialog-centered">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="viewAdminName"></h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <img id="viewAdminPhoto" src="" alt="" class="img-fluid rounded"
+                                                style="max-width: 150px; border: 1px solid #ddd; margin-bottom: 15px;">
+                                        </div>
+                                        <div class="col-md-8">
+                                            <h6>Phone: <span id="viewPhone"></span></h6>
+                                            <h6>Email: <span id="viewEmail"></span></h6>
+                                            <hr>
+
+                                            <h6>Aadhaar No: <span id="viewAadhaarNo"></span></h6>
+                                            <img id="viewAadhaarPhoto" src="" alt="" class="img-fluid rounded"
+                                                style="max-width: 300px; border: 1px solid #ddd; margin-bottom: 15px;">
+
+                                        </div>
+                                    </div>
+
+                                    <!-- Category Description -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- /.modal -->
+                    <script>
+                        document.addEventListener("DOMContentLoaded", function () {
+                            document.querySelectorAll(".viewCategoryBtn").forEach(button => {
+                                button.addEventListener("click", function () {
+                                    let adminName = this.getAttribute("data-name");
+                                    let phone = this.getAttribute("data-phone");
+                                    let email = this.getAttribute("data-email");
+                                    let aadhaarNo = this.getAttribute("data-aadhaarno");
+
+
+                                    let deliveryPhoto = this.getAttribute("data-photo");
+                                    let aadhaarPhoto = this.getAttribute("data-aadhaarphoto");
+
+                                    // Set modal content
+                                    document.getElementById("viewAdminName").textContent = adminName;
+                                    document.getElementById("viewPhone").textContent = phone;
+                                    document.getElementById("viewEmail").textContent = email;
+                                    document.getElementById("viewAadhaarNo").textContent = aadhaarNo;
+
+                                    // Set image source
+                                    document.getElementById("viewAdminPhoto").src = deliveryPhoto;
+                                    document.getElementById("viewAadhaarPhoto").src = aadhaarPhoto;
+                                });
+                            });
+                        });
+                    </script>
+
                     <!--  Modal content for edit admin -->
                     <div class="modal fade bs-example-modal-lg-edit" tabindex="-1" role="dialog"
                         aria-labelledby="myLargeModalLabel" aria-hidden="true">
@@ -375,7 +452,7 @@ include("checked-login.php");
                                                         Zone</label>
                                                     <select name="zone" id="modaladminZoneName" class="form-select"
                                                         required>
-                                                        <option value="">-- Choose --</option>
+                                                        <option value="">---</option>
                                                         <?php
                                                         $queryc = "SELECT * FROM `zone`";
                                                         $datac = mysqli_query($conn, $queryc);
@@ -384,9 +461,7 @@ include("checked-login.php");
                                                         }
                                                         ?>
                                                     </select>
-                                                    <div class="valid-feedback">
-                                                        Looks good!
-                                                    </div>
+                                                    <div class="valid-feedback">Looks good!</div>
                                                 </div>
                                             </div>
 
@@ -396,6 +471,37 @@ include("checked-login.php");
                                                         Email</label>
                                                     <input type="email" class="form-control" id="modaladminEmail"
                                                         placeholder="admin email" name="email" required="">
+                                                    <div class="valid-feedback">
+                                                        Looks good!
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="mb-3">
+                                                    <label for="" class="form-label">
+                                                        Photo</label>
+                                                    <input type="file" class="form-control" id="" name="photo">
+                                                    <div class="valid-feedback">
+                                                        Looks good!
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="mb-3">
+                                                    <label for="modalaadhaarNo" class="form-label">
+                                                        Aadhaar No</label>
+                                                    <input type="number" class="form-control" id="modalaadhaarNo"
+                                                        placeholder="xxxx xxxx xxxx" name="aadhaar_no" required="">
+                                                    <div class="valid-feedback">
+                                                        Looks good!
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="mb-3">
+                                                    <label for="" class="form-label">
+                                                        Aadhaar Photo</label>
+                                                    <input type="file" class="form-control" id="" name="aadhaar_img">
                                                     <div class="valid-feedback">
                                                         Looks good!
                                                     </div>
@@ -415,59 +521,78 @@ include("checked-login.php");
                                     <?php
                                     if (isset($_POST['updateadmin'])) {
 
-                                        // Handle image upload
-                                        $filename = $_FILES["image"]["name"];
-                                        $tempname = $_FILES["image"]["tmp_name"];
-                                        $folder = "category/" . mysqli_real_escape_string($conn, $filename);
+                                        $id = $_POST['uid'];
 
                                         // Sanitize input
-                                        $id = $_POST['uid'];
+                                    
                                         $aname = htmlspecialchars(mysqli_real_escape_string($conn, $_POST['aname']));
                                         $phone = htmlspecialchars(mysqli_real_escape_string($conn, $_POST['phone']));
                                         $zone = htmlspecialchars(mysqli_real_escape_string($conn, $_POST['zone']));
                                         $email = htmlspecialchars(mysqli_real_escape_string($conn, $_POST['email']));
+                                        $aadhaar_no = htmlspecialchars(mysqli_real_escape_string($conn, $_POST['aadhaar_no']));
 
-                                        $query2 = "UPDATE `admin` SET 
-                                        `name`='$aname',
-                                        `phone`='$phone',
-                                        `zone`='$zone',
-                                        `email`='$email'
-                                        WHERE `id`='$id'";
 
-                                        // Execute the query
+
+                                        // File paths
+                                        $photoPath = "";
+                                        $aadhaarPath = "";
+
+                                        // Photo upload
+                                        if (!empty($_FILES["photo"]["name"])) {
+                                            $filename = mysqli_real_escape_string($conn, $_FILES["photo"]["name"]);
+                                            $tempname = $_FILES["photo"]["tmp_name"];
+                                            $photoPath = "adminFiles/" . $filename;
+                                            move_uploaded_file($tempname, $photoPath);
+                                        }
+
+                                        // Aadhaar upload
+                                        if (!empty($_FILES["aadhaar_img"]["name"])) {
+                                            $filename2 = mysqli_real_escape_string($conn, $_FILES["aadhaar_img"]["name"]);
+                                            $tempname2 = $_FILES["aadhaar_img"]["tmp_name"];
+                                            $aadhaarPath = "adminFiles/" . $filename2;
+                                            move_uploaded_file($tempname2, $aadhaarPath);
+                                        }
+
+                                        // Build the update query
+                                        $updateFields = "`name`='$aname', `phone`='$phone',`zone`='$zone', `email`='$email', `aadhaar_no`='$aadhaar_no'";
+                                        if (!empty($photoPath)) {
+                                            $updateFields .= ", `photo`='$photoPath'";
+                                        }
+                                        if (!empty($aadhaarPath)) {
+                                            $updateFields .= ", `aadhaar_photo`='$aadhaarPath'";
+                                        }
+
+                                        $query2 = "UPDATE `admin` SET $updateFields WHERE `id`='$id'";
                                         $data2 = mysqli_query($conn, $query2);
 
                                         // Start output buffering
                                         ob_start();
 
-                                        // Success alert
                                         if ($data2) {
                                             echo "<script src='https://cdn.jsdelivr.net/npm/sweetalert2@11'></script>";
                                             echo "<script>
-            Swal.fire({
-                title: 'Success!',
-                text: 'Admin Profile Updated.',
-                icon: 'success',
-                showConfirmButton: false,
-                timer: 2000 
-            }).then(() => {
-                window.location.href = 'admin.php'; 
-            });
-        </script>";
+                                                    Swal.fire({
+                                                        title: 'Success!',
+                                                        text: 'Admin Profile Updated.',
+                                                        icon: 'success',
+                                                        showConfirmButton: false,
+                                                        timer: 2000 
+                                                    }).then(() => {
+                                                        window.location.href = 'admin.php'; 
+                                                    });
+                                                </script>";
                                         } else {
-                                            // Error alert
                                             echo "<script src='https://cdn.jsdelivr.net/npm/sweetalert2@11'></script>";
                                             echo "<script>
-            Swal.fire({
-                title: 'Error!',
-                text: 'Failed. Please try again.',
-                icon: 'error',
-                confirmButtonText: 'OK'
-            });
-        </script>";
+                                                    Swal.fire({
+                                                        title: 'Error!',
+                                                        text: 'Failed. Please try again.',
+                                                        icon: 'error',
+                                                        confirmButtonText: 'OK'
+                                                    });
+                                                </script>";
                                         }
 
-                                        // Flush output buffer
                                         ob_end_flush();
                                     }
                                     ?>
@@ -489,7 +614,9 @@ include("checked-login.php");
                                     let adminId = this.getAttribute("data-id");
                                     let adminName = this.getAttribute("data-name");
                                     let adminPhone = this.getAttribute("data-phone");
+                                    let adminZone = this.getAttribute("data-zone");
                                     let adminEmail = this.getAttribute("data-email");
+                                    let aadhaarNo = this.getAttribute("data-aadhaarno");
 
 
 
@@ -499,7 +626,9 @@ include("checked-login.php");
                                     document.getElementById("modaladminId").value = adminId;
                                     document.getElementById("modaladminName").value = adminName;
                                     document.getElementById("modaladminPhone").value = adminPhone;
+                                    document.getElementById("modaladminZoneName").value = adminZone;
                                     document.getElementById("modaladminEmail").value = adminEmail;
+                                    document.getElementById("modalaadhaarNo").value = aadhaarNo;
                                 });
                             });
                         });
