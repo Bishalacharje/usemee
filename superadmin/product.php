@@ -241,7 +241,7 @@ include("checked-login.php");
                                                     <label for="validationCustom01" class="form-label">Product
                                                         name</label>
                                                     <input type="text" class="form-control" id="validationCustom01"
-                                                        placeholder="Category name" name="name" required="">
+                                                        placeholder="Product name" name="name" required="">
                                                     <div class="valid-feedback">
                                                         Looks good!
                                                     </div>
@@ -259,6 +259,8 @@ include("checked-login.php");
                                                             <div class="valid-feedback">
                                                                 Looks good!
                                                             </div>
+                                                             <p class="text-secondary my-1">(Dimention:
+                                                                600*600)</p>
                                                         </div>
                                                     </div>
                                                     <div class="col-md-4">
@@ -554,6 +556,8 @@ include("checked-login.php");
                                                             <input type="file" name="image"
                                                                 class="form-control imageInput" id="validationCustom02">
 
+                                                       <p class="text-secondary my-1">(Dimention:
+                                                                600*600)</p>
                                                         </div>
                                                     </div>
                                                     <div class="col-md-4">

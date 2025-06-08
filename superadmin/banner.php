@@ -125,7 +125,8 @@ switch ($type) {
                                     novalidate>
                                     <div class="modal-header">
                                         <h5 class="modal-title">Add
-                                            <?php echo $type === 'footer' ? 'Card' : 'Banner'; ?></h5>
+                                            <?php echo $type === 'footer' ? 'Card' : 'Banner'; ?>
+                                        </h5>
                                         <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                                     </div>
                                     <div class="modal-body">
@@ -138,6 +139,7 @@ switch ($type) {
                                                 <label class="form-label">Image</label>
                                                 <input type="file" class="form-control" name="image" accept="image/*"
                                                     required>
+
                                             </div>
                                             <div class="col-md-6 mb-3">
                                                 <label class="form-label">Link</label>
@@ -148,6 +150,8 @@ switch ($type) {
                                                     <label class="form-label">Position</label>
                                                     <input type="number" class="form-control" name="position" value="0"
                                                         required>
+
+
                                                 </div>
                                             <?php endif; ?>
                                             <?php if ($has_visibility): ?>
@@ -202,7 +206,8 @@ switch ($type) {
                                     novalidate>
                                     <div class="modal-header">
                                         <h5 class="modal-title">Edit
-                                            <?php echo $type === 'footer' ? 'Card' : 'Banner'; ?></h5>
+                                            <?php echo $type === 'footer' ? 'Card' : 'Banner'; ?>
+                                        </h5>
                                         <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                                     </div>
                                     <div class="modal-body">

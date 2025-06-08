@@ -177,10 +177,12 @@ include("checked-login.php");
                                                     <div class="col-md-8">
                                                         <div class="mb-3">
                                                             <label for="validationCustom02" class="form-label">Category
-                                                                Image</label>
+                                                                Image </label>
                                                             <input type="file" name="image"
                                                                 class="form-control imageInput" id="validationCustom02"
                                                                 required="">
+                                                            <p class="text-secondary my-1">(Dimention:
+                                                                549*454)</p>
                                                             <div class="valid-feedback">
                                                                 Looks good!
                                                             </div>
@@ -311,7 +313,8 @@ include("checked-login.php");
                                                                 Image</label>
                                                             <input type="file" name="image"
                                                                 class="form-control imageInput" id="">
-
+                                                            <p class="text-secondary my-1">(Dimention:
+                                                                549*454)</p>
                                                         </div>
                                                     </div>
                                                     <div class="col-md-4">
