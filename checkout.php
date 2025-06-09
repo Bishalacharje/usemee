@@ -45,8 +45,12 @@ if (empty($cart_items)) {
     header('Location: cart.php');
     exit;
 }
+$queryShipping = "SELECT * FROM `delivery_charge` LIMIT 1";
+$dataShipping = mysqli_query($conn, $queryShipping);
+$resultShipping = mysqli_fetch_assoc($dataShipping);
 
-$delivery_cost = 49;
+
+$delivery_cost = $resultShipping['shipping_charge'];
 $total_price = $sub_total + $delivery_cost;
 ?>
 

@@ -41,6 +41,12 @@
                     </ul>
                 </li>
                 <li>
+                    <a href="shipping_charge.php" class="waves-effect">
+                        <i class="ri-dashboard-line"></i>
+                        <span>Shippping Charge</span>
+                    </a>
+                </li>
+                <li>
                     <a href="javascript: void(0);" class="has-arrow waves-effect">
                         <i class="ri-shopping-bag-line"></i>
                         <span>Admin</span>

@@ -42,7 +42,14 @@ $cart_items = [
     ]
 ];
 $subtotal = $price * $quantity;
-$delivery_charge = 49;
+
+$queryShipping = "SELECT * FROM `delivery_charge` LIMIT 1";
+$dataShipping = mysqli_query($conn, $queryShipping);
+$resultShipping = mysqli_fetch_assoc($dataShipping);
+
+
+$delivery_charge = $resultShipping['shipping_charge'];
+
 $total_price = $subtotal + $delivery_charge;
 
 // Prefill address
