@@ -29,6 +29,12 @@ switch ($type) {
     default:
         die("Invalid banner type");
 }
+    $recommended_sizes = [
+        'header' => 'Recommended size: 699 * 258 pixels',
+        'center' => 'Position 1: [709 * 688 px] | Position 2&3: [	706 * 318 px]',
+        'footer' => 'Recommended size: 459 * 270 pixels'
+    ];
+    $current_size_text = $recommended_sizes[$type];
 ?>
 
 <!doctype html>
@@ -137,9 +143,10 @@ switch ($type) {
                                             </div>
                                             <div class="col-md-6 mb-3">
                                                 <label class="form-label">Image</label>
-                                                <input type="file" class="form-control" name="image" accept="image/*"
-                                                    required>
-
+                                                <input type="file" class="form-control" name="image" accept="image/*" required>
+                                                <small class="form-text text-info mt-1">
+                                                    <i class="fas fa-info-circle"></i> <?php echo $current_size_text; ?>
+                                                </small>
                                             </div>
                                             <div class="col-md-6 mb-3">
                                                 <label class="form-label">Link</label>
@@ -219,11 +226,13 @@ switch ($type) {
                                                     name="title" required>
                                             </div>
                                             <div class="col-md-6 mb-3">
-                                                <label class="form-label">Image (optional)</label>
-                                                <input type="file" class="form-control" name="image" accept="image/*">
-                                                <small class="form-text text-muted">Leave blank to keep current
-                                                    image.</small>
-                                            </div>
+                                            <label class="form-label">Image (optional)</label>
+                                            <input type="file" class="form-control" name="image" accept="image/*">
+                                            <small class="form-text text-muted d-block">Leave blank to keep current image.</small>
+                                            <small class="form-text text-info">
+                                                <i class="fas fa-info-circle"></i> <?php echo $current_size_text; ?>
+                                            </small>
+                                        </div>
                                             <div class="col-md-6 mb-3">
                                                 <label class="form-label">Link</label>
                                                 <input type="url" class="form-control" id="editBannerLink" name="link">

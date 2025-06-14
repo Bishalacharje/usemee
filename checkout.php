@@ -49,8 +49,11 @@ $queryShipping = "SELECT * FROM `delivery_charge` LIMIT 1";
 $dataShipping = mysqli_query($conn, $queryShipping);
 $resultShipping = mysqli_fetch_assoc($dataShipping);
 
-
-$delivery_cost = $resultShipping['shipping_charge'];
+if ($resultShipping && isset($resultShipping['shipping_charge'])) {
+    $delivery_cost = $resultShipping['shipping_charge'];
+} else {
+    $delivery_cost = 0; // or handle as needed (e.g., default value, error message)
+}
 $total_price = $sub_total + $delivery_cost;
 ?>
 
