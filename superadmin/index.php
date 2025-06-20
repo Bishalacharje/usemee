@@ -55,9 +55,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['update_contact_status'
 }
 
 // Cache zones query result
-$zones_query = "SELECT DISTINCT o.zone, z.city FROM orders o 
-LEFT JOIN zone z ON o.zone = z.id 
-ORDER BY z.city";
+$zones_query = "SELECT id, city FROM zone ORDER BY city";
 $zones_result = mysqli_query($conn, $zones_query);
 $zones_data = [];
 if ($zones_result) {
@@ -202,12 +200,12 @@ if ($stmt = mysqli_prepare($conn, $contact_query)) {
                                     <div class="col-md-3">
                                         <div class="mb-3">
                                             <label class="form-label">Select Zone</label>
-                                            <select class="form-select" name="zone">
+                                            <select name="zone" id="zone" class="form-control">
                                                 <option value="">All Zones</option>
-                                                <?php foreach($zones_data as $zone_row): ?>
-                                                    <option value="<?php echo htmlspecialchars($zone_row['zone']); ?>" 
-                                                        <?php echo ($selected_zone == $zone_row['zone']) ? 'selected' : ''; ?>>
-                                                        <?php echo htmlspecialchars($zone_row['city'] ?? 'Zone ' . $zone_row['zone']); ?>
+                                                <?php foreach ($zones_data as $zone): ?>
+                                                    <option value="<?php echo htmlspecialchars($zone['id']); ?>" 
+                                                        <?php echo ($selected_zone == $zone['id']) ? 'selected' : ''; ?>>
+                                                        <?php echo htmlspecialchars($zone['city']); ?>
                                                     </option>
                                                 <?php endforeach; ?>
                                             </select>
@@ -635,21 +633,22 @@ if ($stmt = mysqli_prepare($conn, $contact_query)) {
                             <div class="card">
                                 <div class="card-body">
                                     <div class="d-flex align-items-center">
-                                        <div class="flex-grow-1">
-                                            <p class="text-truncate font-size-14 mb-2">Active Service Zones</p>
-                                            <?php
-                                            $query = "SELECT COUNT(DISTINCT zone) as total FROM `orders`";
-                                            $data = mysqli_query($conn, $query);
-                                            $row = mysqli_fetch_assoc($data);
-                                            $total = $row['total'];
-                                            ?>
-                                            <h4 class="mb-4 text-truncate"><?php echo number_format($total); ?></h4>
-                                        </div>
-                                        <div class="avatar-sm">
-                                            <span class="avatar-title bg-light text-warning rounded-3">
-                                                <i class="ri-map-pin-line font-size-24"></i>
-                                            </span>
-                                        </div>
+                                       <div class="flex-grow-1">
+                                        <p class="text-truncate font-size-14 mb-2">Active Service Zones</p>
+                                        <?php
+                                        // Show all zones (if no is_active column exists)
+                                        $query = "SELECT COUNT(*) as total FROM `zone`";
+                                        $data = mysqli_query($conn, $query);
+                                        $row = mysqli_fetch_assoc($data);
+                                        $total = $row['total'];
+                                        ?>
+                                        <h4 class="mb-4 text-truncate"><?php echo number_format($total); ?></h4>
+                                    </div>
+                                    <div class="avatar-sm">
+                                        <span class="avatar-title bg-light text-warning rounded-3">
+                                            <i class="ri-map-pin-line font-size-24"></i>
+                                        </span>
+                                    </div>
                                     </div>
                                 </div>
                             </div>
@@ -693,14 +692,14 @@ if ($stmt = mysqli_prepare($conn, $contact_query)) {
                                                             <td class="text"><?php echo htmlspecialchars($row['created_at']); ?></td>
                                                             <td>
                                                                 <form method="POST" action="index.php" class="d-inline">
-                                                                    <input type="hidden" name="contact_id" value="<?php echo htmlspecialchars($row['id']); ?>">
-                                                                    <select name="form-control status-select" onchange="this.form.submit()">
-                                                                        <option value="Pending" <?php echo ($row['status'] == 'Pending') ? 'selected' : ''; ?>>Pending</option>
-                                                                        <option value="In Progress" <?php echo ($row['status'] == 'In Progress') ? 'selected' : ''; ?>>In Progress</option>
-                                                                        <option value="Resolved" <?php echo ($row['status'] == 'Resolved') ? 'selected' : ''; ?>>Resolved</option>
-                                                                    </select>
-                                                                    <input type="hidden" name="update_contact_status" value="1">
-                                                                </form>
+                                                        <input type="hidden" name="contact_id" value="<?php echo htmlspecialchars($row['id']); ?>">
+                                                        <select name="status" class="form-control status-select" onchange="this.form.submit()">
+                                                            <option value="Pending" <?php echo ($row['status'] == 'Pending') ? 'selected' : ''; ?>>Pending</option>
+                                                            <option value="In Progress" <?php echo ($row['status'] == 'In Progress') ? 'selected' : ''; ?>>In Progress</option>
+                                                            <option value="Resolved" <?php echo ($row['status'] == 'Resolved') ? 'selected' : ''; ?>>Resolved</option>
+                                                        </select>
+                                                        <input type="hidden" name="update_contact_status" value="1">
+                                                    </form>
                                                             </td>
                                                         </tr>
                                                     <?php endforeach; ?>
