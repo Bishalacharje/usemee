@@ -28,7 +28,7 @@ include("checked-login.php");
                                 <h4 class="mb-sm-0">Seller Wallet</h4>
                                 <div class="page-title-right">
                                     <ol class="breadcrumb m-0">
-                                        <li class="breadcrumb-item"><a href="#">Usemee</a></li>
+                                        <li class="breadcrumb-item"><a href="javascript: void(0);">Usemee</a></li>
                                         <li class="breadcrumb-item active">Seller Wallet</li>
                                     </ol>
                                 </div>
@@ -38,6 +38,7 @@ include("checked-login.php");
 
                     <!-- Filters -->
                     <div class="row mb-4">
+                        <!-- Zone Filter -->
                         <div class="col-md-3">
                             <form method="GET" id="filterForm">
                                 <label>Zone</label>
@@ -45,26 +46,29 @@ include("checked-login.php");
                                     onchange="document.getElementById('filterForm').submit();">
                                     <option value="">All Zones</option>
                                     <?php
-                                    $zones = mysqli_query($conn, "SELECT * FROM `zone`");
-                                    while ($z = mysqli_fetch_assoc($zones)) {
-                                        $selected = (isset($_GET['zone']) && $_GET['zone'] == $z['id']) ? "selected" : "";
-                                        echo "<option value='{$z['id']}' $selected>{$z['city']}</option>";
+                                    $query = "SELECT * FROM `zone`";
+                                    $data = mysqli_query($conn, $query);
+                                    while ($result = mysqli_fetch_assoc($data)) {
+                                        $selected = (isset($_GET['zone']) && $_GET['zone'] == $result['id']) ? "selected" : "";
+                                        echo "<option value='{$result['id']}' $selected>{$result['city']}</option>";
                                     }
                                     ?>
                                 </select>
                         </div>
 
+                        <!-- Start Date -->
                         <div class="col-md-3">
                             <label>Start Date</label>
                             <input type="date" class="form-control" name="start_date"
-                                value="<?= $_GET['start_date'] ?? '' ?>"
+                                value="<?= isset($_GET['start_date']) ? $_GET['start_date'] : '' ?>"
                                 onchange="document.getElementById('filterForm').submit();">
                         </div>
 
+                        <!-- End Date -->
                         <div class="col-md-3">
                             <label>End Date</label>
                             <input type="date" class="form-control" name="end_date"
-                                value="<?= $_GET['end_date'] ?? '' ?>"
+                                value="<?= isset($_GET['end_date']) ? $_GET['end_date'] : '' ?>"
                                 onchange="document.getElementById('filterForm').submit();">
                         </div>
                         </form>
@@ -85,17 +89,20 @@ include("checked-login.php");
                                                               JOIN order_details od ON o.id = od.order_id
                                                               WHERE o.status = 'Delivered'";
 
-                                                if (!empty($_GET['zone'])) {
-                                                    $total_sql .= " AND o.zone = '{$_GET['zone']}'";
+                                                if (isset($_GET['zone']) && $_GET['zone'] !== "") {
+                                                    $zone = $_GET['zone'];
+                                                    $total_sql .= " AND o.zone = '$zone'";
                                                 }
 
                                                 if (!empty($_GET['start_date']) && !empty($_GET['end_date'])) {
-                                                    $total_sql .= " AND DATE(o.delivered_date) BETWEEN '{$_GET['start_date']}' AND '{$_GET['end_date']}'";
+                                                    $start_date = $_GET['start_date'];
+                                                    $end_date = $_GET['end_date'];
+                                                    $total_sql .= " AND DATE(o.delivered_date) BETWEEN '$start_date' AND '$end_date'";
                                                 }
 
-                                                $res = mysqli_query($conn, $total_sql);
-                                                $row = mysqli_fetch_assoc($res);
-                                                echo '₹' . number_format($row['TotalPrice'] ?? 0, 2);
+                                                $total_result = mysqli_query($conn, $total_sql);
+                                                $total_row = mysqli_fetch_assoc($total_result);
+                                                echo number_format($total_row['TotalPrice'], 2);
                                                 ?>
                                             </h4>
                                         </div>
@@ -105,12 +112,12 @@ include("checked-login.php");
                                             </span>
                                         </div>
                                     </div>
-                                </div>
-                            </div>
-                        </div>
+                                </div><!-- End card-body -->
+                            </div><!-- End card -->
+                        </div><!-- End col -->
                     </div>
 
-                    <!-- Seller Table -->
+                    <!-- Sellers Table -->
                     <div class="row">
                         <div class="col-md-12">
                             <div class="card">
@@ -118,94 +125,63 @@ include("checked-login.php");
                                     <h5 class="mb-0 text-dark">Sellers</h5>
                                 </div>
                                 <div class="card-body">
-                                    <table class="table table-striped table-bordered dt-responsive nowrap"
-                                        style="width:100%;">
-                                        <thead>
-                                            <tr>
-                                                <th>Seller Name</th>
-                                                <th>Total Price</th>
-                                                <th>Status</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <?php
-                                            $sql = "SELECT 
-                                                        s.id AS SellerID,
-                                                        s.name AS SellerName,
-                                                        MAX(o.delivered_date) AS LastDelivered,
-                                                        sb.last_billed_at AS LastBilled,
-                                                        SUM(od.price * od.quantity) AS TotalPrice
-                                                    FROM orders o
-                                                    JOIN order_details od ON o.id = od.order_id
-                                                    JOIN seller s ON od.seller = s.id
-                                                    LEFT JOIN seller_billing_status sb ON sb.seller_id = s.id
-                                                    WHERE o.status = 'Delivered'";
+                                    <div class="table-con">
+                                        <table id="datatable-buttons"
+                                            class="table table-striped table-bordered dt-responsive nowrap"
+                                            style="border-collapse: collapse; border-spacing: 0; width: 100%;">
+                                            <thead>
+                                                <tr>
+                                                    <th>Seller Name</th>
+                                                    <th>Total Price</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <?php
+                                                $sql = "SELECT s.name AS SellerName, s.category AS Category, SUM(od.price * od.quantity) AS TotalPrice
+                                                        FROM orders o
+                                                        JOIN order_details od ON o.id = od.order_id
+                                                        JOIN seller s ON od.seller = s.id
+                                                        WHERE o.status = 'Delivered'";
 
-                                            if (!empty($_GET['zone'])) {
-                                                $sql .= " AND o.zone = '{$_GET['zone']}'";
-                                            }
+                                                if (isset($_GET['zone']) && $_GET['zone'] !== "") {
+                                                    $zone = $_GET['zone'];
+                                                    $sql .= " AND o.zone = '$zone'";
+                                                }
 
-                                            if (!empty($_GET['start_date']) && !empty($_GET['end_date'])) {
-                                                $sql .= " AND DATE(o.delivered_date) BETWEEN '{$_GET['start_date']}' AND '{$_GET['end_date']}'";
-                                            }
+                                                if (!empty($_GET['start_date']) && !empty($_GET['end_date'])) {
+                                                    $start_date = $_GET['start_date'];
+                                                    $end_date = $_GET['end_date'];
+                                                    $sql .= " AND DATE(o.delivered_date) BETWEEN '$start_date' AND '$end_date'";
+                                                }
 
-                                            $sql .= " GROUP BY s.id";
+                                                $sql .= " GROUP BY s.id, s.category";
+                                                $result = $conn->query($sql);
 
-                                            $result = mysqli_query($conn, $sql);
-                                            while ($row = mysqli_fetch_assoc($result)) {
-                                                $isIncomplete = !$row['LastBilled'] || $row['LastDelivered'] > $row['LastBilled'];
-                                                $btnText = $isIncomplete ? "Incomplete" : "Billed";
-                                                $btnClass = $isIncomplete ? "btn-danger" : "btn-success";
+                                                while ($row = $result->fetch_assoc()) {
 
-                                                echo "<tr>
-                                                        <td>" . htmlspecialchars($row['SellerName']) . "</td>
-                                                        <td>₹" . number_format($row['TotalPrice'], 2) . "</td>
-                                                        <td>
-                                                            <button class='btn $btnClass btn-sm toggleBillingStatus' data-seller-id='{$row['SellerID']}'>
-                                                                $btnText
-                                                            </button>
-                                                        </td>
-                                                      </tr>";
-                                            }
-                                            ?>
-                                        </tbody>
-                                    </table>
+                                                    echo "<tr>
+                                                            <td>" . htmlspecialchars($row['SellerName']) . "</td>
+                                                            <td>" . number_format($row['TotalPrice'], 2) . "</td>
+                                                          </tr>";
+                                                }
+                                                ?>
+                                            </tbody>
+                                        </table>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
 
-                </div>
-            </div>
+                </div> <!-- container-fluid -->
+            </div> <!-- page-content -->
 
             <?php include("./components/footer.php"); ?>
-        </div>
-    </div>
+        </div> <!-- main-content -->
+    </div> <!-- layout-wrapper -->
 
+    <!-- JAVASCRIPT -->
     <?php include("./components/footscript.php"); ?>
-
-    <script>
-        document.addEventListener("DOMContentLoaded", function () {
-            document.querySelectorAll(".toggleBillingStatus").forEach(function (btn) {
-                btn.addEventListener("click", function () {
-                    const sellerId = this.getAttribute("data-seller-id");
-                    fetch("update-billing-status.php", {
-                        method: "POST",
-                        headers: { "Content-Type": "application/x-www-form-urlencoded" },
-                        body: "seller_id=" + sellerId
-                    })
-                        .then(res => res.text())
-                        .then(response => {
-                            if (response.trim() === "success") {
-                                this.classList.remove("btn-danger");
-                                this.classList.add("btn-success");
-                                this.textContent = "Billed";
-                            }
-                        });
-                });
-            });
-        });
-    </script>
 </body>
 
 </html>
