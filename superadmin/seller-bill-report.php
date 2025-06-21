@@ -4,6 +4,7 @@ include("../connection.php");
 session_start();
 include("checked-login.php");
 
+// Get seller ID from URL
 if (isset($_GET['id'])) {
     $id = $_GET['id'];
 } else {
@@ -11,32 +12,39 @@ if (isset($_GET['id'])) {
     exit;
 }
 
+// Get seller info
 $query = "SELECT * FROM `seller` WHERE `id`='$id'";
 $data = mysqli_query($conn, $query);
 $result = mysqli_fetch_assoc($data);
 $seller_id = $result['id'];
 $seller_name = $result['name'];
 
-// Initialize total price
+// Initialize total price and product list
 $total_price = 0;
-$products = []; // Store fetched products here
+$products = [];
 
-// Set default selected date to today if not provided
-$selected_date = isset($_GET['selected_date']) ? $_GET['selected_date'] : date('Y-m-d');
+// Get date filters
+$start_date = isset($_GET['start_date']) ? $_GET['start_date'] : '';
+$end_date = isset($_GET['end_date']) ? $_GET['end_date'] : '';
 
-// Fetch order details where seller matches and order is "Delivered"
+// Build query
 $query = "SELECT order_details.*, orders.status, orders.delivered_date 
           FROM `order_details` 
           JOIN `orders` ON order_details.order_id = orders.id 
           WHERE order_details.seller = '$seller_id' AND orders.status = 'Delivered'";
 
-if (!empty($selected_date)) {
-    $query .= " AND DATE(orders.delivered_date) = '$selected_date'"; // Ensure date matches
+if (!empty($start_date) && !empty($end_date)) {
+    $query .= " AND DATE(orders.delivered_date) BETWEEN '$start_date' AND '$end_date'";
+} elseif (!empty($start_date)) {
+    $query .= " AND DATE(orders.delivered_date) >= '$start_date'";
+} elseif (!empty($end_date)) {
+    $query .= " AND DATE(orders.delivered_date) <= '$end_date'";
 }
 
+// Execute query
 $data = mysqli_query($conn, $query);
 
-// Fetch and store results in an array
+// Process data
 while ($result2 = mysqli_fetch_assoc($data)) {
     $products[] = $result2;
     $total_price += $result2['price'] * $result2['quantity'];
@@ -55,7 +63,6 @@ while ($result2 = mysqli_fetch_assoc($data)) {
 <body data-topbar="dark">
 
     <div id="layout-wrapper">
-
         <?php include("./components/header.php"); ?>
         <?php include("./components/sidebar.php"); ?>
 
@@ -63,30 +70,32 @@ while ($result2 = mysqli_fetch_assoc($data)) {
             <div class="page-content">
                 <div class="container-fluid">
 
-                    <!-- start page title -->
+                    <!-- Page Title -->
                     <div class="row">
                         <div class="col-12">
                             <div class="page-title-box d-sm-flex align-items-center justify-content-between">
                                 <h4 class="mb-sm-0"><?php echo $seller_name; ?> Bill</h4>
                                 <div class="page-title-right">
                                     <ol class="breadcrumb m-0">
-                                        <li class="breadcrumb-item"><a href="javascript: void(0);">Upcube</a></li>
+                                        <li class="breadcrumb-item"><a href="#">Dashboard</a></li>
                                         <li class="breadcrumb-item active"><?php echo $seller_name; ?> Bill</li>
                                     </ol>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <!-- end page title -->
 
                     <!-- Date Filter -->
-                    <div class="row mb-2">
-                        <div class="col-md-6">
+                    <div class="row mb-3">
+                        <div class="col-md-8">
                             <form method="GET">
                                 <input type="hidden" name="id" value="<?php echo $id; ?>">
                                 <div class="input-group">
-                                    <input class="form-control" type="date" name="selected_date"
-                                        value="<?php echo $selected_date; ?>" onchange="this.form.submit();">
+                                    <input class="form-control" type="date" name="start_date"
+                                        value="<?php echo $start_date; ?>" placeholder="Start Date">
+                                    <input class="form-control" type="date" name="end_date"
+                                        value="<?php echo $end_date; ?>" placeholder="End Date">
+                                    <button type="submit" class="btn btn-primary">Filter</button>
                                     <a href="seller-bill-report.php?id=<?php echo $id; ?>"
                                         class="btn btn-danger">Reset</a>
                                 </div>
@@ -94,6 +103,19 @@ while ($result2 = mysqli_fetch_assoc($data)) {
                         </div>
                     </div>
 
+                    <!-- Date Range Summary -->
+                    <?php if ($start_date || $end_date): ?>
+                        <div class="row mb-3">
+                            <div class="col">
+                                <p class="text-muted">
+                                    Showing results
+                                    <?php if ($start_date): ?> from
+                                        <strong><?php echo $start_date; ?></strong><?php endif; ?>
+                                    <?php if ($end_date): ?> to <strong><?php echo $end_date; ?></strong><?php endif; ?>
+                                </p>
+                            </div>
+                        </div>
+                    <?php endif; ?>
 
                     <!-- Total Price Card -->
                     <div class="row">
@@ -103,7 +125,7 @@ while ($result2 = mysqli_fetch_assoc($data)) {
                                     <div class="d-flex">
                                         <div class="flex-grow-1">
                                             <p class="text-truncate font-size-14 mb-2">Total Price</p>
-                                            <h4 class="mb-2"><?php echo number_format($total_price, 2); ?></h4>
+                                            <h4 class="mb-2">₹<?php echo number_format($total_price, 2); ?></h4>
                                         </div>
                                         <div class="avatar-sm">
                                             <span class="avatar-title bg-light text-primary rounded-3">
@@ -111,11 +133,12 @@ while ($result2 = mysqli_fetch_assoc($data)) {
                                             </span>
                                         </div>
                                     </div>
-                                </div><!-- end cardbody -->
-                            </div><!-- end card -->
-                        </div><!-- end col -->
+                                </div>
+                            </div>
+                        </div>
                     </div>
 
+                    <!-- Product Table -->
                     <div class="row">
                         <div class="col-md-12">
                             <div class="card">
@@ -137,18 +160,15 @@ while ($result2 = mysqli_fetch_assoc($data)) {
                                             </thead>
                                             <tbody>
                                                 <?php if (!empty($products)) { ?>
-                                                    <?php foreach ($products as $result2) {
-                                                        $row_total = $result2['price'] * $result2['quantity']; ?>
+                                                    <?php foreach ($products as $row) {
+                                                        $row_total = $row['price'] * $row['quantity']; ?>
                                                         <tr>
-                                                            <td><?php echo $result2['product_name']; ?>
-                                                                (<?php echo $result2['variant_name']; ?>)</td>
-                                                            <td><?php echo number_format($result2['price'], 2); ?></td>
-                                                            <td><?php echo $result2['quantity']; ?></td>
-                                                            <td><?php echo number_format($row_total, 2); ?></td>
-
+                                                            <td><?php echo $row['product_name']; ?>
+                                                                (<?php echo $row['variant_name']; ?>)</td>
+                                                            <td>₹<?php echo number_format($row['price'], 2); ?></td>
+                                                            <td><?php echo $row['quantity']; ?></td>
+                                                            <td>₹<?php echo number_format($row_total, 2); ?></td>
                                                         </tr>
-
-
                                                     <?php } ?>
                                                 <?php } else { ?>
                                                     <tr>
@@ -165,17 +185,11 @@ while ($result2 = mysqli_fetch_assoc($data)) {
 
                 </div>
             </div>
-            <!-- End Page-content -->
 
             <?php include("./components/footer.php"); ?>
-
         </div>
-        <!-- end main content-->
-
     </div>
-    <!-- END layout-wrapper -->
 
-    <!-- JAVASCRIPT -->
     <?php include("./components/footscript.php"); ?>
 
 </body>
